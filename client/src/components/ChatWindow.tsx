@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { Box, VStack, Input, IconButton, Flex, Text, Avatar, Container } from '@chakra-ui/react';
-import { IoSend } from 'react-icons/io5';
+import { LuSearch } from 'react-icons/lu';
 
 interface Message {
   id: string;
@@ -75,7 +75,7 @@ export const ChatWindow = ({ onSendMessage }: ChatWindowProps) => {
         borderRadius="lg"
         overflow="hidden"
       >
-        <VStack h="full" spacing={0}>
+        <VStack h="full" >
           {/* Messages Area */}
           <Box
             flex="1"
@@ -94,7 +94,7 @@ export const ChatWindow = ({ onSendMessage }: ChatWindowProps) => {
               },
             }}
           >
-            <VStack spacing={4} align="stretch">
+            <VStack align="stretch" >
               {messages.map((message) => (
                 <Flex
                   key={message.id}
@@ -142,10 +142,11 @@ export const ChatWindow = ({ onSendMessage }: ChatWindowProps) => {
               <IconButton
                 colorScheme="blue"
                 aria-label="Send message"
-                icon={<IoSend />}
                 onClick={handleSend}
-                isLoading={isLoading}
-              />
+                loading={isLoading}
+              >
+                <LuSearch />
+              </IconButton>
             </Flex>
           </Box>
         </VStack>

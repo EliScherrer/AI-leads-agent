@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import {
   Box,
   ClientOnly,
@@ -10,8 +9,6 @@ import { ColorModeToggle } from './components/color-mode-toggle'
 import { ChatWindow } from './components/ChatWindow';
 
 export default function Page() {
-  const [isOpen, setIsOpen] = useState(false)
-
   const handleSendMessage = async (message: string): Promise<string> => {
     // TODO: Make API call to the backend
     await new Promise(resolve => setTimeout(resolve, 1000));

@@ -5,16 +5,19 @@ Build an AI agent that can search the web to create a list of high quality leads
 ### how to run
 1. Build frontend
     1. cd /client
-    2. npm i
-    3. npm run build
-2. Export openAI key for agent to use in CLI `export OPENAI_API_KEY="XYZ"`
-3. Start express-server 
+    2. `npm i`
+    3. `npm run build`
+2. Start express-server 
     1. cd /express-server
-    2. npm i
+    2. `npm i`
     3. `node server.js`
-4. Start ag2 agent
-    1. `python3 agent.py`
-5. Go to http://localhost:3000/ and chat
+3. Start ag2 agent
+    1. cd /ag2
+    2. `pip install -U ag2[openai,browser-use]`
+    3. `pip install -r requirements.txt`
+    4. `playwright install`
+    5. `uvicorn agent:app --reload`
+4. Go to http://localhost:3000/ and chat
 
 
 
@@ -27,8 +30,8 @@ Build an AI agent that can search the web to create a list of high quality leads
 
 ### Node Server
 1. Host React frontend
-2. Web requests for communicating with agent server
 
 ### Frontend
 1. simple single page website
 2. chat window
+3. Web requests for communicating with agent server
