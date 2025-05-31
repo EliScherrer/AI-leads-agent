@@ -1,78 +1,34 @@
+import { useState } from 'react';
 import {
   Box,
-  Button,
-  Checkbox,
   ClientOnly,
-  HStack,
   Heading,
-  Progress,
-  RadioGroup,
   Skeleton,
   VStack,
 } from '@chakra-ui/react'
 import { ColorModeToggle } from './components/color-mode-toggle'
-import { Tooltip } from './components/tooltip';
-import { useState } from 'react';
+import { ChatWindow } from './components/ChatWindow';
 
 export default function Page() {
   const [isOpen, setIsOpen] = useState(false)
 
-  const handleClick = () => {
-    console.log('clicked')
-    setIsOpen(!isOpen);
-  }
+  const handleSendMessage = async (message: string): Promise<string> => {
+    // TODO: Make API call to the backend
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    return `You said: ${message}`;
+  };
 
   return (
-    <Box textAlign="center" fontSize="xl" pt="30vh">
-      <VStack gap="8">
-        <img alt="chakra logo" src="/static/logo.svg" width="80" height="80" />
+    <Box textAlign="center" fontSize="xl" pt="10vh">
+      {/* <VStack gap="8"> */}
+      <VStack>
         <Heading size="2xl" letterSpacing="tight">
-          Welcome to Chakra UI v3 + Vite
+          Welcome to the Lead Finder chat bot
         </Heading>
 
-        <HStack gap="10">
-          <Checkbox.Root defaultChecked>
-            <Checkbox.HiddenInput />
-            <Checkbox.Control>
-              <Checkbox.Indicator />
-            </Checkbox.Control>
-            <Checkbox.Label>Checkbox</Checkbox.Label>
-          </Checkbox.Root>
-
-          <RadioGroup.Root display="inline-flex" defaultValue="1">
-            <RadioGroup.Item value="1" mr="2">
-              <RadioGroup.ItemHiddenInput />
-              <RadioGroup.ItemControl>
-                <RadioGroup.ItemIndicator />
-              </RadioGroup.ItemControl>
-              <RadioGroup.ItemText lineHeight="1">Radio</RadioGroup.ItemText>
-            </RadioGroup.Item>
-
-            <RadioGroup.Item value="2">
-              <RadioGroup.ItemHiddenInput />
-              <RadioGroup.ItemControl>
-                <RadioGroup.ItemIndicator />
-              </RadioGroup.ItemControl>
-              <RadioGroup.ItemText lineHeight="1">Radio</RadioGroup.ItemText>
-            </RadioGroup.Item>
-          </RadioGroup.Root>
-        </HStack>
-
-        <Progress.Root width="300px" value={65} striped>
-          <Progress.Track>
-            <Progress.Range />
-          </Progress.Track>
-        </Progress.Root>
-
-        <HStack>
-          <Tooltip content="this is a tooltip" showArrow={true} >
-            <Button onClick={() => { handleClick() }}>
-              Let's go!
-            </Button>
-          </Tooltip>
-          <Button variant="outline">bun install @chakra-ui/react</Button>
-        </HStack>
-        {/* <div>{(isOpen) && <Tooltip content="this is a tooltip" /> }</div> */}
+        <Box w="full" maxW="container.md">
+          <ChatWindow onSendMessage={handleSendMessage} />
+        </Box>
       </VStack>
 
       <Box pos="absolute" top="4" right="4">
