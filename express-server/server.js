@@ -1,14 +1,10 @@
 import express from "express";
 import bodyParser from "body-parser";
-import env from "dotenv";
 import path from "path";
-import axios from "axios";
 
 const app = express();
 const port = 3000;
 const __dirname = path.resolve();
-
-env.config();
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "../client/dist")));
