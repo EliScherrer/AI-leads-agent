@@ -42,13 +42,10 @@ export const ChatWindow = ({ onSendMessage }: ChatWindowProps) => {
     setIsLoading(true);
 
     try {
-      const response = await onSendMessage(inputValue);
-
-      console.log('response: ', response);
-
+      const aiResponseMessage = await onSendMessage(inputValue);
       const aiMessage: Message = {
         id: (Date.now() + 1).toString(),
-        text: response,
+        text: aiResponseMessage,
         sender: 'ai',
         timestamp: new Date(),
       };

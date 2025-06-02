@@ -7,12 +7,35 @@ import {
 } from '@chakra-ui/react'
 import { ColorModeToggle } from './components/color-mode-toggle'
 import { ChatWindow } from './components/ChatWindow';
+import axios from 'axios';
 
-export default function Page() {
+const BASE_URL = "http://127.0.0.1:8000/chat";
+
+export default function App() {
+
+  const requestAG2 = async (message: string): Promise<string> => {
+    console.log("requestAG2: ", message);
+    
+    try {
+      const data = { message: message };
+      const config = { headers: { 'Access-Control-Allow-Origin' : '*' } }
+      const response = await axios.post(BASE_URL, data, config)
+
+      console.log("data...");
+      console.log(response.data);
+      console.log("data.response...");
+      console.log(response.data.response);
+
+      return response.data.response;
+    } catch (error) {
+      console.log(error);
+      return "Error contacting AG2";
+    }
+  };
+
   const handleSendMessage = async (message: string): Promise<string> => {
-    // TODO: Make API call to the backend
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    return `You said: ${message}`;
+    console.log("handleSendMessage: ", message);
+    return await requestAG2(message);
   };
 
   return (
