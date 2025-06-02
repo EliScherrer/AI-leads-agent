@@ -39,7 +39,7 @@ export default function App() {
   };
 
   return (
-    <Box textAlign="center" fontSize="xl" pt="10vh">
+    <Box textAlign="center" fontSize="xl">
       {/* <VStack gap="8"> */}
       <VStack>
         <Heading size="2xl" letterSpacing="tight">

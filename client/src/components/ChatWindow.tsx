@@ -65,7 +65,7 @@ export const ChatWindow = ({ onSendMessage }: ChatWindowProps) => {
   };
 
   return (
-    <Container maxW="container.md" h="100vh" py={4}>
+    <Container maxW="container.md" h="80vh" py={4}>
       <Box
         h="full"
         borderWidth="1px"
