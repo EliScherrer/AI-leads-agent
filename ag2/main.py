@@ -1,7 +1,7 @@
 from autogen import config_list_from_json
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
-from intake_agent import IntakeAgent
+from agents.intake_agent.intake_agent import IntakeAgent
 
 import nest_asyncio
 
@@ -33,19 +33,38 @@ async def chat(request: Request):
     """API Endpoint that handles individual messages while maintaining conversation history."""
     data = await request.json()
     user_query = data.get("message", "")
+    user_agent = request.headers.get("user-agent")
 
     # Process the message and get response
-    response = await agent.process_message(user_query)
+    response = await agent.process_message(user_query, user_agent)
 
     results = {
         "response": response,
-        "message_history": [
-            {
-                "role": msg["role"],
-                "content": msg["content"]
-            }
-            for msg in agent.agent.chat_messages.get(agent.userProxy, [])  # None is used as the default recipient
-        ]
+        "message_history": agent.message_history[user_agent]
     }
+
+    print("-------------results-------------------")
+    print(results)
     
+    return results
+
+@app.post("/new_session")
+async def chat(request: Request):
+    """API Endpoint that handles individual messages while maintaining conversation history."""
+    data = await request.json()
+    user_agent = request.headers.get("user-agent")
+
+    should_start_new_session = data.get("new", "")
+
+    results = { "response": "Error" }
+
+    if (should_start_new_session == "true"):
+        agent.message_history[user_agent] = []
+        results = { "response": "session restarted" }
+    else:
+        results = { "response": "session not restarted" }
+
+    print("-------------results-------------------")
+    print(results)
+
     return results
