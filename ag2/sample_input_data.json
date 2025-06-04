@@ -1,0 +1,41 @@
+{
+    "company_info": {
+      "name": "SupplyStream Technologies",
+      "website": "https://www.supplystreamtech.com",
+      "description": "SupplyStream Technologies provides AI-driven ERP solutions for mid-sized automotive manufacturers, streamlining operations from procurement to distribution.",
+      "industry": "B2B SaaS",
+      "location": "Detroit, MI",
+      "employee_count": 45,
+      "annual_revenue": "12M"
+    },
+    "product_info": {
+      "name": "StreamERP",
+      "description": "StreamERP is a cloud-based ERP solution designed for automotive suppliers. It includes modules for inventory optimization, supplier integration, predictive maintenance, and production scheduling.",
+      "key_features": [
+        "Automated inventory forecasting",
+        "Supplier API integrations",
+        "Predictive equipment maintenance",
+        "Real-time production dashboards",
+        "Compliance reporting for ISO/TS standards"
+      ],
+      "competitive_advantages": [
+        "Tailored specifically for automotive supply chain",
+        "Easy integration with legacy systems",
+        "Rapid 6-week deployment model"
+      ]
+    },
+    "ICP": {
+      "target_title": "COO",
+      "company_industry": "Automotive manufacturing or parts supply",
+      "employee_range": {
+        "min": 20,
+        "max": 200
+      },
+      "revenue_range_million_usd": {
+        "min": 5,
+        "max": 50
+      },
+      "target_regions": ["United States", "Canada"],
+      "additional_notes": "Prioritize companies currently undergoing digital transformation or operating multiple production sites."
+    }
+  }
