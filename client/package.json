@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "watch": "nodemon --exec \"npm run build\" -e tsx --ignore lib/"
   },
   "dependencies": {
     "@chakra-ui/react": "^3.19.1",

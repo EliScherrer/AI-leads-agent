@@ -43,7 +43,7 @@ export default function App() {
       {/* <VStack gap="8"> */}
       <VStack>
         <Heading size="2xl" letterSpacing="tight">
-          Welcome to the Lead Finder chat bot
+          Welcome to the Lead Finder chat bot - BROOOOOO
         </Heading>
 
         <Box w="full" maxW="container.md">
