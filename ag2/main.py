@@ -1,7 +1,8 @@
 from autogen import config_list_from_json
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
-from agents.intake_agent.intake_agent import IntakeAgent
+from agents.intake_agent import IntakeAgent
+from agents.company_research_agent import CompanyResearchAgent
 
 import nest_asyncio
 
@@ -26,7 +27,8 @@ app.add_middleware(
 config_list = config_list_from_json(env_or_file="OAI_CONFIG_LIST")
 
 # Initialize agent once and store as global
-agent = IntakeAgent()
+intakeAgent = IntakeAgent()
+companyResearchAgent = CompanyResearchAgent()
 
 @app.post("/chat")
 async def chat(request: Request):
@@ -36,14 +38,13 @@ async def chat(request: Request):
     user_agent = request.headers.get("user-agent")
 
     # Process the message and get response
-    response = await agent.process_message(user_query, user_agent)
-
-    results = {
-        "response": response
-    }
-
+    results = await intakeAgent.process_message(user_query, user_agent)
     print("-------------results-------------------")
     print(results)
+
+    if results["complete"]:
+        # TODO: call company research agent
+        pass
     
     return results
 
@@ -58,12 +59,24 @@ async def chat(request: Request):
     results = { "response": "Error" }
 
     if (should_start_new_session == "true"):
-        agent.message_history[user_agent] = []
+        intakeAgent.message_history[user_agent] = []
         results = { "response": "session restarted" }
     else:
         results = { "response": "session not restarted" }
 
     print("-------------results-------------------")
+    print(results)
+
+    return results
+
+@app.get("/companies")
+async def chat(request: Request):
+    """API Endpoint that handles individual messages while maintaining conversation history."""
+    user_agent = request.headers.get("user-agent")
+
+    # Process the message and get response
+    results = await companyResearchAgent.process_message(intakeAgent.agent, intakeAgent.intake_data)
+    print("-------------Company Research Agent results-------------------")
     print(results)
 
     return results

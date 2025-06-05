@@ -1,4 +1,4 @@
-# agents/intake_agent/old_agent.py
+# agents/intake_agent.py
 import json
 
 from autogen import UserProxyAgent, config_list_from_json, ConversableAgent
@@ -69,7 +69,8 @@ When you have complied all the data you can return ONLY a JSON object in exactly
 
 Rules:
 - No markdown fences.
-- Outside JSON, at most four sentences if you must ask a clarifying question.
+- at most four sentences if you must ask a clarifying question.
+- JSON only for the final response.
 """.strip()
 
 # ---------------------------------------------------------------------------
@@ -81,14 +82,11 @@ class IntakeAgent():
 
     Parameters TODO
     ----------
-    prompt_key : {"dtrp", "lead_sourcing"}
-        Chooses the system prompt *and* which internal tools are exposed.
     """
 
     def __init__(
         self,
     ):
-
         # Load config once at startup
         config_list = config_list_from_json(env_or_file="OAI_CONFIG_LIST")
 
@@ -101,10 +99,11 @@ class IntakeAgent():
 
         self.intake_data = {}
 
+        # TODO: inherit from conversable agent
 
         # Initialize agent once and store as global
         self.agent = ConversableAgent(
-            name="ConversableAgent",
+            name="IntakeAgent",
             llm_config={"config_list": config_list},
             system_message=SYSTEM_MESSAGE,
             human_input_mode="NEVER"  # Don't ask for human input since we're in API mode
@@ -112,7 +111,7 @@ class IntakeAgent():
 
         self.userProxy = UserProxyAgent(name="userProxy", code_execution_config=False)
 
-    async def process_message(self, message: str, user: str) -> str:
+    async def process_message(self, message: str, userId: str):
         """Process a single message and return the agent's response."""
         # Create a message in the format expected by the agent
         user_message = {
@@ -124,21 +123,20 @@ class IntakeAgent():
         self.agent.receive(user_message, self.userProxy)
 
         # Get the message history
-        if user not in self.message_history:
-            self.message_history[user] = []
-        self.message_history[user].append(user_message)
+        if userId not in self.message_history:
+            self.message_history[userId] = []
+        self.message_history[userId].append(user_message)
 
         # Get the agent's reply
-        reply = self.agent.generate_reply(messages=self.message_history[user], sender=self.userProxy)
+        reply = self.agent.generate_reply(messages=self.message_history[userId], sender=self.userProxy)
+        print("-------------reply-------------------")
+        print(reply)
 
         ai_message = {
             "role": "assistant",
             "content": reply
         }
-        self.message_history[user].append(ai_message)
-
-        print("-------------reply-------------------")
-        print(reply)
+        self.message_history[userId].append(ai_message)
 
         try:
             parsedReply = reply
@@ -150,16 +148,16 @@ class IntakeAgent():
             replyJson = json.loads(parsedReply)
 
             if "company_info" in replyJson and "product_info" in replyJson and "ICP" in replyJson:
-                self.intake_data = replyJson
+                self.intake_data = parsedReply
                 print("-------------intake data accuired successfully----------")
                 print(replyJson)
-                return "Intake data accuired successfully, please wait while I find leads for you"
+                return { "response": "Intake data accuired successfully, please wait while I find leads for you", "complete": True }
         except Exception as e:
             print("-------------replyJson error-------------------")
             print(e)
             print(type(e))
 
         if reply is None:
-            return "I apologize, but I couldn't generate a response."
+            return { "response": "I apologize, but I couldn't generate a response.", "complete": False }
         
-        return reply
+        return { "response": reply, "complete": False }
