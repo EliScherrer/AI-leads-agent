@@ -52,7 +52,7 @@ When you have complied all the data you can return ONLY a JSON object in exactly
       ]
     },
     "ICP": {
-      "target_title": "COO",
+      "target_titles": ["COO", "CFO", "VP of Operations", "VP of IT", "VP of Supply Chain", "VP of Manufacturing", "VP of Engineering", "VP of Quality", "VP of Sales", "VP of Marketing"],
       "company_industry": "Automotive manufacturing or parts supply",
       "employee_range": {
         "min": 20,
@@ -76,7 +76,7 @@ Rules:
 # ---------------------------------------------------------------------------
 # Agent definition
 # ---------------------------------------------------------------------------
-class IntakeAgent():
+class IntakeAgent(ConversableAgent):
     """
     Specialist agent for gathering background information from the user.
 
@@ -97,18 +97,18 @@ class IntakeAgent():
         # }
         self.message_history = {}
 
+        # results of the intake agent
         self.intake_data = {}
 
-        # TODO: inherit from conversable agent
-
-        # Initialize agent once and store as global
-        self.agent = ConversableAgent(
+        # init agent
+        super().__init__(
             name="IntakeAgent",
             llm_config={"config_list": config_list},
             system_message=SYSTEM_MESSAGE,
             human_input_mode="NEVER"  # Don't ask for human input since we're in API mode
         )
 
+        # init proxy for user
         self.userProxy = UserProxyAgent(name="userProxy", code_execution_config=False)
 
     async def process_message(self, message: str, userId: str):
@@ -120,7 +120,7 @@ class IntakeAgent():
         }
         
         # Send the message to the agent
-        self.agent.receive(user_message, self.userProxy)
+        self.receive(user_message, self.userProxy)
 
         # Get the message history
         if userId not in self.message_history:
@@ -128,7 +128,7 @@ class IntakeAgent():
         self.message_history[userId].append(user_message)
 
         # Get the agent's reply
-        reply = self.agent.generate_reply(messages=self.message_history[userId], sender=self.userProxy)
+        reply = self.generate_reply(messages=self.message_history[userId], sender=self.userProxy)
         print("-------------reply-------------------")
         print(reply)
 

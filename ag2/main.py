@@ -1,8 +1,10 @@
+import json
 from autogen import config_list_from_json
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from agents.intake_agent import IntakeAgent
 from agents.company_research_agent import CompanyResearchAgent
+from agents.people_finder_agent import PeopleFinderAgent
 
 import nest_asyncio
 
@@ -29,6 +31,7 @@ config_list = config_list_from_json(env_or_file="OAI_CONFIG_LIST")
 # Initialize agent once and store as global
 intakeAgent = IntakeAgent()
 companyResearchAgent = CompanyResearchAgent()
+peopleFinderAgent = PeopleFinderAgent()
 
 @app.post("/chat")
 async def chat(request: Request):
@@ -72,11 +75,14 @@ async def chat(request: Request):
 @app.get("/companies")
 async def chat(request: Request):
     """API Endpoint that handles individual messages while maintaining conversation history."""
+
     user_agent = request.headers.get("user-agent")
+    intakeInfoString = intakeAgent.intake_data
+    companyListString = await companyResearchAgent.process_message(intakeAgent, intakeInfoString)
+    companyListAndPeopleString = await peopleFinderAgent.process_message(companyResearchAgent, intakeInfoString, companyListString)
 
-    # Process the message and get response
-    results = await companyResearchAgent.process_message(intakeAgent.agent, intakeAgent.intake_data)
-    print("-------------Company Research Agent results-------------------")
-    print(results)
 
-    return results
+    print("-------------People Research Agent results-------------------")
+    print(companyListAndPeopleString)
+
+    return companyListString
