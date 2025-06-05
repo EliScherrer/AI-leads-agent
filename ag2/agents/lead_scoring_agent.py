@@ -94,6 +94,7 @@ this is an example of the JSON object you should return:
             "name": "John Doe",
             "title": "COO",
             "email": "john.doe@supplystreamtech.com",
+            "phone": "123-456-7890",
             "linkedin": "https://www.linkedin.com/in/john-doe-1234567890",
             "relevant_info": "John Doe is the COO of SupplyStream Technologies and is responsible for the overall operations of the company.",
             "relevance_score": 75,
@@ -103,6 +104,7 @@ this is an example of the JSON object you should return:
                 "website": "https://www.supplystreamtech.com",
                 "description": "SupplyStream Technologies provides AI-driven ERP solutions for mid-sized automotive manufacturers, streamlining operations from procurement to distribution.",
                 "industry": "B2B SaaS",
+                "relevant_info": "This company is a good fit for the ICP because they are a mid-sized automotive manufacturer that is undergoing digital transformation and operating multiple production sites.",
             }
         }
     ]

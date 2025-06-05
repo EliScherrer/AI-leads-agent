@@ -1,0 +1,232 @@
+{
+    "leads_list": [
+        {
+            "lead_info": {
+                "name": "Jim Tobin",
+                "title": "COO",
+                "email": "jim.tobin@magna.com",
+                "phone": "123-456-7890",
+                "linkedin": "https://www.linkedin.com/in/jimtobin",
+                "relevant_info": "Jim Tobin is the COO at Magna International, overseeing the operational aspects of the company which is crucial for StreamERP's deployment.",
+                "relevance_score": 92,
+                "approach_reccomendation": "Engage Jim Tobin with insights on how StreamERP can streamline Magna's operations amid their ongoing digital transformation initiatives.",
+                "company_info": {
+                    "name": "Magna International",
+                    "website": "https://www.magna.com",
+                    "description": "Magna is one of the world's largest automotive suppliers, focusing on developing new technologies and innovative products for automotive manufacturers.",
+                    "industry": "Automotive manufacturing",
+                    "relevant_info": "Magna International is one of the world's largest automotive suppliers, focusing on developing new technologies and innovative products for automotive manufacturers."
+                }
+            }
+        },
+        {
+            "lead_info": {
+                "name": "Vikas Rajadhyaksha",
+                "title": "VP of IT",
+                "email": "vikas.rajadhyaksha@magna.com",
+                "phone": "321-456-7890",
+                "linkedin": "https://www.linkedin.com/in/vikasrajadhyaksha",
+                "relevant_info": "As VP of IT, Vikas is at the forefront of digital transformation at Magna, making him a key contact for discussing StreamERP's technical integration capabilities.",
+                "relevance_score": 94,
+                "approach_reccomendation": "Propose a technical demonstration focusing on StreamERP's seamless integration with existing IT infrastructure to Vikas Rajadhyaksha.",
+                "company_info": {
+                    "name": "Magna International",
+                    "website": "https://www.magna.com",
+                    "description": "Magna is one of the world's largest automotive suppliers, focusing on developing new technologies and innovative products for automotive manufacturers.",
+                    "industry": "Automotive manufacturing",
+                    "relevant_info": "Magna International is one of the world's largest automotive suppliers, focusing on developing new technologies and innovative products for automotive manufacturers."
+                }
+            }
+        },
+        {
+            "lead_info": {
+                "name": "Maria Rogers",
+                "title": "VP of Supply Chain",
+                "email": "maria.rogers@magna.com",
+                "phone": "432-456-7890",
+                "linkedin": "https://www.linkedin.com/in/mariarogers",
+                "relevant_info": "Handling supply chain management at Magna, Maria Rogers is an ideal candidate for discussing how StreamERP can enhance supply chain efficiency.",
+                "relevance_score": 90,
+                "approach_reccomendation": "Approach Maria Rogers with case studies on StreamERP's impact on supply chain optimization in similar companies.",
+                "company_info": {
+                    "name": "Magna International",
+                    "website": "https://www.magna.com",
+                    "description": "Magna is one of the world's largest automotive suppliers, focusing on developing new technologies and innovative products for automotive manufacturers.",
+                    "industry": "Automotive manufacturing",
+                    "relevant_info": "Magna International is one of the world's largest automotive suppliers, focusing on developing new technologies and innovative products for automotive manufacturers."
+                }
+            }
+        },
+        {
+            "lead_info": {
+                "name": "Michael Simonte",
+                "title": "President",
+                "email": "michael.simonte@aam.com",
+                "phone": "543-456-7890",
+                "linkedin": "https://www.linkedin.com/in/michaelsimonte",
+                "relevant_info": "As President, Michael Simonte is instrumental in decision-making and strategic direction, crucial for ERP sales opportunities.",
+                "relevance_score": 89,
+                "approach_reccomendation": "Engage Michael Simonte by highlighting StreamERP's competitive advantages and its potential ROI for AAM.",
+                "company_info": {
+                    "name": "American Axle & Manufacturing",
+                    "website": "https://www.aam.com",
+                    "description": "A leading supplier of driveline and drivetrain systems, as well as related components for the automotive industry.",
+                    "industry": "Automotive parts supply",
+                    "relevant_info": "American Axle & Manufacturing is a leading supplier of driveline and drivetrain systems, as well as related components for the automotive industry."
+                }
+            }
+        },
+        {
+            "lead_info": {
+                "name": "David Dauch",
+                "title": "CEO",
+                "email": "david.dauch@aam.com",
+                "phone": "654-456-7890",
+                "linkedin": "https://www.linkedin.com/in/daviddauch",
+                "relevant_info": "David Dauch, as CEO, oversees overall business operations and innovations, providing a strategic point of contact for ERP initiatives.",
+                "relevance_score": 87,
+                "approach_reccomendation": "Approach David Dauch with executive summaries and visionary insights on how StreamERP supports digital transformation projects.",
+                "company_info": {
+                    "name": "American Axle & Manufacturing",
+                    "website": "https://www.aam.com",
+                    "description": "A leading supplier of driveline and drivetrain systems, as well as related components for the automotive industry.",
+                    "industry": "Automotive parts supply",
+                    "relevant_info": "American Axle & Manufacturing is a leading supplier of driveline and drivetrain systems, as well as related components for the automotive industry."
+                }
+            }
+        },
+        {
+            "lead_info": {
+                "name": "Timothy Bowes",
+                "title": "VP of Corporate Planning & Development",
+                "email": "timothy.bowes@aam.com",
+                "phone": "765-456-7890",
+                "linkedin": "https://www.linkedin.com/in/timothybowes",
+                "relevant_info": "Timothy Bowes specializes in corporate planning and development, making him a valuable contact for discussions on ERP integration and development strategies.",
+                "relevance_score": 85,
+                "approach_reccomendation": "Present to Timothy Bowes a comprehensive integration plan aligning StreamERP with AAM's corporate growth strategies.",
+                "company_info": {
+                    "name": "American Axle & Manufacturing",
+                    "website": "https://www.aam.com",
+                    "description": "A leading supplier of driveline and drivetrain systems, as well as related components for the automotive industry.",
+                    "industry": "Automotive parts supply",
+                    "relevant_info": "American Axle & Manufacturing is a leading supplier of driveline and drivetrain systems, as well as related components for the automotive industry."
+                }
+            }
+        },
+        {
+            "lead_info": {
+                "name": "James Kamsickas",
+                "title": "CEO",
+                "email": "james.kamsickas@dana.com",
+                "phone": "876-456-7890",
+                "linkedin": "https://www.linkedin.com/in/jameskamsickas",
+                "relevant_info": "As CEO, James Kamsickas is responsible for defining strategic directions and overseeing company's innovations, positioning him as a key stakeholder for ERP discussions.",
+                "relevance_score": 87,
+                "approach_reccomendation": "Engage James Kamsickas with industry reports and data-driven insights on the benefits of StreamERP for automotive manufacturing.",
+                "company_info": {
+                    "name": "Dana Incorporated",
+                    "website": "https://www.dana.com",
+                    "description": "Provider of power-conveyance and energy-management solutions for the automotive industry.",
+                    "industry": "Automotive manufacturing",
+                    "relevant_info": "Dana Incorporated is a provider of power-conveyance and energy-management solutions for the automotive industry."
+                }
+            }
+        },
+        {
+            "lead_info": {
+                "name": "Jonathan Collins",
+                "title": "CFO",
+                "email": "jonathan.collins@dana.com",
+                "phone": "987-456-7890",
+                "linkedin": "https://www.linkedin.com/in/jonathancollins",
+                "relevant_info": "Jonathan Collins manages the financial operations, making him essential for discussions on the financial impact and ROI of implementing StreamERP.",
+                "relevance_score": 84,
+                "approach_reccomendation": "Approach Jonathan Collins with a detailed cost-benefit analysis to highlight StreamERP's financial efficiency and value.",
+                "company_info": {
+                    "name": "Dana Incorporated",
+                    "website": "https://www.dana.com",
+                    "description": "Provider of power-conveyance and energy-management solutions for the automotive industry.",
+                    "industry": "Automotive manufacturing",
+                    "relevant_info": "Dana Incorporated is a provider of power-conveyance and energy-management solutions for the automotive industry."
+                }
+            }
+        },
+        {
+            "lead_info": {
+                "name": "Matt Urbanek",
+                "title": "VP of Operations",
+                "email": "matt.urbanek@dana.com",
+                "phone": "109-456-7890",
+                "linkedin": "https://www.linkedin.com/in/matturbanek",
+                "relevant_info": "Matt Urbanek oversees operational efficiency and productivity, making him vital for discussions on operational enhancements through StreamERP.",
+                "relevance_score": 90,
+                "approach_reccomendation": "Discuss with Matt Urbanek how StreamERP can streamline Dana's operations and improve their real-time production capabilities.",
+                "company_info": {
+                    "name": "Dana Incorporated",
+                    "website": "https://www.dana.com",
+                    "description": "Provider of power-conveyance and energy-management solutions for the automotive industry.",
+                    "industry": "Automotive manufacturing",
+                    "relevant_info": "Dana Incorporated is a provider of power-conveyance and energy-management solutions for the automotive industry."
+                }
+            }
+        },
+        {
+            "lead_info": {
+                "name": "Linda Hasenfratz",
+                "title": "CEO",
+                "email": "linda.hasenfratz@linamar.com",
+                "phone": "120-456-7890",
+                "linkedin": "https://www.linkedin.com/in/lindahasenfratz",
+                "relevant_info": "As CEO, Linda Hasenfratz is influential in steering Linamar's strategic initiatives and innovations, making her essential for high-level discussions on ERP systems.",
+                "relevance_score": 92,
+                "approach_reccomendation": "Initiate contact with Linda Hasenfratz by emphasizing StreamERP's capability to drive Linamar's innovation and transformation goals.",
+                "company_info": {
+                    "name": "Linamar Corporation",
+                    "website": "https://www.linamar.com",
+                    "description": "A Canadian manufacturer focused on engineered products and powertrain system solutions in the automotive industry.",
+                    "industry": "Automotive parts supply",
+                    "relevant_info": "Linamar is a Canadian manufacturer focused on engineered products and powertrain system solutions in the automotive industry."
+                }
+            }
+        },
+        {
+            "lead_info": {
+                "name": "Jim Jarrell",
+                "title": "COO",
+                "email": "jim.jarrell@linamar.com",
+                "phone": "131-456-7890",
+                "linkedin": "https://www.linkedin.com/in/jimjarrell",
+                "relevant_info": "Jim Jarrell, as COO, focuses on the operational success of Linamar's manufacturing processes, which aligns well with StreamERP's operational modules.",
+                "relevance_score": 94,
+                "approach_reccomendation": "Approach Jim Jarrell with operational case studies where StreamERP improved productivity and efficiency in similar manufacturing settings.",
+                "company_info": {
+                    "name": "Linamar Corporation",
+                    "website": "https://www.linamar.com",
+                    "description": "A Canadian manufacturer focused on engineered products and powertrain system solutions in the automotive industry.",
+                    "industry": "Automotive parts supply",
+                    "relevant_info": "Linamar is a Canadian manufacturer focused on engineered products and powertrain system solutions in the automotive industry."
+                }
+            }
+        },
+        {
+            "lead_info": {
+                "name": "Mark Stoddart",
+                "title": "VP of Engineering",
+                "email": "mark.stoddart@linamar.com",
+                "phone": "142-456-7890",
+                "linkedin": "https://www.linkedin.com/in/markstoddart",
+                "relevant_info": "Mark Stoddart oversees engineering projects at Linamar, making him pivotal for discussions on integrating StreamERP with engineering workflows.",
+                "relevance_score": 89,
+                "approach_reccomendation": "Engage Mark Stoddart with technical presentations on how StreamERP can enhance engineering processes and design efficiencies.",
+                "company_info": {
+                    "name": "Linamar Corporation",
+                    "website": "https://www.linamar.com",
+                    "description": "A Canadian manufacturer focused on engineered products and powertrain system solutions in the automotive industry.",
+                    "industry": "Automotive parts supply",
+                    "relevant_info": "Linamar is a Canadian manufacturer focused on engineered products and powertrain system solutions in the automotive industry."
+                }
+            }
+        }
+    ]
+}

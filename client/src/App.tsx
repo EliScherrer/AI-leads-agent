@@ -9,10 +9,25 @@ import {
 import { ColorModeToggle } from './components/color-mode-toggle'
 import { ChatWindow } from './components/ChatWindow';
 import AG2Client from './AG2Client';
+import { DataTable, LeadInfo } from './components/DataTable';
+import { useState, useEffect } from 'react';
+import testData from './testData.json';
 
 const ag2 = new AG2Client();
 
 export default function App() {
+  const [tableData, setTableData] = useState<LeadInfo[]>([]);
+
+  useEffect(() => {
+    loadTestData();
+  }, []);
+
+  const loadTestData = () => {
+    // Transform the nested data structure into a flat array of lead info
+    const leads = testData.leads_list.map(item => item.lead_info);
+    setTableData(leads);
+  };
+
   const handleSendMessage = async (message: string): Promise<string> => {
     console.log("handleSendMessage: ", message);
     return await ag2.AG2_Chat(message);
@@ -50,16 +65,20 @@ export default function App() {
           New Session
         </Button>
 
+        <Box w="full" maxW="container.md">
+          <ChatWindow onSendMessage={handleSendMessage} />
+        </Box>
+
         <Button
           colorScheme="green"
           size="lg"
           onClick={handleGetCompanyList}
         >
-          Get Company List
+          Get Leads List
         </Button>
 
         <Box w="full" maxW="container.md">
-          <ChatWindow onSendMessage={handleSendMessage} />
+          {tableData.length > 0 && <DataTable data={tableData} />}
         </Box>
       </VStack>
 

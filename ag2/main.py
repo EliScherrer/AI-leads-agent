@@ -90,10 +90,13 @@ async def chat(request: Request):
     leadsListString = await leadScoringAgent.process_message(peopleFinderAgent, intakeInfoString, companyListAndPeopleString)
     print("-------------Leads List results-------------------")
     print(leadsListString)
+    return leadsListString
+
+
     # csv output agent
-    tsvOutputString = await tsvOutputAgent.process_message(leadScoringAgent, leadsListString)
+    # tsvOutputString = await tsvOutputAgent.process_message(leadScoringAgent, leadsListString)
 
-    print("-------------TSV Output results-------------------")
-    print(tsvOutputString)
+    # print("-------------TSV Output results-------------------")
+    # print(tsvOutputString)
 
-    return tsvOutputString
+    # return tsvOutputString
