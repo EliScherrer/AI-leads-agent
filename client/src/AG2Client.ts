@@ -43,8 +43,8 @@ export default class AG2Client {
         }
       };
     
-    AG2_GetResults = async (message: string): Promise<boolean> => {
-        console.log("AG2_GetResults: ", message);
+    AG2_GetResults = async (): Promise<string> => {
+        console.log("AG2_GetResults");
         
         try {
           const config = { headers: { 'Access-Control-Allow-Origin' : '*' } }
@@ -55,10 +55,10 @@ export default class AG2Client {
           console.log("data.response...");
           console.log(response.data.response);
     
-          return true;
+          return response.data;
         } catch (error) {
           console.log(error);
-          return false;
+          return "couldn't get results";
         }
       };
 

@@ -10,23 +10,23 @@ import { ColorModeToggle } from './components/color-mode-toggle'
 import { ChatWindow } from './components/ChatWindow';
 import AG2Client from './AG2Client';
 import { DataTable, LeadInfo } from './components/DataTable';
-import { useState, useEffect } from 'react';
-import testData from './testData.json';
+import { useState } from 'react';
+// import testData from './testData.json';
 
 const ag2 = new AG2Client();
 
 export default function App() {
   const [tableData, setTableData] = useState<LeadInfo[]>([]);
 
-  useEffect(() => {
-    loadTestData();
-  }, []);
+  // useEffect(() => {
+  //   // loadTestData();
+  // }, []);
 
-  const loadTestData = () => {
-    // Transform the nested data structure into a flat array of lead info
-    const leads = testData.leads_list.map(item => item.lead_info);
-    setTableData(leads);
-  };
+  // const loadTestData = () => {
+  //   // Transform the nested data structure into a flat array of lead info
+  //   const leads = testData.leads_list.map(item => item.lead_info);
+  //   setTableData(leads);
+  // };
 
   const handleSendMessage = async (message: string): Promise<string> => {
     console.log("handleSendMessage: ", message);
@@ -41,9 +41,19 @@ export default function App() {
     }
   };
 
-  const handleGetCompanyList = async () => {
-    console.log("handleGetCompanyList");
-    await ag2.AG2_GetResults("get company list");
+  const handleGetLeads = async () => {
+    console.log("handleGetLeads");
+
+    const leads = await ag2.AG2_GetResults();
+    const leadsList = JSON.parse(leads);
+
+    console.log("leadsListLength: ", leadsList.leads_list.length);
+
+    console.log(leadsList.leads_list[0]);
+    console.log(leadsList.leads_list[0].lead_info);
+    console.log(Object.keys(leadsList.leads_list[0]));
+
+    setTableData(leadsList.leads_list);
   };
 
   const handleRefresh = () => {
@@ -72,7 +82,7 @@ export default function App() {
         <Button
           colorScheme="green"
           size="lg"
-          onClick={handleGetCompanyList}
+          onClick={handleGetLeads}
         >
           Get Leads List
         </Button>

@@ -1,4 +1,5 @@
-import json
+import asyncio
+
 from autogen import config_list_from_json
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
@@ -31,6 +32,9 @@ app.add_middleware(
 # Load config once at startup
 config_list = config_list_from_json(env_or_file="OAI_CONFIG_LIST")
 
+# dictionary to store the final results, key is userId, value is the leads list
+final_results = {}
+
 # Initialize agent once and store as global
 intakeAgent = IntakeAgent()
 companyResearchAgent = CompanyResearchAgent()
@@ -41,7 +45,7 @@ tsvOutputAgent = TSVOutputAgent()
 
 @app.post("/chat")
 async def chat(request: Request):
-    """API Endpoint that handles individual messages while maintaining conversation history."""
+    """API Endpoint that handles intake data and responds to user queries"""
     data = await request.json()
     user_query = data.get("message", "")
     user_agent = request.headers.get("user-agent")
@@ -52,14 +56,14 @@ async def chat(request: Request):
     print(results)
 
     if results["complete"]:
-        # TODO: call company research agent
-        pass
+        asyncio.create_task(processIntakeData(user_agent))
+        
     
     return results
 
 @app.post("/new_session")
-async def chat(request: Request):
-    """API Endpoint that handles individual messages while maintaining conversation history."""
+async def newSession(request: Request):
+    """API Endpoint that clears the conversation history and starts a new session"""
     data = await request.json()
     user_agent = request.headers.get("user-agent")
 
@@ -78,11 +82,9 @@ async def chat(request: Request):
 
     return results
 
-@app.get("/results")
-async def chat(request: Request):
-    """API Endpoint that handles individual messages while maintaining conversation history."""
 
-    user_agent = request.headers.get("user-agent")
+async def processIntakeData(userId: str):
+    print("-------------started lead generation-------------------")
     intakeInfoString = intakeAgent.intake_data
     companyListString = await companyResearchAgent.process_message(intakeAgent, intakeInfoString)
     companyListAndPeopleString = await peopleFinderAgent.process_message(companyResearchAgent, intakeInfoString, companyListString)
@@ -90,8 +92,7 @@ async def chat(request: Request):
     leadsListString = await leadScoringAgent.process_message(peopleFinderAgent, intakeInfoString, companyListAndPeopleString)
     print("-------------Leads List results-------------------")
     print(leadsListString)
-    return leadsListString
-
+    final_results[userId] = leadsListString
 
     # csv output agent
     # tsvOutputString = await tsvOutputAgent.process_message(leadScoringAgent, leadsListString)
@@ -100,3 +101,16 @@ async def chat(request: Request):
     # print(tsvOutputString)
 
     # return tsvOutputString
+
+
+
+@app.get("/results")
+async def getResults(request: Request):
+    """API Endpoint that returns the leads list for the user"""
+
+    user_agent = request.headers.get("user-agent")
+
+    if user_agent in final_results:
+        return final_results[user_agent]
+
+    return "Leads haven't been generated yet"

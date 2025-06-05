@@ -15,6 +15,7 @@ interface DataTableProps {
 }
 
 export interface LeadInfo {
+  lead_info: {
     name: string;
     title: string;
     email: string;
@@ -30,7 +31,8 @@ export interface LeadInfo {
       industry: string;
       relevant_info: string;
     };
-  }
+  };
+}
 
 type SortDirection = 'asc' | 'desc' | 'none';
 
@@ -39,12 +41,13 @@ interface SortConfig {
   direction: SortDirection;
 }
 
+type LeadInfoKeys = keyof LeadInfo['lead_info'];
+
 export const DataTable = ({ data }: DataTableProps) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [sortConfig, setSortConfig] = useState<SortConfig>({ key: '', direction: 'none' });
 
-  // Get headers from the first object's keys
-  const headers = data.length > 0 ? Object.keys(data[0]) : [];
+  const headers = data.length > 0 ? Object.keys(data[0].lead_info) : [];
 
   const handleSort = (key: string) => {
     let direction: SortDirection = 'asc';
@@ -62,13 +65,13 @@ export const DataTable = ({ data }: DataTableProps) => {
     if (sortConfig.direction === 'none') return data;
 
     return [...data].sort((a, b) => {
-      let aValue = a[sortConfig.key as keyof LeadInfo];
-      let bValue = b[sortConfig.key as keyof LeadInfo];
+      let aValue = a.lead_info[sortConfig.key as LeadInfoKeys];
+      let bValue = b.lead_info[sortConfig.key as LeadInfoKeys];
 
       // Handle nested company_info
       if (sortConfig.key === 'company_info') {
-        aValue = a.company_info.name;
-        bValue = b.company_info.name;
+        aValue = a.lead_info.company_info.name;
+        bValue = b.lead_info.company_info.name;
       }
 
       // Convert to strings for comparison
@@ -83,7 +86,7 @@ export const DataTable = ({ data }: DataTableProps) => {
 
   // Filter data based on search term
   const filteredData = data.filter(row =>
-    Object.values(row).some(value =>
+    Object.values(row.lead_info).some(value =>
       String(value).toLowerCase().includes(searchTerm.toLowerCase())
     )
   );
@@ -92,8 +95,31 @@ export const DataTable = ({ data }: DataTableProps) => {
   const sortedAndFilteredData = getSortedData(filteredData);
 
   const handleDownload = () => {
-    console.log("Downloading leads list");
-  }
+    // Create TSV content
+    const headerRow = headers.join('\t');
+    const rows = data.map(item => {
+      return headers.map(header => {
+        if (header === 'company_info') {
+          const company = item.lead_info.company_info;
+          return `${company.name} (${company.industry})`; // Simplified company info
+        }
+        return String(item.lead_info[header as LeadInfoKeys]).replace(/\t/g, ' '); // Replace tabs with spaces
+      }).join('\t');
+    });
+    
+    const tsvContent = [headerRow, ...rows].join('\n');
+    
+    // Create and trigger download
+    const blob = new Blob([tsvContent], { type: 'text/tab-separated-values' });
+    const url = window.URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'leads_list.tsv';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    window.URL.revokeObjectURL(url);
+  };
 
   const getSortIcon = (header: string) => {
     if (sortConfig.key !== header) return <Icon as={FaSort} ml={2} color="gray.400" />;
@@ -127,9 +153,9 @@ export const DataTable = ({ data }: DataTableProps) => {
           textOverflow="ellipsis"
           whiteSpace="nowrap"
           color="gray.500"
-          title={header === "company_info" ? JSON.stringify(lead[header as keyof LeadInfo], null, 2) : String(lead[header as keyof LeadInfo])}
+          title={header === "company_info" ? JSON.stringify(lead.lead_info.company_info, null, 2) : String(lead.lead_info[header as LeadInfoKeys])}
         >
-          {header === "company_info" ? String(lead["company_info"]["name"]) : String(lead[header as keyof LeadInfo])}
+          {header === "company_info" ? String(lead.lead_info.company_info.name) : String(lead.lead_info[header as LeadInfoKeys])}
         </Table.Cell>
       ))}
     </Table.Row>
