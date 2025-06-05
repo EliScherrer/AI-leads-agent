@@ -4,7 +4,11 @@ import json
 from autogen import Agent, config_list_from_json, ConversableAgent
 
 SYSTEM_MESSAGE = """
-TODO - take a leads list and output it in a CSV file.
+Role:
+- you are an agent that takes a leads list and outputs it in a CSV file string.
+- the csv list should have the first row as the headers and the rest of the rows as the data.
+- the headers should be the fields in the leads_list object.
+- the data should be the values in the leads_list object.
 """.strip()
 
 # ---------------------------------------------------------------------------

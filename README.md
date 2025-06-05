@@ -18,7 +18,7 @@ Build an AI agent that can search the web to create a list of high quality leads
     2. `pip install -U ag2[openai,browser-use]`
     3. `pip install -r requirements.txt`
     4. `playwright install`
-    5. `uvicorn agent:app --reload`
+    5. `uvicorn main:app --reload`
 5. Go to http://localhost:3000/ and chat
 
 ### [outdated] Usage
