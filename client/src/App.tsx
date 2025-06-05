@@ -8,79 +8,19 @@ import {
 } from '@chakra-ui/react'
 import { ColorModeToggle } from './components/color-mode-toggle'
 import { ChatWindow } from './components/ChatWindow';
-import axios from 'axios';
+import AG2Client from './AG2Client';
 
-const BASE_URL = "http://127.0.0.1:8000";
+const ag2 = new AG2Client();
 
 export default function App() {
-
-  const AG2_Chat = async (message: string): Promise<string> => {
-    console.log("AG2_Chat: ", message);
-
-    try {
-      const data = { message: message };
-      const config = { headers: { 'Access-Control-Allow-Origin' : '*' } }
-      const response = await axios.post(BASE_URL + "/chat", data, config)
-
-      console.log("data...");
-      console.log(response.data);
-      console.log("data.response...");
-      console.log(response.data.response);
-
-      return response.data.response;
-    } catch (error) {
-      console.log(error);
-      return "Error contacting AG2";
-    }
-  };
-
-  const AG2_NewSession = async (message: string): Promise<boolean> => {
-    console.log("AG2_NewSession: ", message);
-    
-    try {
-      const data = { new: "true" };
-      const config = { headers: { 'Access-Control-Allow-Origin' : '*' } }
-      const response = await axios.post(BASE_URL + "/new_session", data, config)
-
-      console.log("data...");
-      console.log(response.data);
-      console.log("data.response...");
-      console.log(response.data.response);
-
-      return true;
-    } catch (error) {
-      console.log(error);
-      return false;
-    }
-  };
-
-  const AG2_GetCompanyList = async (message: string): Promise<boolean> => {
-    console.log("AG2_GetCompanyList: ", message);
-    
-    try {
-      const config = { headers: { 'Access-Control-Allow-Origin' : '*' } }
-      const response = await axios.get(BASE_URL + "/companies", config)
-
-      console.log("data...");
-      console.log(response.data);
-      console.log("data.response...");
-      console.log(response.data.response);
-
-      return true;
-    } catch (error) {
-      console.log(error);
-      return false;
-    }
-  };
-
   const handleSendMessage = async (message: string): Promise<string> => {
     console.log("handleSendMessage: ", message);
-    return await AG2_Chat(message);
+    return await ag2.AG2_Chat(message);
   };
 
   const handleNewSession = async () => {
     console.log("handleNewSession");
-    const res = await AG2_NewSession("new session");
+    const res = await ag2.AG2_NewSession("new session");
     if (res === true) {
       handleRefresh();
     }
@@ -88,7 +28,7 @@ export default function App() {
 
   const handleGetCompanyList = async () => {
     console.log("handleGetCompanyList");
-    await AG2_GetCompanyList("get company list");
+    await ag2.AG2_GetResults("get company list");
   };
 
   const handleRefresh = () => {

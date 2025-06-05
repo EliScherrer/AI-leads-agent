@@ -6,7 +6,7 @@ from autogen import Agent, config_list_from_json, ConversableAgent
 SYSTEM_MESSAGE = """
 Role:
 - You take in structured JSON from a previous agent and use it to find companies that match the ICP for a sales agent at company_info to sell product_info to.
-- Use the web search tool to find companies that match the ICP. 
+- Use the web search agent tool to find companies that match the ICP. 
 -Find the top (at least 3 and at most 5) most relevant companies.
 - Along with each company, you should return a relevant_info field that details why the company matches the ICP and would be a good fit for company_info to sell product_info to 
 - Also include a relevance_score [0-100] for how well the company matches.
@@ -128,6 +128,7 @@ class CompanyResearchAgent(ConversableAgent):
         print("-------------reply-------------------")
         print(reply)
 
+        # parse the AI response to JSON to confirm it is valid
         try:
             parsedReply = reply
             if parsedReply[0] != "{":

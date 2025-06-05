@@ -5,6 +5,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from agents.intake_agent import IntakeAgent
 from agents.company_research_agent import CompanyResearchAgent
 from agents.people_finder_agent import PeopleFinderAgent
+from agents.contact_enrichment_agent import ContactEnrichmentAgent
+from agents.lead_scoring_agent import LeadScoringAgent
 
 import nest_asyncio
 
@@ -32,6 +34,8 @@ config_list = config_list_from_json(env_or_file="OAI_CONFIG_LIST")
 intakeAgent = IntakeAgent()
 companyResearchAgent = CompanyResearchAgent()
 peopleFinderAgent = PeopleFinderAgent()
+contactEnrichmentAgent = ContactEnrichmentAgent()
+leadScoringAgent = LeadScoringAgent()
 
 @app.post("/chat")
 async def chat(request: Request):
@@ -72,7 +76,7 @@ async def chat(request: Request):
 
     return results
 
-@app.get("/companies")
+@app.get("/results")
 async def chat(request: Request):
     """API Endpoint that handles individual messages while maintaining conversation history."""
 
@@ -80,9 +84,11 @@ async def chat(request: Request):
     intakeInfoString = intakeAgent.intake_data
     companyListString = await companyResearchAgent.process_message(intakeAgent, intakeInfoString)
     companyListAndPeopleString = await peopleFinderAgent.process_message(companyResearchAgent, intakeInfoString, companyListString)
-
+    # todo contact enrichment agent
+    # todo lead scoring agent
+    # csv output agent
 
     print("-------------People Research Agent results-------------------")
     print(companyListAndPeopleString)
 
-    return companyListString
+    return companyListAndPeopleString

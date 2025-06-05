@@ -7,7 +7,7 @@ SYSTEM_MESSAGE = """
 Role:
 - You take in two structured JSON objects from previous agents and use it to find people at each company in company_list that match the ICP.
 - These should be the best leads / the people should be the ones that are most likely to be the person a sales rep for company_info would contact to sell product_info to.
-- use the web search tool to find people
+- use the web search tool and deep research agent to find people
 - find the top (at least 3 and at most 5) people at each company
 - Along with each person, you should return a relevant_info field that details why the person matches the ICP and would be a good fit for company_info to sell product_info to.
 - Also include a approach_reccomendation field that details how you would approach the person to sell product_info to them.
@@ -113,7 +113,7 @@ Rules:
 # ---------------------------------------------------------------------------
 class PeopleFinderAgent(ConversableAgent):
     """
-    Specialist agent for gather a list of people at a list of companies that match the ICP for company_info to sell product_info to.
+    Specialist agent for gathering a list of people at a list of companies that match the ICP for company_info to sell product_info to.
 
     Parameters TODO
     ----------
@@ -159,6 +159,7 @@ class PeopleFinderAgent(ConversableAgent):
         print("-------------reply-------------------")
         print(reply)
 
+        # parse the AI response to JSON to confirm it is valid
         try:
             parsedReply = reply
             if parsedReply[0] != "{":

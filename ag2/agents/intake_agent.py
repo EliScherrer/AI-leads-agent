@@ -138,6 +138,7 @@ class IntakeAgent(ConversableAgent):
         }
         self.message_history[userId].append(ai_message)
 
+        # parse the AI response to JSON to confirm it is valid
         try:
             parsedReply = reply
             if parsedReply[0] != "{":
