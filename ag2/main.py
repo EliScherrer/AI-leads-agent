@@ -39,8 +39,7 @@ async def chat(request: Request):
     response = await agent.process_message(user_query, user_agent)
 
     results = {
-        "response": response,
-        "message_history": agent.message_history[user_agent]
+        "response": response
     }
 
     print("-------------results-------------------")

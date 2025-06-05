@@ -13,8 +13,15 @@ interface ChatWindowProps {
   onSendMessage: (message: string) => Promise<string>;
 }
 
+const defaultFirstMessage: Message = {
+  id: Date.now().toString(),
+  text: "Hello, I'm the lead finder chat bot. I'm here to help you find leads for your product. Please provide me with information about your company, the product you are selling, and information about your ideal customer profile.",
+  sender: 'ai',
+  timestamp: new Date(),
+};
+
 export const ChatWindow = ({ onSendMessage }: ChatWindowProps) => {
-  const [messages, setMessages] = useState<Message[]>([]);
+  const [messages, setMessages] = useState<Message[]>([defaultFirstMessage]);
   const [inputValue, setInputValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -112,6 +119,7 @@ export const ChatWindow = ({ onSendMessage }: ChatWindowProps) => {
                             px={4}
                             py={2}
                             borderRadius="lg"
+                            text-align={message.sender === 'user' ? 'right' : 'left'}
                         >
                             <Text>{message.text}</Text>
                         </Box>
