@@ -7,7 +7,7 @@ from agents.company_research_agent import CompanyResearchAgent
 from agents.people_finder_agent import PeopleFinderAgent
 from agents.contact_enrichment_agent import ContactEnrichmentAgent
 from agents.lead_scoring_agent import LeadScoringAgent
-from agents.csv_output_agent import CSVOutputAgent
+from agents.tsv_output_agent import TSVOutputAgent
 
 import nest_asyncio
 
@@ -37,7 +37,7 @@ companyResearchAgent = CompanyResearchAgent()
 peopleFinderAgent = PeopleFinderAgent()
 contactEnrichmentAgent = ContactEnrichmentAgent()
 leadScoringAgent = LeadScoringAgent()
-csvOutputAgent = CSVOutputAgent()
+tsvOutputAgent = TSVOutputAgent()
 
 @app.post("/chat")
 async def chat(request: Request):
@@ -91,9 +91,9 @@ async def chat(request: Request):
     print("-------------Leads List results-------------------")
     print(leadsListString)
     # csv output agent
-    csvOutputString = await csvOutputAgent.process_message(leadScoringAgent, leadsListString)
+    tsvOutputString = await tsvOutputAgent.process_message(leadScoringAgent, leadsListString)
 
-    print("-------------CSV Output results-------------------")
-    print(csvOutputString)
+    print("-------------TSV Output results-------------------")
+    print(tsvOutputString)
 
-    return csvOutputString
+    return tsvOutputString

@@ -1,22 +1,24 @@
-# agents/csv_output_agent.py
+# agents/tsv_output_agent.py
 import json
 
 from autogen import Agent, config_list_from_json, ConversableAgent
 
 SYSTEM_MESSAGE = """
 Role:
-- you are an agent that takes a leads list and outputs it in a CSV file string.
-- the csv list should have the first row as the headers and the rest of the rows as the data.
+- you are an agent that takes a leads list and outputs it in a TSV (tab seperated value) file string.
+- the tsv list should have the first row as the headers and the rest of the rows as the data.
 - the headers should be the fields in the leads_list object.
 - the data should be the values in the leads_list object.
+- to prevent the AI from hallucinating, only use the data you have and don't make up any data.
+- before creating the tsv file string, make sure to replace any tabs inside of the data with spaces, make sure to remove any markdown fences and any other formatting that is not part of the tsv file.
 """.strip()
 
 # ---------------------------------------------------------------------------
 # Agent definition
 # ---------------------------------------------------------------------------
-class CSVOutputAgent(ConversableAgent):
+class TSVOutputAgent(ConversableAgent):
     """
-    Specialist agent for outputting the leads list in a CSV file.
+    Specialist agent for outputting the leads list in a TSV file.
 
     Parameters TODO
     ----------
