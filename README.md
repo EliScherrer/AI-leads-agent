@@ -21,18 +21,8 @@ Build an AI agent that can search the web to create a list of high quality leads
     5. `uvicorn agent:app --reload`
 5. Go to http://localhost:3000/ and chat
 
-### Usage
+### [outdated] Usage
 
 ![image1](./usage-screenshots/first.jpeg)
 ![image2](./usage-screenshots/second.jpeg)
 ![image3](./usage-screenshots/third.jpeg)
-
-
-## TODO
-### Agent Server Improvements
-1. Seems like there should be a better way to maintain chat history and get chatbot like behavior but I couldn't find any samples or info in the AG2 docs about how. Doesn't matter for a local host but for a live app I'd want to make chat history dictionary with a unique ID for each client from their request object.
-2. handle the downtime when the "deep research" is happening better. Even running a simple CLI version of the chatbot you get left hanging while its trying to generate results and whatever you send it it just replies "Please hold on while I perform a search." - it would be nice if instead of returning that it just waited for the results and I could await that on the front end with a loading indicator
-3. The system_message could probably be refined for a cleaner chat experience.
-
-### Frontend Improvements
-1. final result is JSON inside of a larger message, would be nicer if the json was pulled out and displayed nicely separetely. But the advantage of giving the raw json is its easy to copy and past out into where you want the data
