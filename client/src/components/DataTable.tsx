@@ -109,6 +109,8 @@ export const DataTable = ({ data }: DataTableProps) => {
     
     const tsvContent = [headerRow, ...rows].join('\n');
     
+    // TODO: flatten company info and return
+
     // Create and trigger download
     const blob = new Blob([tsvContent], { type: 'text/tab-separated-values' });
     const url = window.URL.createObjectURL(blob);

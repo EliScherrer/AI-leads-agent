@@ -82,27 +82,21 @@ async def newSession(request: Request):
 
     return results
 
-
 async def processIntakeData(userId: str):
     print("-------------started lead generation-------------------")
     intakeInfoString = intakeAgent.intake_data
+    # get company list
     companyListString = await companyResearchAgent.process_message(intakeAgent, intakeInfoString)
+    # get people list
     companyListAndPeopleString = await peopleFinderAgent.process_message(companyResearchAgent, intakeInfoString, companyListString)
-    # todo contact enrichment agent
-    leadsListString = await leadScoringAgent.process_message(peopleFinderAgent, intakeInfoString, companyListAndPeopleString)
+    # enrich people list
+    companyListAndPeopleStringEnriched = await contactEnrichmentAgent.process_message(peopleFinderAgent, companyListAndPeopleString)
+    # score leads
+    leadsListString = await leadScoringAgent.process_message(contactEnrichmentAgent, intakeInfoString, companyListAndPeopleStringEnriched)
     print("-------------Leads List results-------------------")
     print(leadsListString)
     final_results[userId] = leadsListString
-
-    # csv output agent
-    # tsvOutputString = await tsvOutputAgent.process_message(leadScoringAgent, leadsListString)
-
-    # print("-------------TSV Output results-------------------")
-    # print(tsvOutputString)
-
-    # return tsvOutputString
-
-
+    return
 
 @app.get("/results")
 async def getResults(request: Request):

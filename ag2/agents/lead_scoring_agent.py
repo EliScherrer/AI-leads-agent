@@ -12,6 +12,13 @@ Role:
 - These should be the best leads / the people should be the ones that are most likely to be the person a sales rep for company_info would contact to sell product_info to.
 - use the deep research agent to determine what would make the best lead for the sales agent based on all of the information provided
 - using this criteria, score the leads on a normal distribution from 0-100 and replace the previous relevance_score field with the new score
+- a relevance_score of 0 means the lead is not relevant to the sales agent and should be removed from the leads_list
+- a relevance_score of 25 means the lead is not a good match for the sales agent but not completely irrelevant
+- a relevance_score of 50 means the lead is a fair match for the sales agent and should be considered for contact
+- a relevance_score of 75 means the lead is a good match for the sales agent and should be considered for contact
+- a relevance_score above 90 means the lead is an amazing match for the sales agent and should definitely be contacted
+- a relevance_score of 100 means the lead is a perfect match for the sales agent and should be the first person the sales agent contacts
+
 - refine the relevant_info with the new information gained from the research
 - refine the approach_reccomendation field that details how you would approach the lead to sell product to them.
 - The next agent after you will take the output of this agent and create a CSV file with the leads list.
@@ -77,8 +84,10 @@ Role:
                   "phone": "123-456-7890",
                   "linkedin": "https://www.linkedin.com/in/john-doe-1234567890",
                   "relevant_info": "John Doe is the COO of SupplyStream Technologies and is responsible for the overall operations of the company.",
-                  "relevance_score": 82,
+                  "relevance_score": 95,
                   "approach_reccomendation": "I would approach John Doe by saying 'Hello, I'm from SupplyStream Technologies and we provide AI-driven ERP solutions for mid-sized automotive manufacturers. We're looking for a COO like you who is interested in digital transformation and streamlining operations. Would you be interested in a demo?'",
+                  "notes": "I found this information on the company website. The phone number I'm not sure if it's still valid. the email might be John's or steve hammond's"
+                  "source_url": "https://www.supplystreamtech.com/people/john-doe"
               }
           ]
         },
@@ -97,8 +106,10 @@ this is an example of the JSON object you should return:
             "phone": "123-456-7890",
             "linkedin": "https://www.linkedin.com/in/john-doe-1234567890",
             "relevant_info": "John Doe is the COO of SupplyStream Technologies and is responsible for the overall operations of the company.",
-            "relevance_score": 75,
+            "relevance_score": 95,
             "approach_reccomendation": "I would approach John Doe by saying 'Hello, I'm from SupplyStream Technologies and we provide AI-driven ERP solutions for mid-sized automotive manufacturers. We're looking for a COO like you who is interested in digital transformation and streamlining operations. Would you be interested in a demo?'",
+            "notes": "I found this information on the company website. The phone number I'm not sure if it's still valid. the email might be John's or steve hammond's"
+            "source_url": "https://www.supplystreamtech.com/people/john-doe"
             "company_info": {
                 "name": "SupplyStream Technologies",
                 "website": "https://www.supplystreamtech.com",
