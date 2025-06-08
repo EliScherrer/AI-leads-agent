@@ -8,7 +8,11 @@ import {
   Icon,
 } from '@chakra-ui/react';
 import { useState } from 'react';
-import { FaSort, FaSortUp, FaSortDown } from 'react-icons/fa';
+import { FaSort, FaSortUp, FaSortDown, FaFileDownload, FaRegCopy, FaInfoCircle } from 'react-icons/fa';
+import { RiContactsBook2Line } from "react-icons/ri";
+import { MdOutlineBusinessCenter, MdPerson } from "react-icons/md";
+
+import { Toaster, toaster } from './Toaster';
 
 interface DataTableProps {
   data: LeadInfo[];
@@ -95,22 +99,38 @@ export const DataTable = ({ data }: DataTableProps) => {
   const sortedAndFilteredData = getSortedData(filteredData);
 
   const handleDownload = () => {
+    // Flatten headers: expand company_info fields
+    const companyInfoFields = [
+      'company_name',
+      'company_website',
+      'company_description',
+      'company_industry',
+      'company_relevant_info',
+    ];
+    const flatHeaders = headers.flatMap(header =>
+      header === 'company_info' ? companyInfoFields : [header]
+    );
+
     // Create TSV content
-    const headerRow = headers.join('\t');
+    const headerRow = flatHeaders.join('\t');
     const rows = data.map(item => {
-      return headers.map(header => {
+      return headers.flatMap(header => {
         if (header === 'company_info') {
           const company = item.lead_info.company_info;
-          return `${company.name} (${company.industry})`; // Simplified company info
+          return [
+            company.name,
+            company.website,
+            company.description,
+            company.industry,
+            company.relevant_info,
+          ].map(val => String(val).replace(/\t/g, ' '));
         }
-        return String(item.lead_info[header as LeadInfoKeys]).replace(/\t/g, ' '); // Replace tabs with spaces
+        return [String(item.lead_info[header as LeadInfoKeys]).replace(/\t/g, ' ')];
       }).join('\t');
     });
     
     const tsvContent = [headerRow, ...rows].join('\n');
     
-    // TODO: flatten company info and return
-
     // Create and trigger download
     const blob = new Blob([tsvContent], { type: 'text/tab-separated-values' });
     const url = window.URL.createObjectURL(blob);
@@ -124,10 +144,34 @@ export const DataTable = ({ data }: DataTableProps) => {
   };
 
   const getSortIcon = (header: string) => {
-    if (sortConfig.key !== header) return <Icon as={FaSort} ml={2} color="gray.400" />;
-    if (sortConfig.direction === 'asc') return <Icon as={FaSortUp} ml={2} color="blue.500" />;
-    if (sortConfig.direction === 'desc') return <Icon as={FaSortDown} ml={2} color="blue.500" />;
+    if (sortConfig.key !== header) {
+      return <Icon as={FaSort} ml={2} color="gray.400" />;
+    } else if (sortConfig.direction === 'asc') {
+      return <Icon as={FaSortUp} ml={2} color="blue.500" />;
+    } else if (sortConfig.direction === 'desc') {
+      return <Icon as={FaSortDown} ml={2} color="blue.500" />;
+    }
     return <Icon as={FaSort} ml={2} color="gray.400" />;
+  };
+
+  const getHeaderIcon = (header: string) => {
+    if (header === 'email' || header === 'phone' || header === 'linkedin') {
+      return <Icon as={RiContactsBook2Line} ml={2} color="gray.400" />;
+    } else if (header === 'company_info') {
+      return <Icon as={MdOutlineBusinessCenter} ml={2} color="gray.400" />;
+    } else if (header === 'name' || header === 'title') {
+      return <Icon as={MdPerson} ml={2} color="gray.400" />;
+    }
+    return <Icon as={FaInfoCircle} ml={2} color="gray.400" />;
+  };
+
+  const handleCellCopy = (value: string) => {
+    navigator.clipboard.writeText(value);
+    toaster.create({
+      title: `"${value}" copied to clipboard`,
+      type: 'success',
+      duration: 1200,
+    });
   };
 
   const renderRow = (lead: LeadInfo, rowIndex: number) => (
@@ -136,30 +180,42 @@ export const DataTable = ({ data }: DataTableProps) => {
       _hover={{ bg: 'gray.50' }}
       _even={{ bg: 'gray.50' }}
     >
-      <Table.Cell 
-        color="gray.500" 
-        textAlign="center" 
+      <Table.Cell
+        color="gray.500"
+        textAlign="center"
         width="50px"
+        onClick={() => handleCellCopy(String(rowIndex + 1))}
+        cursor="pointer"
+        _hover={{ bg: 'gray.100' }}
       >
         {rowIndex + 1}
       </Table.Cell>
-      {headers.map((header, cellIndex) => (
-        <Table.Cell 
-          key={cellIndex}
-          px={3}
-          py={2}
-          fontSize="sm"
-          minW="150px"
-          maxW="300px"
-          overflow="hidden"
-          textOverflow="ellipsis"
-          whiteSpace="nowrap"
-          color="gray.500"
-          title={header === "company_info" ? JSON.stringify(lead.lead_info.company_info, null, 2) : String(lead.lead_info[header as LeadInfoKeys])}
-        >
-          {header === "company_info" ? String(lead.lead_info.company_info.name) : String(lead.lead_info[header as LeadInfoKeys])}
-        </Table.Cell>
-      ))}
+      {headers.map((header, cellIndex) => {
+        const cellValue =
+          header === "company_info"
+            ? String(lead.lead_info.company_info.name)
+            : String(lead.lead_info[header as LeadInfoKeys]);
+        return (
+          <Table.Cell
+            key={cellIndex}
+            px={3}
+            py={2}
+            fontSize="sm"
+            minW="150px"
+            maxW="300px"
+            overflow="hidden"
+            textOverflow="ellipsis"
+            whiteSpace="nowrap"
+            color="gray.500"
+            title={header === "company_info" ? JSON.stringify(lead.lead_info.company_info, null, 2) : cellValue}
+            onClick={() => handleCellCopy(cellValue)}
+            cursor="pointer"
+            _hover={{ bg: 'gray.100' }}
+          >
+            {cellValue}
+          </Table.Cell>
+        );
+      })}
     </Table.Row>
   );
 
@@ -167,7 +223,10 @@ export const DataTable = ({ data }: DataTableProps) => {
     <Box borderWidth="1px" borderRadius="lg" overflow="hidden" bg="white" mb={50}>
       <HStack mb={4} justify="space-between" p={4} borderBottomWidth="1px">
         <Text color="gray.600" fontSize="sm">
-          {sortedAndFilteredData.length} / {data.length} Rows Selected
+          {sortedAndFilteredData.length} / {data.length} Rows Filtered
+        </Text>
+        <Text color="gray.600" fontSize="sm">
+          <Icon as={FaRegCopy} ml={2} color="gray.400" /> Click on a cell to copy the value to clipboard
         </Text>
         <Input
           placeholder="Search..."
@@ -200,7 +259,8 @@ export const DataTable = ({ data }: DataTableProps) => {
                   _hover={{ bg: 'gray.100' }}
                 >
                   <HStack gap={1} justify="space-between">
-                    <Text>{header.replace(/_/g, ' ')}</Text>
+                    {getHeaderIcon(header)}
+                    <Text>{header.replace(/_/g, ' ').charAt(0).toUpperCase() + header.replace(/_/g, ' ').slice(1)}</Text>
                     {getSortIcon(header)}
                   </HStack>
                 </Table.ColumnHeader>
@@ -215,12 +275,13 @@ export const DataTable = ({ data }: DataTableProps) => {
         </Table.Root>
       </Box>
       <Button
-        colorScheme="green"
         size="lg"
         onClick={handleDownload}
+        variant="solid"
       >
-        Download Leads List
+       <Icon as={FaFileDownload} ml={2} color="gray.400" /> Download Leads List
       </Button>
+      <Toaster />
     </Box>
   );
 }; 
