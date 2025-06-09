@@ -67,10 +67,10 @@ this is an example of the JSON object you should return:
         "industry": "B2B SaaS",
         "location": "Detroit, MI",
         "employee_count": 45,
-        "annual_revenue": "12M"
+        "annual_revenue": "12M",
         "relevant_info": "This company is a good fit for the ICP because they are a mid-sized automotive manufacturer that is undergoing digital transformation and operating multiple production sites.",
-        "relevance_score": 0.95,
-        },
+        "relevance_score": 95
+        }
     ]
 }
 

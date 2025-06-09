@@ -27,6 +27,7 @@ Rules:
 - find the top (at least 3 and at most 5) people at each company
 - Along with each person, you should return a relevant_info field that details why the person matches the ICP and would be a good fit for company_info to sell product_info to.
 - If you make an assumption, state it in the notes field and lower the relevance_score. Always append to the notes field, do not overwrite it.
+- Use fuzzy title matching and job summaries to infer role alignment.
 
 
 Steps:
@@ -93,9 +94,9 @@ Input:
         "industry": "B2B SaaS",
         "location": "Detroit, MI",
         "employee_count": 45,
-        "annual_revenue": "12M"
+        "annual_revenue": "12M",
         "relevant_info": "This company is a good fit for the ICP because they are a mid-sized automotive manufacturer that is undergoing digital transformation and operating multiple production sites.",
-        "relevance_score": 91,
+        "relevance_score": 91
         },
     ]
 }
@@ -117,7 +118,7 @@ Output:
           "industry": "B2B SaaS",
           "location": "Detroit, MI",
           "employee_count": 45,
-          "annual_revenue": "12M"
+          "annual_revenue": "12M",
           "relevant_info": "This company is a good fit for the ICP because they are a mid-sized automotive manufacturer that is undergoing digital transformation and operating multiple production sites.",
           "relevance_score": 83,
           "people_list": [
@@ -130,11 +131,11 @@ Output:
                   "relevant_info": "John Doe is the COO of SupplyStream Technologies and is responsible for the overall operations of the company.",
                   "relevance_score": 95,
                   "approach_reccomendation": "I would approach John Doe by saying 'Hello, I'm from SupplyStream Technologies and we provide AI-driven ERP solutions for mid-sized automotive manufacturers. We're looking for a COO like you who is interested in digital transformation and streamlining operations. Would you be interested in a demo?'",
-                  "notes": "I found this information on the company website. The phone number I'm not sure if it's still valid. the email might be John's or steve hammond's"
+                  "notes": "I found this information on the company website. The phone number I'm not sure if it's still valid. the email might be John's or steve hammond's",
                   "source_url": "https://www.supplystreamtech.com/people/john-doe"
               }
           ]
-        },
+        }
     ]
 }
 """.strip()

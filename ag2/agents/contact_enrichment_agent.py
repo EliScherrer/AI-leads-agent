@@ -31,14 +31,12 @@ Context to know:
 
 
 Rules:
-- No markdown fences.
 - Nothing outside of the JSON object.
 - Never invent contact details. If you cannot find a reliable contact, return an empty string for that field.
 - Use only verifiable sources (company websites, LinkedIn, reputable business directories).
 - Do not include generic emails (info@, sales@, etc.) unless no other option exists.
 - If you find multiple possible emails/phones/linkedins, return them in an array for that field.
 - If you make an assumption, add it to the notes field and lower the relevance_score. Always append to the notes field, do not overwrite it.
-- If possible, cross-check contact info across at least two independent sources
 - Always cite the source for each contact method.
 
 
@@ -46,14 +44,16 @@ Steps:
 1. Do the following for each person in the people list of each company:
 2. Use the internet or other sources you have to verify the phone number - If it can not be verified use the internet or other sources to find the correct phone number
 3. Use the internet to verify the email adrress - If it can not be verified use the internet or other sources to find the correct email address
-4. use the internet to verify the linkedin URL - If it can not be verified use the internet or other sources to find the correct linkedin URL
-5. update the contact information when applicable, 
-6. record a source for every contact you found in source_url field, update to an array of urls if you used more than one source
-7. append to the notes field to explain why you made changes and any assumptions you made.
+4. use the internet to verify the linkedin URL - If it can not be verified use the internet or other sources to find the correct linkedin URL.
+5. Attempt to search for the person's name + title + company on google with the following format: "John Doe CEO at SupplyStream Technologies linkedin". If you find a linkedin url, that matches the format of "https://www.linkedin.com/in/johndoe" then prioritize that url as the linkedin url and append a note that it was found by searching on google.
+6. update the contact information when applicable, 
+7. record a source for every contact you found in source_url field, update to an array of urls if you used more than one source
+8. append to the notes field to explain why you made changes and any assumptions you made.
 
 
 Edge cases / negative examples:
 - linkedin urls that are just their name like this for "george allen" "https://www.linkedin.com/in/george-allen" are usually not valid, double check the url to make sure it's a valid linkedin url.
+- If when you visit the linkedin url, you get redirected to "https://www.linkedin.com/404/" or a page that says something like "This page isn't available" or "This account doesn't exist", then the linkedin url is not valid and should be removed from the object.
 - emails that are just firstname.lastname@company.com like this for "george allen" "george.allen@supplystreamtech.com" are usually not valid, double check the email to make sure it's a valid email.
 
 
@@ -63,15 +63,7 @@ Input and Output:
 {
     "company_list": [
         "company_info": {
-          "name": "SupplyStream Technologies",
-          "website": "https://www.supplystreamtech.com",
-          "description": "SupplyStream Technologies provides AI-driven ERP solutions for mid-sized automotive manufacturers, streamlining operations from procurement to distribution.",
-          "industry": "B2B SaaS",
-          "location": "Detroit, MI",
-          "employee_count": 45,
-          "annual_revenue": "12M"
-          "relevant_info": "This company is a good fit for the ICP because they are a mid-sized automotive manufacturer that is undergoing digital transformation and operating multiple production sites.",
-          "relevance_score": 56,
+          ...company_info
           "people_list": [
               "person_info": {
                   "name": "John Doe",
@@ -81,19 +73,14 @@ Input and Output:
                   "linkedin": "https://www.linkedin.com/in/john-doe-1234567890",
                   "relevant_info": "John Doe is the COO of SupplyStream Technologies and is responsible for the overall operations of the company.",
                   "relevance_score": 95,
-                  "approach_reccomendation": "I would approach John Doe by saying 'Hello, I'm from SupplyStream Technologies and we provide AI-driven ERP solutions for mid-sized automotive manufacturers. We're looking for a COO like you who is interested in digital transformation and streamlining operations. Would you be interested in a demo?'",
-                  "notes": "I found this information on the company website. The phone number I'm not sure if it's still valid. the email might be John's or steve hammond's"
+                  "approach_reccomendation": "I would approach John Doe by saying 'blah blah blah'",
+                  "notes": "I found this information on the company website. The phone number I'm not sure if it's still valid. the email might be John's or steve hammond's",
                   "source_url": "https://www.supplystreamtech.com/people/john-doe"
               }
           ]
         },
     ]
 }
-
-
-Rules:
-- No markdown fences.
-- Nothing outside of the JSON object.
 """.strip()
 
 # ---------------------------------------------------------------------------
@@ -112,7 +99,9 @@ class ContactEnrichmentAgent(ConversableAgent):
     ):
         # Load config once at startup
         config_list = config_list_from_json(env_or_file="OAI_CONFIG_LIST")
-
+        webSearchModel = "gpt-4o-mini-search-preview"
+        config_list[0]["model"] = webSearchModel
+        
         # init agent
         super().__init__(
             name="ContactEnrichmentAgent",

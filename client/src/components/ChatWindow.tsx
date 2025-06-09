@@ -1,6 +1,8 @@
 import { useState, useRef, useEffect } from 'react';
-import { Box, VStack, Input, IconButton, Flex, Text, Avatar, Container } from '@chakra-ui/react';
+import { Box, VStack, Input, IconButton, Flex, Text, Avatar, Container, Button } from '@chakra-ui/react';
 import { LuSearch } from 'react-icons/lu';
+import { FaRegTrashAlt } from "react-icons/fa";
+import AG2Client from '../AG2Client';
 
 interface Message {
   id: string;
@@ -19,6 +21,8 @@ const defaultFirstMessage: Message = {
   sender: 'ai',
   timestamp: new Date(),
 };
+
+const ag2 = new AG2Client();
 
 export const ChatWindow = ({ onSendMessage }: ChatWindowProps) => {
   const [messages, setMessages] = useState<Message[]>([defaultFirstMessage]);
@@ -68,6 +72,14 @@ export const ChatWindow = ({ onSendMessage }: ChatWindowProps) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
       handleSend();
+    }
+  };
+
+  const handleNewSession = async () => {
+    console.log("handleNewSession");
+    const res = await ag2.AG2_NewSession("new session");
+    if (res === true) {
+      window.location.reload();
     }
   };
 
@@ -137,6 +149,9 @@ export const ChatWindow = ({ onSendMessage }: ChatWindowProps) => {
             borderTopWidth="1px"
           >
             <Flex gap={2}>
+            <Button onClick={handleNewSession} bg="red.300">
+              <FaRegTrashAlt/> Clear Session
+            </Button>
               <Input
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}

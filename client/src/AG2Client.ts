@@ -52,8 +52,6 @@ export default class AG2Client {
     
           console.log("data...");
           console.log(response.data);
-          console.log("data.response...");
-          console.log(response.data.response);
     
           return response.data;
         } catch (error) {

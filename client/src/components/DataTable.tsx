@@ -226,7 +226,7 @@ export const DataTable = ({ data }: DataTableProps) => {
           {sortedAndFilteredData.length} / {data.length} Rows Filtered
         </Text>
         <Text color="gray.600" fontSize="sm">
-          <Icon as={FaRegCopy} ml={2} color="gray.400" /> Click on a cell to copy the value to clipboard
+          <Icon as={FaRegCopy} ml={2} color="gray.400" /> Click on a cell to copy the value
         </Text>
         <Input
           placeholder="Search..."

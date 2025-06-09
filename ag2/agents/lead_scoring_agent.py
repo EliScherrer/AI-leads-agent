@@ -19,6 +19,16 @@ Role:
 - a relevance_score above 90 means the lead is an amazing match for the sales agent and should definitely be contacted
 - a relevance_score of 100 means the lead is a perfect match for the sales agent and should be the first person the sales agent contacts
 
+
+Evaluation Criteria:
+- Functional role match
+- Seniority
+- Department (e.g., ops, supply chain, logistics)
+- Region
+- Title/keywords similarity
+- how well the company the lead works for matches the ICP
+
+
 - refine the relevant_info with the new information gained from the research
 - refine the approach_reccomendation field that details how you would approach the lead to sell product to them.
 - The next agent after you will take the output of this agent and create a CSV file with the leads list.
@@ -86,7 +96,7 @@ Role:
                   "relevant_info": "John Doe is the COO of SupplyStream Technologies and is responsible for the overall operations of the company.",
                   "relevance_score": 95,
                   "approach_reccomendation": "I would approach John Doe by saying 'Hello, I'm from SupplyStream Technologies and we provide AI-driven ERP solutions for mid-sized automotive manufacturers. We're looking for a COO like you who is interested in digital transformation and streamlining operations. Would you be interested in a demo?'",
-                  "notes": "I found this information on the company website. The phone number I'm not sure if it's still valid. the email might be John's or steve hammond's"
+                  "notes": "I found this information on the company website. The phone number I'm not sure if it's still valid. the email might be John's or steve hammond's",
                   "source_url": "https://www.supplystreamtech.com/people/john-doe"
               }
           ]
@@ -95,9 +105,10 @@ Role:
 }
 
 
-When you have complied all the data you can return ONLY a JSON object in this format. Taking all of the people_list objects and combining them into a single leads_list object including the data you've compiled.
+When you have complied all the data you can return ONLY a JSON object in this format. Taking all of the people_list objects and combining them into a single leads_list object including the data you've compiled. If you are confident that all of the leads have been scored and ranked, set the complete field to true.
 this is an example of the JSON object you should return:
 {
+    "complete": true,
     "leads_list": [
         "lead_info": {
             "name": "John Doe",
@@ -108,14 +119,14 @@ this is an example of the JSON object you should return:
             "relevant_info": "John Doe is the COO of SupplyStream Technologies and is responsible for the overall operations of the company.",
             "relevance_score": 95,
             "approach_reccomendation": "I would approach John Doe by saying 'Hello, I'm from SupplyStream Technologies and we provide AI-driven ERP solutions for mid-sized automotive manufacturers. We're looking for a COO like you who is interested in digital transformation and streamlining operations. Would you be interested in a demo?'",
-            "notes": "I found this information on the company website. The phone number I'm not sure if it's still valid. the email might be John's or steve hammond's"
-            "source_url": "https://www.supplystreamtech.com/people/john-doe"
+            "notes": "I found this information on the company website. The phone number I'm not sure if it's still valid. the email might be John's or steve hammond's",
+            "source_url": "https://www.supplystreamtech.com/people/john-doe",
             "company_info": {
                 "name": "SupplyStream Technologies",
                 "website": "https://www.supplystreamtech.com",
                 "description": "SupplyStream Technologies provides AI-driven ERP solutions for mid-sized automotive manufacturers, streamlining operations from procurement to distribution.",
                 "industry": "B2B SaaS",
-                "relevant_info": "This company is a good fit for the ICP because they are a mid-sized automotive manufacturer that is undergoing digital transformation and operating multiple production sites.",
+                "relevant_info": "This company is a good fit for the ICP because they are a mid-sized automotive manufacturer that is undergoing digital transformation and operating multiple production sites."
             }
         }
     ]
