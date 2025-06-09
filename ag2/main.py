@@ -45,27 +45,6 @@ contactEnrichmentAgent = ContactEnrichmentAgent()
 leadScoringAgent = LeadScoringAgent()
 tsvOutputAgent = TSVOutputAgent()
 
-company_research_agent = QuickResearchAgent(
-        search_mode=True,
-        scrape_mode=False,
-        queries_per_search=3,
-        name="company_research_agent",
-        llm_config=cfg,
-        additional_instructions="""
-    Research Goal:
-    - Look at the intake_agent discovery_notes to get the company name and website url.
-    - The research goal should be to find out what the company does.
-    - Make sure one of the queries is ONLY the company url so we can get the home page of the official website.
-    - So if the domain is xyz.com, the one of the queries should be "xyz.com" ONLY to get the home page. Nothing else in that query.
-    
-    Critical Instructions:
-    - Ensure all 4 points above are put into the research goal with the REAL company name and website url from the discovery_notes. 
-    - Don't actually use xyz.com, this is just an example, get the real data from the discovery_notes and create the research goal using real data.***
-    - All other queries MUST include the url in the query, dont do site:websiteurl, just use the website url in the query.
-    """,
-        additional_functions=[],
-    )
-
 @app.post("/chat")
 async def chat(request: Request):
     """API Endpoint that handles intake data and responds to user queries"""

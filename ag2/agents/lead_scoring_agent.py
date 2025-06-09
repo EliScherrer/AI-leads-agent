@@ -110,7 +110,7 @@ this is an example of the JSON object you should return:
 {
     "complete": true,
     "leads_list": [
-        "lead_info": {
+        {
             "name": "John Doe",
             "title": "COO",
             "email": "john.doe@supplystreamtech.com",
