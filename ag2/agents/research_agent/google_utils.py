@@ -7,9 +7,7 @@ import time
 load_dotenv()
 
 API_KEY = os.getenv("GOOGLE_SEARCH_API_KEY")
-# API_KEY = "AIzaSyBvwrDuGrspi3zHHqONOvPNOvJ1ftYW7sc"
 CX_ID   = os.getenv("GOOGLE_SEARCH_CX")          # Custom-search engine ID
-# CX_ID = "4453681da5f3c4654"
 
 if not API_KEY or not CX_ID:
     raise ValueError("Missing GOOGLE_SEARCH_API_KEY or GOOGLE_SEARCH_CX in .env")
