@@ -58,6 +58,8 @@ export default function App() {
       console.log(Object.keys(leadsList.leads_list[0]));
 
       setTableData(leadsList.leads_list);
+    } catch (error) {
+      console.error("Error getting leads: ", error);
     } finally {
       setIsLoadingLeads(false);
     }

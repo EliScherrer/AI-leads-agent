@@ -99,8 +99,8 @@ class ContactEnrichmentAgent(ConversableAgent):
     ):
         # Load config once at startup
         config_list = config_list_from_json(env_or_file="OAI_CONFIG_LIST")
-        webSearchModel = "gpt-4o-mini-search-preview"
-        config_list[0]["model"] = webSearchModel
+        # webSearchModel = "gpt-4o-mini-search-preview"
+        # config_list[0]["model"] = webSearchModel
         
         # init agent
         super().__init__(

@@ -3,7 +3,7 @@ import json
 
 from autogen import Agent, config_list_from_json, ConversableAgent
 
-SYSTEM_MESSAGE = """
+SYSTEM_MESSAGE_OLD = """
 Role:
 - You take in structured JSON from a previous agent and use it to find companies that match the ICP for a sales agent at company_info to sell product_info to.
 - Use the web search agent tool to find companies that match the ICP. 
@@ -55,6 +55,12 @@ Role:
     }
 }
 
+IMPORTANT OPERATING INSTRUCTIONS: 
+- Leverage the company_google_research_agent to find companies that match the ICP.
+- the company_google_research_agent should be able to find more relevant up to date companies that match the ICP than you can.
+- pass the same input JSON you received as input to the company_google_research_agent
+- Process the output of the company_google_research_agent and return the most relevant companies that match the ICP.
+
 
 When you have complied all the data you can return ONLY a JSON object in this format, you can add more fields if you have more information that you think is relevant. Make no assumptions, and only return the data you have, fill in empty strings for any data that you don't have.
 this is an example of the JSON object you should return:
@@ -78,6 +84,84 @@ Rules:
 - No markdown fences.
 - Nothing outside of the JSON object.
 """.strip()
+
+SYSTEM_MESSAGE = """
+Role:
+- You take in structured JSON from a previous agent and use it to find companies that match the ICP for a sales agent at company_info to sell product_info to.
+- work with the company_google_research_agent to find companies that match the ICP and process the results from company_google_research_agent
+- the company_google_research_agent should be able to find more relevant up to date companies that match the ICP than you can.
+- pass the same input JSON you received as input to the company_google_research_agent
+- Process the output of the company_google_research_agent and return the most relevant companies that match the ICP.
+
+- The input JSON is in the following format:
+{
+    "company_info": {
+      "name": "SupplyStream Technologies",
+      "website": "https://www.supplystreamtech.com",
+      "description": "SupplyStream Technologies provides AI-driven ERP solutions for mid-sized automotive manufacturers, streamlining operations from procurement to distribution.",
+      "industry": "B2B SaaS",
+      "location": "Detroit, MI",
+      "employee_count": 45,
+      "annual_revenue": "12M"
+    },
+    "product_info": {
+      "name": "StreamERP",
+      "description": "StreamERP is a cloud-based ERP solution designed for automotive suppliers. It includes modules for inventory optimization, supplier integration, predictive maintenance, and production scheduling.",
+      "key_features": [
+        "Automated inventory forecasting",
+        "Supplier API integrations",
+        "Predictive equipment maintenance",
+        "Real-time production dashboards",
+        "Compliance reporting for ISO/TS standards"
+      ],
+      "competitive_advantages": [
+        "Tailored specifically for automotive supply chain",
+        "Easy integration with legacy systems",
+        "Rapid 6-week deployment model"
+      ]
+    },
+    "ICP": {
+      "target_titles": ["COO", "CFO", "VP of Operations", "VP of IT", "VP of Supply Chain", "VP of Manufacturing", "VP of Engineering", "VP of Quality", "VP of Sales", "VP of Marketing"],
+      "company_industry": "Automotive manufacturing or parts supply",
+      "employee_range": {
+        "min": 20,
+        "max": 200
+      },
+      "revenue_range_million_usd": {
+        "min": 5,
+        "max": 50
+      },
+      "target_regions": ["United States", "Canada"],
+      "additional_notes": "Prioritize companies currently undergoing digital transformation or operating multiple production sites."
+    }
+}
+
+
+
+When you have complied all the data you can return ONLY a JSON object in this format, you can add more fields if you have more information that you think is relevant. Make no assumptions, and only return the data you have, fill in empty strings for any data that you don't have.
+this is an example of the JSON object you should return:
+{
+    "company_list": [
+        "company_info": {
+        "name": "SupplyStream Technologies",
+        "website": "https://www.supplystreamtech.com",
+        "description": "SupplyStream Technologies provides AI-driven ERP solutions for mid-sized automotive manufacturers, streamlining operations from procurement to distribution.",
+        "industry": "B2B SaaS",
+        "location": "Detroit, MI",
+        "employee_count": 45,
+        "annual_revenue": "12M",
+        "relevant_info": "This company is a good fit for the ICP because they are a mid-sized automotive manufacturer that is undergoing digital transformation and operating multiple production sites.",
+        "relevance_score": 95
+        }
+    ]
+}
+
+Rules:
+- No markdown fences.
+- Nothing outside of the JSON object.
+""".strip()
+
+
 
 # ---------------------------------------------------------------------------
 # Agent definition

@@ -19,7 +19,7 @@ interface DataTableProps {
 }
 
 export interface LeadInfo {
-  lead_info: {
+  // lead_info: {
     name: string;
     title: string;
     email: string;
@@ -35,7 +35,7 @@ export interface LeadInfo {
       industry: string;
       relevant_info: string;
     };
-  };
+  // };
 }
 
 type SortDirection = 'asc' | 'desc' | 'none';
@@ -45,13 +45,15 @@ interface SortConfig {
   direction: SortDirection;
 }
 
-type LeadInfoKeys = keyof LeadInfo['lead_info'];
+type LeadInfoKeys = keyof LeadInfo;
+// type LeadInfoKeys = keyof LeadInfo['lead_info'];
 
 export const DataTable = ({ data }: DataTableProps) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [sortConfig, setSortConfig] = useState<SortConfig>({ key: '', direction: 'none' });
 
-  const headers = data.length > 0 ? Object.keys(data[0].lead_info) : [];
+  // const headers = data.length > 0 ? Object.keys(data[0].lead_info) : [];
+  const headers = data.length > 0 ? Object.keys(data[0]) : [];
 
   const handleSort = (key: string) => {
     let direction: SortDirection = 'asc';
@@ -69,13 +71,17 @@ export const DataTable = ({ data }: DataTableProps) => {
     if (sortConfig.direction === 'none') return data;
 
     return [...data].sort((a, b) => {
-      let aValue = a.lead_info[sortConfig.key as LeadInfoKeys];
-      let bValue = b.lead_info[sortConfig.key as LeadInfoKeys];
+      // let aValue = a.lead_info[sortConfig.key as LeadInfoKeys];
+      // let bValue = b.lead_info[sortConfig.key as LeadInfoKeys];
+      let aValue = a[sortConfig.key as LeadInfoKeys];
+      let bValue = b[sortConfig.key as LeadInfoKeys];
 
       // Handle nested company_info
       if (sortConfig.key === 'company_info') {
-        aValue = a.lead_info.company_info.name;
-        bValue = b.lead_info.company_info.name;
+        // aValue = a.lead_info.company_info.name;
+        // bValue = b.lead_info.company_info.name;
+        aValue = a.company_info.name;
+        bValue = b.company_info.name;
       }
 
       // Convert to strings for comparison
@@ -90,7 +96,8 @@ export const DataTable = ({ data }: DataTableProps) => {
 
   // Filter data based on search term
   const filteredData = data.filter(row =>
-    Object.values(row.lead_info).some(value =>
+    // Object.values(row.lead_info).some(value =>
+    Object.values(row).some(value =>
       String(value).toLowerCase().includes(searchTerm.toLowerCase())
     )
   );
@@ -116,7 +123,8 @@ export const DataTable = ({ data }: DataTableProps) => {
     const rows = data.map(item => {
       return headers.flatMap(header => {
         if (header === 'company_info') {
-          const company = item.lead_info.company_info;
+          // const company = item.lead_info.company_info;
+          const company = item.company_info;
           return [
             company.name,
             company.website,
@@ -125,7 +133,8 @@ export const DataTable = ({ data }: DataTableProps) => {
             company.relevant_info,
           ].map(val => String(val).replace(/\t/g, ' '));
         }
-        return [String(item.lead_info[header as LeadInfoKeys]).replace(/\t/g, ' ')];
+        // return [String(item.lead_info[header as LeadInfoKeys]).replace(/\t/g, ' ')];
+        return [String(item[header as LeadInfoKeys]).replace(/\t/g, ' ')];
       }).join('\t');
     });
     
@@ -193,8 +202,10 @@ export const DataTable = ({ data }: DataTableProps) => {
       {headers.map((header, cellIndex) => {
         const cellValue =
           header === "company_info"
-            ? String(lead.lead_info.company_info.name)
-            : String(lead.lead_info[header as LeadInfoKeys]);
+          // ? String(lead.lead_info.company_info.name)
+          // : String(lead.lead_info[header as LeadInfoKeys]);
+            ? String(lead.company_info.name)
+            : String(lead[header as LeadInfoKeys]);
         return (
           <Table.Cell
             key={cellIndex}
@@ -207,7 +218,8 @@ export const DataTable = ({ data }: DataTableProps) => {
             textOverflow="ellipsis"
             whiteSpace="nowrap"
             color="gray.500"
-            title={header === "company_info" ? JSON.stringify(lead.lead_info.company_info, null, 2) : cellValue}
+            // title={header === "company_info" ? JSON.stringify(lead.lead_info.company_info, null, 2) : cellValue}
+            title={header === "company_info" ? JSON.stringify(lead.company_info, null, 2) : cellValue}
             onClick={() => handleCellCopy(cellValue)}
             cursor="pointer"
             _hover={{ bg: 'gray.100' }}
