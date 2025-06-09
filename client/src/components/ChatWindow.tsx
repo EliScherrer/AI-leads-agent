@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { Box, VStack, Input, IconButton, Flex, Text, Avatar, Container, Button } from '@chakra-ui/react';
 import { LuSearch } from 'react-icons/lu';
-import { FaRegTrashAlt } from "react-icons/fa";
+import { FaRegTrashAlt, FaUser } from "react-icons/fa";
 import AG2Client from '../AG2Client';
 
 interface Message {
@@ -87,8 +87,9 @@ export const ChatWindow = ({ onSendMessage }: ChatWindowProps) => {
     <Container maxW="container.md" h="80vh" py={4}>
       <Box
         h="full"
-        borderWidth="1px"
+        borderWidth="2px"
         borderRadius="lg"
+        borderColor="gray.950"
         overflow="hidden"
       >
         <VStack h="full" >
@@ -121,9 +122,10 @@ export const ChatWindow = ({ onSendMessage }: ChatWindowProps) => {
                         gap={2}
                         direction={message.sender === 'user' ? 'row-reverse' : 'row'}
                      >
-                        <Avatar.Root size="lg">
-                            <Avatar.Fallback name={message.sender === 'user' ? 'User' : 'AI'} />
+                        <Avatar.Root size="lg" borderWidth="1px" borderColor="gray.600" bg="white">
+                            {/* <Avatar.Fallback name={message.sender === 'user' ? 'User' : 'AI'} /> */}
                             {(message.sender === 'ai') && <Avatar.Image src="https://platform.theverge.com/wp-content/uploads/sites/2/2025/02/openai-old-logo.png?quality=90&strip=all&crop=7.8125%2C0%2C84.375%2C100&w=2400" />}
+                            {(message.sender === 'user') && <FaUser />}
                         </Avatar.Root>
                         <Box
                             bg={message.sender === 'user' ? 'blue.500' : 'green.500'}
@@ -146,10 +148,11 @@ export const ChatWindow = ({ onSendMessage }: ChatWindowProps) => {
           <Box
             w="full"
             p={4}
-            borderTopWidth="1px"
+            borderTopWidth="2px"
+            borderColor="gray.950"
           >
             <Flex gap={2}>
-            <Button onClick={handleNewSession} bg="red.300">
+            <Button onClick={handleNewSession} bg="red.500">
               <FaRegTrashAlt/> Clear Session
             </Button>
               <Input
@@ -158,6 +161,8 @@ export const ChatWindow = ({ onSendMessage }: ChatWindowProps) => {
                 onKeyPress={handleKeyPress}
                 placeholder="Type your message..."
                 disabled={isLoading}
+                borderWidth="1px"
+                borderColor="gray.950"
               />
               <IconButton
                 colorScheme="blue"

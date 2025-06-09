@@ -1,13 +1,13 @@
 import {
   Box,
   Button,
-  // ClientOnly,
+  ClientOnly,
   Heading,
-  // Skeleton,
+  Skeleton,
   VStack,
   Text
 } from '@chakra-ui/react'
-// import { ColorModeToggle } from './components/color-mode-toggle'
+import { ColorModeToggle } from './components/color-mode-toggle'
 import { ChatWindow } from './components/ChatWindow';
 import AG2Client from './AG2Client';
 import { DataTable, LeadInfo } from './components/DataTable';
@@ -77,13 +77,13 @@ export default function App() {
         <Box
           id="get-leads-list-explanation"
           p={8}
-          bg="gray.50"
+          bg="gray.300"
           borderRadius="xl"
           boxShadow="lg"
           borderWidth="1px"
           borderColor="gray.200"
           maxW="full"
-          mx="auto"
+          mx={8}
           my={6}
           display="flex"
           flexDirection="column"
@@ -92,7 +92,7 @@ export default function App() {
         >
           <Text
             fontSize="lg"
-            color="gray.700"
+            color="gray.950"
             mb={2}
             textAlign="center"
             fontWeight="medium"
@@ -105,8 +105,8 @@ export default function App() {
               px={8}
               boxShadow="md"
               mt={2}
-              bg="green.300"
-              pos="absolute" bottom="10" right="4"
+              bg="teal.500"
+              pos="absolute" bottom="10" right="10"
               loading={isLoadingLeads}
               disabled={isLoadingLeads}
               onClick={handleGetLeads}
@@ -121,9 +121,9 @@ export default function App() {
       </VStack>
 
       <Box pos="absolute" top="4" right="4">
-        {/* <ClientOnly fallback={<Skeleton w="10" h="10" rounded="md" />}>
+        <ClientOnly fallback={<Skeleton w="10" h="10" rounded="md" />}>
           <ColorModeToggle />
-        </ClientOnly> */}
+        </ClientOnly>
       </Box>
     </Box>
   )
