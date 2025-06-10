@@ -367,10 +367,10 @@ async def processIntakeData(userId: str):
 async def getResults(request: Request):
     """API Endpoint that returns the leads list for the user"""
 
-    user_agent = request.headers.get("user-agent")
+    # user_agent = request.headers.get("user-agent")
 
-    if user_agent in final_results:
-        return final_results[user_agent]
+    # if user_agent in final_results:
+    #     return final_results[user_agent]
 
-    # return leadsTestData
-    return "Leads haven't been generated yet"
+    return leadsTestData
+    # return "Leads haven't been generated yet"

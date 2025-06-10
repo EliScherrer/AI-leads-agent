@@ -21,8 +21,8 @@ Build an AI agent that can search the web to create a list of high quality leads
     5. `uvicorn main:app --reload`
 5. Go to http://localhost:3000/ and chat
 
-### [outdated] Usage
+### Usage
 
-![image1](./usage-screenshots/first.jpeg)
-![image2](./usage-screenshots/second.jpeg)
-![image3](./usage-screenshots/third.jpeg)
+![image1](./usage-screenshots/Screenshot-1.jpeg)
+![image2](./usage-screenshots/Screenshot-2.jpeg)
+![image3](./usage-screenshots/Screenshot-3.jpeg)
