@@ -40,6 +40,68 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+companyTestData = """
+{
+  "company_list": [
+    {
+      "name": "Westport Fuel Systems",
+      "website": "https://www.westport.com",
+      "description": "Westport Fuel Systems is a global leader in the design, manufacture, and supply of advanced fuel systems for clean, low-carbon fuels.",
+      "industry": "Automotive Parts and Manufacturing",
+      "location": "Vancouver, BC, Canada",
+      "employee_count": "100-150",
+      "annual_revenue": "$30M-$40M",
+      "relevant_info": "Westport is a good fit for StreamERP due to its focus on clean energy solutions, which likely involves digital transformation, and operates multiple sites.",
+      "relevance_score": 85
+    },
+    {
+      "name": "Magna Seating",
+      "website": "https://www.magnainc.com",
+      "description": "Magna Seating is part of Magna International, specializing in seating solutions for the automotive industry.",
+      "industry": "Automotive Parts",
+      "location": "Aurora, ON, Canada",
+      "employee_count": "100-200",
+      "annual_revenue": "$20M-$50M",
+      "relevant_info": "As part of Magna, this division likely undergoes digital transformation and operates multiple production sites.",
+      "relevance_score": 90
+    },
+    {
+      "name": "Martinrea International Inc.",
+      "website": "https://www.martinrea.com",
+      "description": "Martinrea International Inc. is a diversified global automotive supplier that provides lightweight castings, aluminum blocks, structural components, and fluid management systems.",
+      "industry": "Automotive Parts",
+      "location": "Vaughan, ON, Canada",
+      "employee_count": "100-200",
+      "annual_revenue": "$20M-$50M",
+      "relevant_info": "Martinrea is a good fit due to its diverse operations and likely need for digital transformation across multiple sites.",
+      "relevance_score": 92
+    },
+    {
+      "name": "Accuride Corporation",
+      "website": "https://www.accuridewheels.com",
+      "description": "Accuride Corporation is a leading supplier of wheel end solutions to the global commercial vehicle industry.",
+      "industry": "Automotive Parts",
+      "location": "Evansville, IN, USA",
+      "employee_count": "100-200",
+      "annual_revenue": "$20M-$50M",
+      "relevant_info": "Accuride operates multiple production sites and is likely undergoing digital transformation in its operations.",
+      "relevance_score": 88
+    },
+    {
+      "name": "Linamar Corporation",
+      "website": "https://www.linamar.com",
+      "description": "Linamar Corporation is a diversified global manufacturing company of highly engineered products across its Powertrain and Driveline, Industrial, and Skyjack segments.",
+      "industry": "Automotive Parts and Manufacturing",
+      "location": "Guelph, ON, Canada",
+      "employee_count": "100-200",
+      "annual_revenue": "$20M-$50M",
+      "relevant_info": "Linamar operates multiple production sites and is likely undergoing digital transformation in its operations.",
+      "relevance_score": 90
+    }
+  ]
+}
+"""
+
 # Load config once at startup
 config_list = config_list_from_json(env_or_file="OAI_CONFIG_LIST")
 
@@ -54,93 +116,6 @@ contactEnrichmentAgent = ContactEnrichmentAgent()
 leadScoringAgent = LeadScoringAgent()
 tsvOutputAgent = TSVOutputAgent()
 
-company_google_research_agent = ResearchAgent(
-        search_mode=True,
-        scrape_mode=False,
-        queries_per_search=5,
-        name="company_google_research_agent",
-        additional_instructions="""
-    Research Goal:
-    - Find companies that match the ICP for a sales agent at company_info to sell product_info to.
-    - Look at the structured JSON input to get company_info, product_info, and ICP 
-    - The research goal should be to find companies that match the ICP for a sales agent at company_info to sell product_info to.
-    - the companies do not have to exactly match the ICP, try to find at least 3 and at most 10 that you think most closely match a company that a sales agent at company_info may be able to sell product_info to.
-    
-    Critical Instructions:
-    - Ensure all points above are put into the research goal and the ICO is captured in its entirety.
-    - The output should be a list of companies that match the ICP for a sales agent at company_info to sell product_info to.
-    
-    - The output should be in the following format (this is just example data):
-    {
-        "company_list": [
-            "company_info": {
-            "name": "SupplyStream Technologies",
-            "website": "https://www.supplystreamtech.com",
-            "description": "SupplyStream Technologies provides AI-driven ERP solutions for mid-sized automotive manufacturers, streamlining operations from procurement to distribution.",
-            "industry": "B2B SaaS",
-            "location": "Detroit, MI",
-            "employee_count": 45,
-            "annual_revenue": "12M",
-            "relevant_info": "This company is a good fit for the ICP because they are a mid-sized automotive manufacturer that is undergoing digital transformation and operating multiple production sites.",
-            "relevance_score": 95
-            }
-        ]
-    }
-    """,
-        additional_functions=[],
-    )
-people_google_research_agent = ResearchAgent(
-        search_mode=True,
-        scrape_mode=False,
-        queries_per_search=5,
-        name="people_google_research_agent",
-        additional_instructions="""
-    Research Goal:
-    - Find leads that match the ICP for a sales agent at company_info to sell product_info to.
-    - search for people at the companies in the company_list that is provided to you in the structured JSON input
-    - Look at the structured JSON input to get company_info, product_info, and ICP 
-    - The research goal should be to find people that match the ICP for a sales agent at company_info to sell product_info to.
-    - the people do not have to exactly match the ICP, try to find at least 3 and at most 10 that you think most closely match a person that a sales agent at company_info may be able to sell product_info to.
-    - Use fuzzy title matching and job summaries to infer role alignment.
-    
-    Critical Instructions:
-    - Ensure all points above are put into the research goal and the ICO is captured in its entirety.
-    - The output should be a list of companies with peoplethat match the ICP for a sales agent at company_info to sell product_info to.
-    
-    - The output should be in the following format (this is just example data):
-{
-    "company_list": [
-        "company_info": {
-          "name": "SupplyStream Technologies",
-          "website": "https://www.supplystreamtech.com",
-          "description": "SupplyStream Technologies provides AI-driven ERP solutions for mid-sized automotive manufacturers, streamlining operations from procurement to distribution.",
-          "industry": "B2B SaaS",
-          "location": "Detroit, MI",
-          "employee_count": 45,
-          "annual_revenue": "12M",
-          "relevant_info": "This company is a good fit for the ICP because they are a mid-sized automotive manufacturer that is undergoing digital transformation and operating multiple production sites.",
-          "relevance_score": 83,
-          "people_list": [
-              "person_info": {
-                  "name": "John Doe",
-                  "title": "COO",
-                  "email": "john.doe@supplystreamtech.com",
-                  "phone": "123-456-7890",
-                  "linkedin": "https://www.linkedin.com/in/john-doe-1234567890",
-                  "relevant_info": "John Doe is the COO of SupplyStream Technologies and is responsible for the overall operations of the company.",
-                  "relevance_score": 95,
-                  "approach_reccomendation": "I would approach John Doe by saying 'Hello, I'm from SupplyStream Technologies and we provide AI-driven ERP solutions for mid-sized automotive manufacturers. We're looking for a COO like you who is interested in digital transformation and streamlining operations. Would you be interested in a demo?'",
-                  "notes": "I found this information on the company website. The phone number I'm not sure if it's still valid. the email might be John's or steve hammond's",
-                  "source_url": "https://www.supplystreamtech.com/people/john-doe"
-              }
-          ]
-        }
-    ]
-}
-    """,
-        additional_functions=[],
-    )
-
 @app.post("/chat")
 async def chat(request: Request):
     """API Endpoint that handles intake data and responds to user queries"""
@@ -154,8 +129,8 @@ async def chat(request: Request):
     print(results)
 
     if results["complete"]:
-        # asyncio.create_task(processIntakeData(user_agent))
-        asyncio.create_task(runOrchestrator(user_agent))
+        asyncio.create_task(processIntakeData(user_agent))
+        # asyncio.create_task(runOrchestrator(user_agent))
         
     
     return results
@@ -187,17 +162,31 @@ async def processIntakeData(userId: str):
     print("-------------started lead generation-------------------")
     intakeInfoString = intakeAgent.intake_data
     # get company list
-    companyListString = await companyResearchAgent.process_message(intakeAgent, intakeInfoString)
+    # companyListString = await companyResearchAgent.process_message(intakeAgent, intakeInfoString)
+    companyListString = companyTestData
+
+    print("-------------Company List results-------------------")
+    print(companyListString)
+    final_results[userId] = companyListString
+
     # get people list
     companyListAndPeopleString = await peopleFinderAgent.process_message(companyResearchAgent, intakeInfoString, companyListString)
-    # enrich people list
-    companyListAndPeopleStringEnriched = await contactEnrichmentAgent.process_message(peopleFinderAgent, companyListAndPeopleString)
-    # score leads
-    leadsListString = await leadScoringAgent.process_message(contactEnrichmentAgent, intakeInfoString, companyListAndPeopleStringEnriched)
-    print("-------------Leads List results-------------------")
-    print(leadsListString)
-    final_results[userId] = leadsListString
+    print("-------------Company List and people results-------------------")
+    print(companyListAndPeopleString)
+
     return
+
+
+    # get people list
+    # companyListAndPeopleString = await peopleFinderAgent.process_message(companyResearchAgent, intakeInfoString, companyListString)
+    # enrich people list
+    # companyListAndPeopleStringEnriched = await contactEnrichmentAgent.process_message(peopleFinderAgent, companyListAndPeopleString)
+    # score leads
+    # leadsListString = await leadScoringAgent.process_message(contactEnrichmentAgent, intakeInfoString, companyListAndPeopleStringEnriched)
+    # print("-------------Leads List results-------------------")
+    # print(leadsListString)
+    # final_results[userId] = leadsListString
+    # return
 
 @app.get("/results")
 async def getResults(request: Request):
@@ -211,151 +200,60 @@ async def getResults(request: Request):
     return "Leads haven't been generated yet"
 
 
-async def runOrchestrator(userId: str):
-    print("-------------started lead generation (AG2 orchestration)-------------------")
-    config_list = config_list_from_json(env_or_file="OAI_CONFIG_LIST")
+# async def runOrchestrator(userId: str):
+#     print("-------------started lead generation (AG2 orchestration)-------------------")
+#     config_list = config_list_from_json(env_or_file="OAI_CONFIG_LIST")
 
-    userProxy = UserProxyAgent(name="userProxy", code_execution_config=False, human_input_mode="NEVER")
+#     userProxy = UserProxyAgent(name="userProxy", code_execution_config=False, human_input_mode="NEVER")
 
-    def is_termination_msg(msg: dict[str, Any]) -> bool:
-        content = msg.get("content", "")
-        if (content is not None) and "\"complete\": true" in content:
-            print("-------------Termination message received-------------------")
-            return True
-        return False
+#     def is_termination_msg(msg: dict[str, Any]) -> bool:
+#         content = msg.get("content", "")
+#         if (content is not None) and "\"complete\": true" in content:
+#             print("-------------Termination message received-------------------")
+#             return True
+#         return False
 
-    # Compose the orchestration pattern
-    pattern = AutoPattern(
-        initial_agent=companyResearchAgent,
-        agents=[
-            companyResearchAgent,
-            company_google_research_agent,
-            peopleFinderAgent,
-            people_google_research_agent,
-            # contactEnrichmentAgent,
-            leadScoringAgent,
-        ],
-        user_agent=userProxy,
-        context_variables=get_context_variables(),
-        group_manager_args={"llm_config": {"config_list": config_list}, "is_termination_msg": is_termination_msg},
-    )
-    agents_order = """ It is critical to transfer agents in the following exact order:
-    1. companyResearchAgent
-    2. company_google_research_agent
-    3. companyResearchAgent
-    4. peopleFinderAgent
-    5. people_google_research_agent
-    6. peopleFinderAgent
-    7. leadScoringAgent
+#     # Compose the orchestration pattern
+#     pattern = AutoPattern(
+#         initial_agent=companyResearchAgent,
+#         agents=[
+#             companyResearchAgent,
+#             company_google_research_agent,
+#             peopleFinderAgent,
+#             people_google_research_agent,
+#             # contactEnrichmentAgent,
+#             leadScoringAgent,
+#         ],
+#         user_agent=userProxy,
+#         context_variables=get_context_variables(),
+#         group_manager_args={"llm_config": {"config_list": config_list}, "is_termination_msg": is_termination_msg},
+#     )
+#     agents_order = """ It is critical to transfer agents in the following exact order:
+#     1. companyResearchAgent
+#     2. company_google_research_agent
+#     3. companyResearchAgent
+#     4. peopleFinderAgent
+#     5. people_google_research_agent
+#     6. peopleFinderAgent
+#     7. leadScoringAgent
 
-    """ + intakeAgent.intake_data
-    # 7. contactEnrichmentAgent
+#     """ + intakeAgent.intake_data
+#     # 7. contactEnrichmentAgent
 
 
-    # Run the group chat orchestration max_rounds=100,
-    result, context_variables, last_agent = initiate_group_chat(
-        pattern=pattern,
-        messages=agents_order,
-        max_rounds=40,
-    )
+#     # Run the group chat orchestration max_rounds=100,
+#     result, context_variables, last_agent = initiate_group_chat(
+#         pattern=pattern,
+#         messages=agents_order,
+#         max_rounds=40,
+#     )
 
-    print("\n-----------------------------Conversation complete!---------------------------\n")
+#     print("\n-----------------------------Conversation complete!---------------------------\n")
 
-    # Extract the final leads list from the result
-    leadsListString = result  # Adjust this if your agent outputs differently
-    print("-------------GroupChat summary-------------------")
-    print(leadsListString.summary)
+#     # Extract the final leads list from the result
+#     leadsListString = result  # Adjust this if your agent outputs differently
+#     print("-------------GroupChat summary-------------------")
+#     print(leadsListString.summary)
 
-    final_results[userId] = leadsListString.summary
-    return
-
-def get_context_variables():
-    orchard_ctx = OrchestrationContext(
-        session_details=SessionDetails(
-            session_id="123-1-2222-989",
-            session_started=datetime.utcnow().isoformat(),
-        ),
-        agents=AgentsContext(
-            root={
-                "CompanyResearchAgent": [
-                    AgentContextEntry(
-                        technical_name="intake_data",
-                        description="Contains the intake data.",
-                        data={
-                            "intake_data": intakeAgent.intake_data,
-                            "discovery_complete": True,
-                        },
-                    ),
-                    AgentContextEntry(
-                        technical_name="company_list",
-                        description="Consists of the companies that match the ICP.",
-                        data={"company_list": []},
-                    ),
-                ],
-                "company_google_research_agent": [
-                    AgentContextEntry(
-                        technical_name="research-profile",
-                        description="Data store for all research. We'll store 'researched_websites' here.",
-                        data={
-                            "search_queries": [],
-                            "researched_websites": [],
-                            "research_completed": False,
-                        },
-                    ),
-                    AgentContextEntry(
-                        technical_name="google-search-metrics",
-                        description="All metrics related to Google Search to ensure rate limits are respected.",
-                        data={
-                            "rate_limit_per_minute": 100,
-                            "search_requests_made": {},
-                            "available_searches_now_per_minute": 100,
-                        },
-                    ),
-                ],
-                "PeopleFinderAgent": [
-                    AgentContextEntry(
-                        technical_name="company_list",
-                        description="Consists of the companies and people at those companies that match the ICP.",
-                        data={"company_list": []},
-                    ),
-                ],
-                "people_google_research_agent": [
-                    AgentContextEntry(
-                        technical_name="research-profile",
-                        description="Data store for all research. We'll store 'researched_websites' here.",
-                        data={
-                            "search_queries": [],
-                            "researched_websites": [],
-                            "research_completed": False,
-                        },
-                    ),
-                    AgentContextEntry(
-                        technical_name="google-search-metrics",
-                        description="All metrics related to Google Search to ensure rate limits are respected.",
-                        data={
-                            "rate_limit_per_minute": 100,
-                            "search_requests_made": {},
-                            "available_searches_now_per_minute": 100,
-                        },
-                    ),
-                ],
-                "ContactEnrichmentAgent": [
-                    AgentContextEntry(
-                        technical_name="company_list",
-                        description="Consists of the companies and people at those companies that match the ICP.",
-                        data={"company_list": []},
-                    ),
-                ],
-                "LeadScoringAgent": [
-                    AgentContextEntry(
-                        technical_name="leads_list",
-                        description="Consists of the leads at the companies that match the ICP.",
-                        data={"leads_list": []},
-                    ),
-                ],
-            }
-        ),
-    )
-
-    ctx = StrictContextVariables(data={"orchestration_context": orchard_ctx})
-    return ctx
+#     final_results[userId] = leadsListString.summary
+#     return

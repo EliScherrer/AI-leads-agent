@@ -39,3 +39,361 @@
       "additional_notes": "Prioritize companies currently undergoing digital transformation or operating multiple production sites."
     }
 }
+{
+  "company_list": [
+    {
+      "name": "Westport Fuel Systems",
+      "website": "https://www.westport.com",
+      "description": "Westport Fuel Systems is a global leader in the design, manufacture, and supply of advanced fuel systems for clean, low-carbon fuels.",
+      "industry": "Automotive Parts and Manufacturing",
+      "location": "Vancouver, BC, Canada",
+      "employee_count": "100-150",
+      "annual_revenue": "$30M-$40M",
+      "relevant_info": "Westport is a good fit for StreamERP due to its focus on clean energy solutions, which likely involves digital transformation, and operates multiple sites.",
+      "relevance_score": 85
+    },
+    {
+      "name": "Magna Seating",
+      "website": "https://www.magnainc.com",
+      "description": "Magna Seating is part of Magna International, specializing in seating solutions for the automotive industry.",
+      "industry": "Automotive Parts",
+      "location": "Aurora, ON, Canada",
+      "employee_count": "100-200",
+      "annual_revenue": "$20M-$50M",
+      "relevant_info": "As part of Magna, this division likely undergoes digital transformation and operates multiple production sites.",
+      "relevance_score": 90
+    },
+    {
+      "name": "Martinrea International Inc.",
+      "website": "https://www.martinrea.com",
+      "description": "Martinrea International Inc. is a diversified global automotive supplier that provides lightweight castings, aluminum blocks, structural components, and fluid management systems.",
+      "industry": "Automotive Parts",
+      "location": "Vaughan, ON, Canada",
+      "employee_count": "100-200",
+      "annual_revenue": "$20M-$50M",
+      "relevant_info": "Martinrea is a good fit due to its diverse operations and likely need for digital transformation across multiple sites.",
+      "relevance_score": 92
+    },
+    {
+      "name": "Accuride Corporation",
+      "website": "https://www.accuridewheels.com",
+      "description": "Accuride Corporation is a leading supplier of wheel end solutions to the global commercial vehicle industry.",
+      "industry": "Automotive Parts",
+      "location": "Evansville, IN, USA",
+      "employee_count": "100-200",
+      "annual_revenue": "$20M-$50M",
+      "relevant_info": "Accuride operates multiple production sites and is likely undergoing digital transformation in its operations.",
+      "relevance_score": 88
+    },
+    {
+      "name": "Linamar Corporation",
+      "website": "https://www.linamar.com",
+      "description": "Linamar Corporation is a diversified global manufacturing company of highly engineered products across its Powertrain and Driveline, Industrial, and Skyjack segments.",
+      "industry": "Automotive Parts and Manufacturing",
+      "location": "Guelph, ON, Canada",
+      "employee_count": "100-200",
+      "annual_revenue": "$20M-$50M",
+      "relevant_info": "Linamar operates multiple production sites and is likely undergoing digital transformation in its operations.",
+      "relevance_score": 90
+    }
+  ]
+}
+{
+  "company_list": [
+      {
+          "company_info": {
+              "name": "Westport Fuel Systems",
+              "website": "https://www.westport.com",
+              "description": "Westport Fuel Systems is a global leader in the design, manufacture, and supply of advanced fuel systems for clean, low-carbon fuels.",
+              "industry": "Automotive Parts and Manufacturing",
+              "location": "Vancouver, BC, Canada",
+              "employee_count": "100-150",
+              "annual_revenue": "$30M-$40M",
+              "relevant_info": "Westport is a good fit for StreamERP due to its focus on clean energy solutions, which likely involves digital transformation, and operates multiple sites.",
+              "relevance_score": 85,
+              "people_list": [
+                  {
+                      "name": "",
+                      "title": "Chief Financial Officer",
+                      "email": "",
+                      "phone": "",
+                      "linkedin": "",
+                      "source_url": "",
+                      "relevance_score": 60,
+                      "relevant_info": "The CFO is typically responsible for financial strategy and might be interested in cost optimization through ERP solutions.",
+                      "approach_recommendation": "I would approach by highlighting how StreamERP can improve financial reporting and inventory management, reducing costs and enhancing profitability."
+                  },
+                  {
+                      "name": "",
+                      "title": "Executive Vice President of Applied Technologies Group",
+                      "email": "",
+                      "phone": "",
+                      "linkedin": "",
+                      "source_url": "",
+                      "relevance_score": 70,
+                      "relevant_info": "This person likely oversees technology integration and innovation, making them a good fit for discussing advanced ERP systems.",
+                      "approach_recommendation": "I would focus on the technological advancements and how StreamERP can enhance operational efficiency and innovation within Westport Fuel Systems."
+                  },
+                  {
+                      "name": "",
+                      "title": "Executive Vice President of IAM & LD OEM",
+                      "email": "",
+                      "phone": "",
+                      "linkedin": "",
+                      "source_url": "",
+                      "relevance_score": 80,
+                      "relevant_info": "This role involves managing partnerships and original equipment manufacturing, making them a key contact for discussing supplier integration and inventory management.",
+                      "approach_recommendation": "I would emphasize how StreamERP can improve supply chain management and OEM partnerships."
+                  },
+                  {
+                      "name": "Dan Sceli",
+                      "title": "Chief Executive Officer",
+                      "email": "d***@wfsinc.com (derived from company name)",
+                      "phone": "(604) 718-2000",
+                      "linkedin": "",
+                      "source_url": "https://wfsinc.com/company/leadership",
+                      "relevance_score": 90,
+                      "relevant_info": "As CEO, Dan Sceli is a decision-maker with a background in manufacturing and growth strategies, making him a strong candidate for discussing transformative ERP solutions.",
+                      "approach_recommendation": "I would approach by highlighting StreamERP's ability to drive growth and operational excellence, aligning with Dan Sceli's strategic vision."
+                  }
+              ]
+          }
+      },
+      {
+          "company_info": {
+              "name": "Magna Seating",
+              "website": "https://www.magnainc.com",
+              "description": "Magna Seating is part of Magna International, specializing in seating solutions for the automotive industry.",
+              "industry": "Automotive Parts",
+              "location": "Aurora, ON, Canada",
+              "employee_count": "100-200",
+              "annual_revenue": "$20M-$50M",
+              "relevant_info": "As part of Magna, this division likely undergoes digital transformation and operates multiple production sites.",
+              "relevance_score": 90,
+              "people_list": [
+                  {
+                      "name": "Simon Kew",
+                      "title": "President, Magna Seating",
+                      "email": "",
+                      "phone": "",
+                      "linkedin": "",
+                      "source_url": "https://www.magna.com/company/company-information/magna-groups/magna-seating",
+                      "relevance_score": 70,
+                      "relevant_info": "Simon Kew is the President of Magna Seating, making him a key decision-maker in the seating division. His role involves overseeing operations and strategic direction, which aligns with the use of StreamERP for operational efficiency.",
+                      "approach_recommendation": "I would approach Simon Kew by highlighting the benefits of StreamERP in optimizing production and supply chain management within the automotive seating industry. Emphasize how it can enhance operational efficiency and strategic decision-making."
+                  }
+              ]
+          }
+      },
+      {
+          "company_info": {
+              "name": "Martinrea International Inc.",
+              "website": "https://www.martinrea.com",
+              "description": "Martinrea International Inc. is a diversified global automotive supplier that provides lightweight castings, aluminum blocks, structural components, and fluid management systems.",
+              "industry": "Automotive Parts",
+              "location": "Vaughan, ON, Canada",
+              "employee_count": "100-200",
+              "annual_revenue": "$20M-$50M",
+              "relevant_info": "Martinrea is a good fit due to its diverse operations and likely need for digital transformation across multiple sites.",
+              "relevance_score": 92,
+              "people_list": [
+                  {
+                      "name": "Pat D'Eramo",
+                      "title": "CEO",
+                      "email": "",
+                      "phone": "",
+                      "linkedin": "",
+                      "source_url": "https://www.martinrea.com/about-us/executive-team/",
+                      "relevance_score": 70,
+                      "relevant_info": "As CEO, Pat D'Eramo is crucial for strategic decisions and can be a key contact for adopting new technologies like StreamERP.",
+                      "approach_recommendation": "Approach Pat D'Eramo by emphasizing the strategic benefits of StreamERP in enhancing operational efficiency and aligning with Martinrea's vision of innovation and excellence."
+                  },
+                  {
+                      "name": "Peter Cirulis",
+                      "title": "CFO",
+                      "email": "",
+                      "phone": "",
+                      "linkedin": "",
+                      "source_url": "https://www.martinrea.com/press-release/peter-cirulis-appointed-chief-financial-officer-of-martinrea-international-inc/",
+                      "relevance_score": 80,
+                      "relevant_info": "As CFO, Peter Cirulis would be interested in cost-effective solutions like StreamERP for improving financial management and supply chain efficiency.",
+                      "approach_recommendation": "Highlight to Peter Cirulis how StreamERP can optimize financial processes and enhance profitability through better inventory management and predictive maintenance."
+                  },
+                  {
+                      "name": "Fred Di Tosto",
+                      "title": "President",
+                      "email": "",
+                      "phone": "",
+                      "linkedin": "",
+                      "source_url": "https://www.martinrea.com/press-release/fred-di-tosto-appointed-president-of-martinrea-international-inc/",
+                      "relevance_score": 85,
+                      "relevant_info": "As President, Fred Di Tosto oversees operational aspects and would value StreamERP's capabilities in streamlining manufacturing and supply chain operations.",
+                      "approach_recommendation": "Engage Fred Di Tosto by discussing how StreamERP can enhance operational efficiency, improve production scheduling, and increase supply chain reliability."
+                  },
+                  {
+                      "name": "Armando Pagliari",
+                      "title": "Executive Vice President, Human Resources",
+                      "email": "",
+                      "phone": "",
+                      "linkedin": "",
+                      "source_url": "https://theorg.com/org/martinrea-international/teams/leadership-team",
+                      "relevance_score": 40,
+                      "relevant_info": "Though not directly involved in supply chain or manufacturing, Armando Pagliari's role in HR could influence organizational change and adoption of new technologies.",
+                      "approach_recommendation": "While not a primary contact, consider mentioning StreamERP's benefits in organizational efficiency and employee engagement to Armando Pagliari."
+                  },
+                  {
+                      "name": "Ganesh Iyer",
+                      "title": "Chief Technology Officer",
+                      "email": "",
+                      "phone": "",
+                      "linkedin": "",
+                      "source_url": "https://www.globaldata.com/company-profile/martinrea-international-inc/executives/",
+                      "relevance_score": 90,
+                      "relevant_info": "As CTO, Ganesh Iyer is responsible for technology and innovation, making him a key decision-maker for adopting cloud-based ERP solutions like StreamERP.",
+                      "approach_recommendation": "Engage Ganesh Iyer by highlighting StreamERP's technological advancements and how it aligns with Martinrea's strategic goals for digital transformation."
+                  },
+                  {
+                      "name": "Bruce Johnson",
+                      "title": "Executive Vice President, Martinrea Innovation Development",
+                      "email": "",
+                      "phone": "",
+                      "linkedin": "",
+                      "source_url": "https://theorg.com/org/martinrea-international/teams/leadership-team",
+                      "relevance_score": 80,
+                      "relevant_info": "Bruce Johnson's role involves innovation, which could include adopting advanced ERP systems to enhance Martinrea's competitive edge.",
+                      "approach_recommendation": "Discuss with Bruce Johnson how StreamERP can support innovation through data-driven insights and optimized operations."
+                  }
+              ]
+          }
+      },
+      {
+          "company_info": {
+              "name": "Accuride Corporation",
+              "website": "https://www.accuridewheels.com",
+              "description": "Accuride Corporation is a leading supplier of wheel end solutions to the global commercial vehicle industry.",
+              "industry": "Automotive Parts",
+              "location": "Evansville, IN, USA",
+              "employee_count": "100-200",
+              "annual_revenue": "$20M-$50M",
+              "relevant_info": "Accuride operates multiple production sites and is likely undergoing digital transformation in its operations.",
+              "relevance_score": 88,
+              "people_list": [
+                  {
+                      "name": "Skotti Fietsam",
+                      "title": "Senior Vice President, Supply Chain and CIO",
+                      "email": "",
+                      "phone": "",
+                      "linkedin": "",
+                      "source_url": "https://www.accuridecorp.com/about-accuride/leadership",
+                      "relevance_score": 90,
+                      "relevant_info": "Skotti Fietsam is a good fit due to his role in supply chain and IT, which aligns with the ERP solution's features.",
+                      "approach_recommendation": "Approach Skotti Fietsam by highlighting how StreamERP can enhance supply chain operations and IT infrastructure, improving efficiency and integration."
+                  },
+                  {
+                      "name": "Matt Freeman",
+                      "title": "Vice President, General Counsel",
+                      "email": "",
+                      "phone": "",
+                      "linkedin": "",
+                      "source_url": "https://www.accuridecorp.com/about-accuride/leadership",
+                      "relevance_score": 40,
+                      "relevant_info": "Matt Freeman's role is not directly related to operations or technical aspects but could influence legal aspects of adopting new software.",
+                      "approach_recommendation": "Matt Freeman may not be the primary contact, but mentioning legal compliance and risk management in ERP adoption could be beneficial in reaching other stakeholders."
+                  },
+                  {
+                      "name": "Geoff Bruce",
+                      "title": "President, Accuride Wheels",
+                      "email": "",
+                      "phone": "",
+                      "linkedin": "",
+                      "source_url": "https://www.prnewswire.com/news-releases/accuride-names-kent-jones-as-chief-executive-officer-302460766.html",
+                      "relevance_score": 80,
+                      "relevant_info": "Geoff Bruce recently stepped back into his role as President of Accuride Wheels, which might involve overseeing operational aspects relevant to ERP solutions.",
+                      "approach_recommendation": "Emphasize operational efficiency and how StreamERP can support growth in the wheels division."
+                  },
+                  {
+                      "name": "Kent Jones",
+                      "title": "Chief Executive Officer",
+                      "email": "",
+                      "phone": "",
+                      "linkedin": "",
+                      "source_url": "https://www.prnewswire.com/news-releases/accuride-names-kent-jones-as-chief-executive-officer-302460766.html",
+                      "relevance_score": 95,
+                      "relevant_info": "Kent Jones is the new CEO with a background in transforming operations. He could be interested in innovative solutions like StreamERP for future growth.",
+                      "approach_recommendation": "Approach Kent Jones by highlighting the transformative potential of StreamERP in driving innovation and growth within Accuride."
+                  }
+              ]
+          }
+      },
+      {
+          "company_info": {
+              "name": "Linamar Corporation",
+              "website": "https://www.linamar.com",
+              "description": "Linamar Corporation is a diversified global manufacturing company of highly engineered products across its Powertrain and Driveline, Industrial, and Skyjack segments.",
+              "industry": "Automotive Parts and Manufacturing",
+              "location": "Guelph, ON, Canada",
+              "employee_count": "100-200",
+              "annual_revenue": "$20M-$50M",
+              "relevant_info": "Linamar operates multiple production sites and is likely undergoing digital transformation in its operations.",
+              "relevance_score": 90,
+              "people_list": [
+                  {
+                      "name": "Chris Merchant",
+                      "title": "Global Vice President Of Finance & Information Technology",
+                      "email": "",
+                      "phone": "",
+                      "linkedin": "",
+                      "relevant_info": "Chris Merchant oversees both finance and IT, making him a key decision maker for implementing ERP solutions like StreamERP.",
+                      "relevance_score": 90,
+                      "approach_recommendation": "I would approach Chris Merchant by highlighting how StreamERP can integrate finance and IT operations seamlessly, enhancing efficiency and cost management.",
+                      "source_url": "https://www.theorg.com/org/linamar-corp/teams/leadership-team-1"
+                  },
+                  {
+                      "name": "Dale Schneider",
+                      "title": "Chief Financial Officer",
+                      "email": "",
+                      "phone": "",
+                      "linkedin": "",
+                      "relevant_info": "As CFO, Dale Schneider is crucial for financial decisions such as investing in ERP solutions that improve financial management and inventory optimization.",
+                      "relevance_score": 85,
+                      "approach_recommendation": "I would approach Dale Schneider by discussing how StreamERP can enhance financial reporting, compliance, and cost optimization.",
+                      "source_url": "https://www.globaldata.com/company-profile/linamar-corp/executives/"
+                  },
+                  {
+                      "name": "Jim Jarrell",
+                      "title": "CEO & President",
+                      "email": "",
+                      "phone": "",
+                      "linkedin": "",
+                      "relevant_info": "Jim Jarrell is the CEO and President, overseeing the strategic direction of Linamar. He is a key contact for major technology investments like StreamERP.",
+                      "relevance_score": 95,
+                      "approach_recommendation": "I would approach Jim Jarrell by highlighting the strategic benefits of StreamERP in aligning with Linamar's long-term growth strategy and enhancing operational efficiency.",
+                      "source_url": "https://www.linamar.com/wp-content/uploads/2025/03/2024-MIC-Final.pdf"
+                  },
+                  {
+                      "name": "Kevin Hallahan",
+                      "title": "Vice President, Investor Relations & Marketing",
+                      "email": "kevin.hallahan@linamar.com",
+                      "phone": "519-836-7550",
+                      "linkedin": "https://www.linkedin.com/in/kevin-hallahan",
+                      "relevant_info": "Kevin Hallahan handles investor relations and marketing, making him a useful contact for understanding Linamar's market and growth strategies.",
+                      "relevance_score": 80,
+                      "approach_recommendation": "I would approach Kevin Hallahan by discussing how StreamERP can enhance marketing and investor relations through better data management and visibility.",
+                      "source_url": "https://www.linamar.com/wp-content/uploads/2025/04/Investor-Presentation_March_2025.pdf"
+                  },
+                  {
+                      "name": "Roxanne Rose",
+                      "title": "Vice President, Global Human Resources",
+                      "email": "",
+                      "phone": "",
+                      "linkedin": "",
+                      "relevant_info": "Roxanne Rose is involved in HR, which could be relevant for ERP systems that manage employee data and processes.",
+                      "relevance_score": 70,
+                      "approach_recommendation": "I would approach Roxanne Rose by discussing how StreamERP's HR modules can streamline employee management and organizational processes.",
+                      "source_url": "https://www.theorg.com/org/linamar-corp/teams/leadership-team-1"
+                  }
+              ]
+          }
+      }
+  ]
+}
