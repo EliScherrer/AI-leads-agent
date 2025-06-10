@@ -5,7 +5,7 @@ import json
 from dotenv import load_dotenv
 
 from autogen import Agent, config_list_from_json, ConversableAgent
-from agents.perplexity_agent import PerplexityAgent
+from agents.perplexity_client import PerplexityClient
 from agents.prompts import PERPLEXITY_PEOPLE_FINDER_SYSTEM_MESSAGE, PERPLEXITY_PEOPLE_ENRICHMENT_SYSTEM_MESSAGE
 
 load_dotenv()
@@ -71,8 +71,8 @@ class PeopleFinderAgent(ConversableAgent):
         # Load config once at startup
         config_list = config_list_from_json(env_or_file="OAI_CONFIG_LIST")
 
-        # init PerplexityAgent
-        self.perplexity_agent = PerplexityAgent()
+        # init PerplexityClient
+        self.perplexity_client = PerplexityClient()
 
         # init self agent that will act as the formatting agent
         super().__init__(
@@ -127,8 +127,8 @@ class PeopleFinderAgent(ConversableAgent):
             print(f"Prompt: {prompt}")
 
             try:
-                # Use PerplexityAgent to search for people at this company
-                people_results = self.perplexity_agent.search(PERPLEXITY_PEOPLE_FINDER_SYSTEM_MESSAGE, prompt)
+                # Use PerplexityClient to search for people at this company
+                people_results = self.perplexity_client.search(PERPLEXITY_PEOPLE_FINDER_SYSTEM_MESSAGE, prompt)
                 print(f"People results: {people_results}")
             except Exception as e:
                 print(f"Error searching for people at {company_info.get('name', '')}: {e}")
@@ -165,7 +165,7 @@ class PeopleFinderAgent(ConversableAgent):
                 print(f"Prompt: {enrichment_prompt}")
 
                 try:
-                    enrichment_result = self.perplexity_agent.search(PERPLEXITY_PEOPLE_ENRICHMENT_SYSTEM_MESSAGE, enrichment_prompt)
+                    enrichment_result = self.perplexity_client.search(PERPLEXITY_PEOPLE_ENRICHMENT_SYSTEM_MESSAGE, enrichment_prompt)
                     print(f"Enrichment result: {enrichment_result}")
                 except Exception as e:
                     print(f"Error enriching contact info for {person.get('name', '')}: {e}")

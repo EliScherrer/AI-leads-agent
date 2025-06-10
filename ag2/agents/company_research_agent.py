@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 from autogen import Agent, config_list_from_json, ConversableAgent
 from agents.prompts import PERPLEXITY_COMPANY_RESEARCH_SYSTEM_MESSAGE, COMPANY_LIST_FORMATTER_SYSTEM_MESSAGE
 
-from agents.perplexity_agent import PerplexityAgent
+from agents.perplexity_client import PerplexityClient
 
 load_dotenv()
 
@@ -91,7 +91,7 @@ class CompanyResearchAgent(ConversableAgent):
         # Load config once at startup
         config_list = config_list_from_json(env_or_file="OAI_CONFIG_LIST")
 
-        self.perplexity_agent = PerplexityAgent()
+        self.perplexity_client = PerplexityClient()
         
         self.formatter_agent = ConversableAgent(
             name="FormatterAgent",
@@ -129,12 +129,12 @@ class CompanyResearchAgent(ConversableAgent):
         print("-------------CompanyResearchAgent reply-------------------")
         print(reply)
 
-        # Search for companies using the PerplexityAgent
-        searchResponse = self.perplexity_agent.search(PERPLEXITY_COMPANY_RESEARCH_SYSTEM_MESSAGE, reply)
-        print("-------------perplexity_agent company response-------------------")
+        # Search for companies using the PerplexityClient
+        searchResponse = self.perplexity_client.search(PERPLEXITY_COMPANY_RESEARCH_SYSTEM_MESSAGE, reply)
+        print("-------------perplexity_client company response-------------------")
         print(searchResponse)
 
-        # Format the response from the PerplexityAgent
+        # Format the response from the PerplexityClient
         user_message = {
             "role": "user",
             "content": searchResponse

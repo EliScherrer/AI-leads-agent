@@ -1,4 +1,7 @@
 import asyncio
+import nest_asyncio
+import time
+
 from typing import Any
 from autogen import config_list_from_json, UserProxyAgent
 from autogen.agentchat import initiate_group_chat
@@ -8,12 +11,8 @@ from agents.company_research_agent import CompanyResearchAgent
 from agents.people_finder_agent import PeopleFinderAgent
 from agents.contact_enrichment_agent import ContactEnrichmentAgent
 from agents.lead_scoring_agent import LeadScoringAgent
-from agents.tsv_output_agent import TSVOutputAgent
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
-from datetime import datetime
-
-import nest_asyncio
 
 nest_asyncio.apply()
 app = FastAPI()
@@ -429,7 +428,7 @@ leadsTestData = """
             "phone": "(604) 718-2000",
             "linkedin": "",
             "relevant_info": "Dan Sceli is the CEO and Director of Westport Fuel Systems, responsible for strategic direction. His leadership in manufacturing and commitment to sustainability aligns with the ERP solution's focus on operational efficiency and environmental sustainability.",
-            "relevance_score": 85,
+            "relevance_score": 83,
             "approach_reccomendation": "Approach Dan Sceli by highlighting how StreamERP can enhance operational efficiency and support sustainability goals in the automotive manufacturing sector.",
             "notes": "The email is a best-guess assumption based on the pattern d***@wfsinc.com from ZoomInfo and the publicly available (604) 718-2000 corporate phone number for Westport Fuel Systems.",
             "source_urls": [
@@ -451,7 +450,7 @@ leadsTestData = """
             "phone": "248-420-....",
             "linkedin": "",
             "relevant_info": "Simon Kew is associated with Magna Seating and has been involved in various leadership roles.",
-            "relevance_score": 90,
+            "relevance_score": 91,
             "approach_reccomendation": "Approach Simon Kew by highlighting the importance of automotive seating solutions and the potential for collaboration or innovation in the industry.",
             "notes": "The role of Simon Kew is noted differently across sources; some mention him as President, while others specify Vice President NA JIT Operations.",
             "source_urls": [
@@ -474,7 +473,7 @@ leadsTestData = """
             "phone": "(289) 982-3020",
             "linkedin": "",
             "relevant_info": "Fred Di Tosto serves as President for Martinrea International, based in Concord, Ontario effective July 1, 2024. He previously served as CFO since 2011 and has held other executive roles including EVP of its Flexible Manufacturing Group and EVP, Corporate Strategy.",
-            "relevance_score": 95,
+            "relevance_score": 96,
             "approach_reccomendation": "I would approach Fred Di Tosto by saying: 'Hello Fred, I represent [your organization or product] and am reaching out regarding opportunities in automotive supply chain innovation and leadership. As President of Martinrea International, I believe you share our vision for operational excellence and growth. Would you be open to a brief conversation?'",
             "notes": "The email is partially obscured in ZoomInfo; it is likely f.ditosto@martinrea.com, as this matches the company's standard email format and Fred's initials.",
             "source_urls": [
@@ -497,7 +496,7 @@ leadsTestData = """
             "phone": "",
             "linkedin": "",
             "relevant_info": "As CFO, Peter Cirulis is responsible for financial strategies and would be interested in the financial optimization aspects of StreamERP.",
-            "relevance_score": 95,
+            "relevance_score": 93,
             "approach_reccomendation": "Emphasize how StreamERP can improve financial management and support growth initiatives.",
             "notes": "Peter Cirulis's recent appointment as CFO indicates his critical role in financial decision-making.",
             "source_urls": [
@@ -519,7 +518,7 @@ leadsTestData = """
             "phone": "(812) ***-****",
             "linkedin": "",
             "relevant_info": "Skotti Fietsam handles supply chain and IT responsibilities, making them a relevant contact for StreamERP.",
-            "relevance_score": 90,
+            "relevance_score": 92,
             "approach_reccomendation": "Reach out to Skotti Fietsam by highlighting how StreamERP can improve supply chain efficiency and IT integration.",
             "notes": "Skotti's role involves both supply chain and IT, making them a key decision maker for ERP solutions.",
             "source_urls": [
@@ -540,7 +539,7 @@ leadsTestData = """
             "phone": "815288....",
             "linkedin": "",
             "relevant_info": "Geoff Bruce, as President of Accuride Wheels, could be interested in operational improvements offered by StreamERP.",
-            "relevance_score": 95,
+            "relevance_score": 94,
             "approach_reccomendation": "Emphasize how StreamERP can enhance operational efficiency and customer delivery in the wheel manufacturing sector.",
             "notes": "Geoff Bruce's role focuses on wheel operations, making him a potential decision maker for operational improvements.",
             "source_urls": [
@@ -582,7 +581,7 @@ leadsTestData = """
             "phone": "519-836-****",
             "linkedin": "",
             "relevant_info": "Jim Jarrell serves as the CEO and President of Linamar Corporation, responsible for overall strategic direction. His role involves overseeing major operations and strategic decisions which align with the need for ERP solutions.",
-            "relevance_score": 90,
+            "relevance_score": 87,
             "approach_reccomendation": "Approach Jim Jarrell by highlighting strategic partnerships or innovative solutions that align with Linamar's global expansion and operational goals.",
             "notes": "The phone number is partial and sourced from various directories. The LinkedIn profile was not found due to privacy settings or lack of public information.",
             "source_urls": [
@@ -605,7 +604,7 @@ leadsTestData = """
             "phone": "(519) ***-****",
             "linkedin": "",
             "relevant_info": "Dale Schneider is the CFO of Linamar Corporation, playing a crucial role in financial planning and investment decisions. His focus on financial management aligns with the cost optimization features of StreamERP.",
-            "relevance_score": 90,
+            "relevance_score": 88,
             "approach_reccomendation": "I would approach Dale Schneider by emphasizing how StreamERP can help streamline financial operations and improve cost management across Linamar's operations.",
             "notes": "The phone number and email are partially masked for privacy.",
             "source_urls": [
@@ -627,7 +626,7 @@ leadsTestData = """
             "phone": "519-836-XXXX",
             "linkedin": "",
             "relevant_info": "Chris Merchant has been with Linamar Corporation since 1999 and has served as Global Vice President of Finance & Information Technology.",
-            "relevance_score": 85,
+            "relevance_score": 82,
             "approach_reccomendation": "Contact through corporate channels or phone number provided. Consider reaching out via Linamar's corporate contact form referencing his title for appropriate routing.",
             "notes": "Email addresses were not publicly provided in full; phone number partially obtained but not complete.",
             "source_urls": [
@@ -673,7 +672,7 @@ leadsTestData = """
             "phone": "",
             "linkedin": "",
             "relevant_info": "Mark Stoddart is a seasoned executive with extensive experience in the automotive sector, joining Linamar in 1985.",
-            "relevance_score": 85,
+            "relevance_score": 84,
             "approach_reccomendation": "I would approach Mark Stoddart by highlighting expertise in automotive technology and marketing strategies, emphasizing how your solutions align with Linamar's focus on innovative manufacturing solutions.",
             "notes": "I couldn't find a complete, verified email address or a LinkedIn profile.",
             "source_urls": [
@@ -705,7 +704,6 @@ companyResearchAgent = CompanyResearchAgent()
 peopleFinderAgent = PeopleFinderAgent()
 contactEnrichmentAgent = ContactEnrichmentAgent()
 leadScoringAgent = LeadScoringAgent()
-tsvOutputAgent = TSVOutputAgent()
 
 @app.post("/chat")
 async def chat(request: Request):
@@ -721,8 +719,6 @@ async def chat(request: Request):
 
     if results["complete"]:
         asyncio.create_task(processIntakeData(user_agent))
-        # asyncio.create_task(runOrchestrator(user_agent))
-        
     
     return results
 
@@ -750,6 +746,7 @@ async def newSession(request: Request):
     return results
 
 async def processIntakeData(userId: str):
+    return
     print("-------------started lead generation-------------------")
     intakeInfoString = intakeAgent.intake_data
     # get company list

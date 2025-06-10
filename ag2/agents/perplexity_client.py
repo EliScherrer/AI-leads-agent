@@ -1,4 +1,4 @@
-# agents/perplexity_agent.py
+# agents/perplexity_client.py
 import json
 import os
 import requests
@@ -12,7 +12,7 @@ load_dotenv()
 # ---------------------------------------------------------------------------
 # Agent definition
 # ---------------------------------------------------------------------------
-class PerplexityAgent():
+class PerplexityClient():
     """
     Specialist agent for interacting with the Perplexity API and gathering information from the web.
 
