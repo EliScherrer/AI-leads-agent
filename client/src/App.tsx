@@ -106,6 +106,7 @@ export default function App() {
               boxShadow="md"
               mt={2}
               bg="teal.500"
+              _hover={{ bg: 'teal.600' }}
               pos="absolute" bottom="10" right="10"
               loading={isLoadingLeads}
               disabled={isLoadingLeads}

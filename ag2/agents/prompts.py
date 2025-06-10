@@ -103,8 +103,6 @@ Rules:
 - Avoid fake-looking LinkedIn URLs and emails (e.g., generic patterns or placeholders).
 - Fill in empty strings for any missing data.
 
-Input:
-You will receive structured JSON input containing company_info, product_info, ICP, and a company_list (companies matching the ICP).
 
 Output:
 Return a JSON object in the following format (add more fields if relevant data is found):
@@ -123,6 +121,39 @@ Return a JSON object in the following format (add more fields if relevant data i
             "source_urls": ["https://www.supplystreamtech.com/people/john-doe"]
         }
     ]
+}
+""".strip()
+
+PERPLEXITY_PEOPLE_ENRICHMENT_SYSTEM_MESSAGE = """
+You are a helpful AI assistant. Your task is to find the most up to date and accurate contact information (phone, email, linkedin url) for a person.
+
+Rules:
+- Only output the final answer as a JSON object. Do not include any explanations, intermediate steps, or markdown formatting.
+- If you do not have data for a field, use an empty string.
+- Do not include anything outside the JSON object.
+- For each person, provide: name, title, email, phone, linkedin, source_urls (where you found the info).
+- If you make an assumption, state it in the notes field and lower the relevance_score. Always append to the notes field, do not overwrite it.
+- in each field only include that data, any explanations should be appeneded to the notes field.
+- include a source_urls field that is an array of urls where you found the info.
+- Avoid fake-looking LinkedIn URLs and emails (e.g., generic patterns or placeholders).
+- Fill in empty strings for any missing data.
+
+
+Output:
+Return a JSON object in the following format (add more fields if relevant data is found):
+{
+    "person_info": {
+        "name": "John Doe",
+        "title": "COO",
+        "email": "john.doe@supplystreamtech.com",
+        "phone": "123-456-7890",
+        "linkedin": "https://www.linkedin.com/in/john-doe-1234567890",
+        "relevant_info": "John Doe is the COO of SupplyStream Technologies and is responsible for the overall operations of the company.",
+        "relevance_score": 95,
+        "approach_reccomendation": "I would approach John Doe by saying 'Hello, I'm from SupplyStream Technologies and we provide AI-driven ERP solutions for mid-sized automotive manufacturers. We're looking for a COO like you who is interested in digital transformation and streamlining operations. Would you be interested in a demo?'",
+        "notes": "I found this information on the company website. The phone number I'm not sure if it's still valid. the email might be John's or steve hammond's",
+        "source_urls": ["https://www.supplystreamtech.com/people/john-doe"]
+    }
 }
 """.strip()
 

@@ -1,15 +1,11 @@
 # agents/perplexity_agent.py
-import os
 import json
+import os
+import requests
 
 from dotenv import load_dotenv
-from autogen import Agent, config_list_from_json, ConversableAgent, AssistantAgent
-from autogen.tools.experimental import PerplexitySearchTool
 from jsonschema import ValidationError
 from pydantic import BaseModel
-from requests import RequestException
-import requests
-from agents.prompts import PERPLEXITY_COMPANY_RESEARCH_SYSTEM_MESSAGE
 
 load_dotenv()
 
@@ -18,7 +14,7 @@ load_dotenv()
 # ---------------------------------------------------------------------------
 class PerplexityAgent():
     """
-    Specialist agent for gathering company information given background information from the user.
+    Specialist agent for interacting with the Perplexity API and gathering information from the web.
 
     Parameters TODO
     ----------
@@ -27,10 +23,6 @@ class PerplexityAgent():
     def __init__(
         self,
     ):
-        # Load config once at startup
-        # config_list = config_list_from_json(env_or_file="OAI_CONFIG_LIST")
-        # self.perplexity_api_key = os.getenv("PERPLEXITY_API_KEY")
-
         self.API_URL = "https://api.perplexity.ai/chat/completions"
         self.headers = {
             "accept": "application/json",
@@ -40,18 +32,6 @@ class PerplexityAgent():
         self.model = "sonar"
         self.max_tokens = 1000
         self.web_search_options = {"search_context_size": "high"}
-
-        # Register the tool for LLM recommendation and execution.
-        # self.perplexity_search_tool.register_for_llm(self)
-        #"messages": [
-        #     {"role": "system", "content": self.system_prompt},
-        #     {"role": "user", "content": query}
-        # ]
-        # add the PerplexitySearchTool to the agent
-        # self.perplexity_search_tool = PerplexitySearchTool(
-        #     api_key=os.getenv("PERPLEXITY_API_KEY"),
-        #     max_tokens=1000
-        # )
 
 
     def search(self, system_prompt: str, user_prompt: str) -> str:

@@ -233,7 +233,7 @@ export const DataTable = ({ data }: DataTableProps) => {
 
   return (
     <Box maxW="container.md" px={5}>
-    <Box borderWidth="1px" borderColor="gray.500" borderRadius="lg" overflow="hidden" bg="white" mb={50}>
+    <Box borderWidth="2px" borderColor="gray.950" borderRadius="lg" overflow="hidden" bg="white" mb={50}>
       <HStack mb={4} justify="space-between" p={4} borderBottomWidth="1px">
         <Text color="gray.800" fontSize="sm">
           {sortedAndFilteredData.length} / {data.length} Rows Filtered

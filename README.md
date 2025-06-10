@@ -11,8 +11,9 @@ Build an AI agent that can search the web to create a list of high quality leads
     1. cd /express-server
     2. `npm i`
     3. `node server.js`
-3. Add openAI keys
+3. Add keys
     1. edit /ag2/OAI_CONFI_LIST_sample and rename to OAI_CONFI_LIST
+    2. add a .env file with your PERPLEXITY_API_KEY
 4. Start ag2 agent
     1. cd /ag2
     2. `pip install -U ag2[openai,browser-use]`
