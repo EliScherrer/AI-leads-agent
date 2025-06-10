@@ -397,3 +397,184 @@
       }
   ]
 }
+{
+  "complete": true,
+  "leads_list": [
+      {
+          "name": "Rubina Ali",
+          "title": "Chief Information Officer",
+          "email": "",
+          "phone": "",
+          "linkedin": "",
+          "relevant_info": "Rubina Ali is the Chief Information Officer at Flex-N-Gate and is likely responsible for IT decisions, making her a good fit for discussing cloud-based ERP solutions.",
+          "relevance_score": 90,
+          "approach_reccomendation": "Approach Rubina Ali by highlighting how StreamERP can enhance IT infrastructure and support digital transformation within Flex-N-Gate's operations.",
+          "notes": "Rubina Ali's role suggests she would be interested in ERP solutions that improve IT operations.",
+          "source_urls": ["https://rocketreach.co/flex-n-gate-management_b5c6c1d2f42e0ccf"],
+          "company_info": {
+              "name": "Flex-N-Gate Corporation",
+              "website": "https://flex-n-gate.com",
+              "description": "Manufactures interior and exterior plastics, metal bumpers, and towing devices for the automotive industry.",
+              "industry": "Automotive Parts Manufacturing",
+              "location": "Urbana, IL, USA",
+              "employee_count": "Over 20,000 globally but likely smaller relevant units",
+              "annual_revenue": "$7,024M",
+              "relevant_info": "Flex-N-Gate operates multiple production sites and is likely undergoing digital transformation to remain competitive."
+          }
+      },
+      {
+          "name": "Dan Palazzolo",
+          "title": "Chief Financial Officer",
+          "email": "",
+          "phone": "",
+          "linkedin": "",
+          "relevant_info": "Dan Palazzolo, as the CFO, could be interested in cost optimization and financial management aspects of StreamERP.",
+          "relevance_score": 85,
+          "approach_reccomendation": "Highlight to Dan Palazzolo how StreamERP can help streamline financial operations and improve cost efficiency.",
+          "notes": "CFOs often focus on financial optimization, making them interested in cost-effective ERP solutions.",
+          "source_urls": ["https://www.cbinsights.com/company/flex-n-gate/people"],
+          "company_info": {
+              "name": "Flex-N-Gate Corporation",
+              "website": "https://flex-n-gate.com",
+              "description": "Manufactures interior and exterior plastics, metal bumpers, and towing devices for the automotive industry.",
+              "industry": "Automotive Parts Manufacturing",
+              "location": "Urbana, IL, USA",
+              "employee_count": "Over 20,000 globally but likely smaller relevant units",
+              "annual_revenue": "$7,024M",
+              "relevant_info": "Flex-N-Gate operates multiple production sites and is likely undergoing digital transformation to remain competitive."
+          }
+      },
+      {
+          "name": "Michael J. Lynch",
+          "title": "President & COO",
+          "email": "",
+          "phone": "",
+          "linkedin": "",
+          "relevant_info": "Michael J. Lynch is the President & COO of American Axle & Manufacturing Holdings Inc., responsible for overseeing operations. His role makes him a good fit for discussing operational improvements and digital transformation.",
+          "relevance_score": 90,
+          "approach_reccomendation": "Reach out to Michael J. Lynch by highlighting how StreamERP can enhance operational efficiency and streamline processes, emphasizing the benefits of cloud-based solutions for automotive suppliers.",
+          "notes": "Could not find email or LinkedIn URL for Michael J. Lynch. Assumed relevance based on title.",
+          "source_urls": ["https://www.aam.com/who-we-are/leadership", "https://www.globaldata.com/company-profile/american-axle-manufacturing-holdings-inc/executives/"],
+          "company_info": {
+              "name": "American Axle & Manufacturing Holdings Inc.",
+              "website": "https://www.aam.com",
+              "description": "Specializes in driveline and metal forming components for the automotive industry.",
+              "industry": "Automotive Parts Manufacturing",
+              "location": "Detroit, MI, USA",
+              "employee_count": "Over 20,000 globally",
+              "annual_revenue": "$4,441M",
+              "relevant_info": "American Axle operates multiple production sites and is involved in digital transformation to enhance efficiency."
+          }
+      },
+      {
+          "name": "Christopher J. May",
+          "title": "Executive VP & CFO",
+          "email": "",
+          "phone": "",
+          "linkedin": "",
+          "relevant_info": "As the Executive VP & CFO, Christopher J. May oversees financial operations. He is a key decision-maker for financial and strategic investments, such as implementing new ERP solutions.",
+          "relevance_score": 85,
+          "approach_reccomendation": "Approach Christopher J. May by discussing the financial benefits and ROI of StreamERP, highlighting how it can improve financial management and planning.",
+          "notes": "Could not find email or LinkedIn URL for Christopher J. May. Assumed relevance based on title.",
+          "source_urls": ["https://www.globaldata.com/company-profile/american-axle-manufacturing-holdings-inc/executives/", "https://www.aam.com/who-we-are/leadership"],
+          "company_info": {
+              "name": "American Axle & Manufacturing Holdings Inc.",
+              "website": "https://www.aam.com",
+              "description": "Specializes in driveline and metal forming components for the automotive industry.",
+              "industry": "Automotive Parts Manufacturing",
+              "location": "Detroit, MI, USA",
+              "employee_count": "Over 20,000 globally",
+              "annual_revenue": "$4,441M",
+              "relevant_info": "American Axle operates multiple production sites and is involved in digital transformation to enhance efficiency."
+          }
+      },
+      {
+          "name": "Joseph Fadool",
+          "title": "President and CEO",
+          "email": "",
+          "phone": "",
+          "linkedin": "",
+          "relevant_info": "Joseph Fadool is the President and CEO of BorgWarner, overseeing the company's strategic direction and operations. He could be interested in enterprise solutions like StreamERP.",
+          "relevance_score": 90,
+          "approach_reccomendation": "Approach Joseph Fadool by highlighting StreamERP's ability to enhance operational efficiency and strategic alignment across BorgWarner's diverse product lines.",
+          "notes": "Joseph Fadool's role as CEO positions him as a key decision-maker for strategic investments in technology and operations.",
+          "source_urls": ["https://www.borgwarner.com/newsroom/press-releases/2024/11/07/borgwarner-announces-ceo-succession-plan", "https://www.borgwarner.com/company/leadership"],
+          "company_info": {
+              "name": "BorgWarner Inc.",
+              "website": "https://www.borgwarner.com",
+              "description": "Provides innovative solutions for combustion, hybrid and electric vehicles.",
+              "industry": "Automotive Parts Manufacturing",
+              "location": "Auburn Hills, MI, USA",
+              "employee_count": "Over 50,000 globally",
+              "annual_revenue": "$14.84B",
+              "relevant_info": "BorgWarner operates globally and is undergoing significant digital transformation to support electric vehicle technologies."
+          }
+      },
+      {
+          "name": "Craig D. Aaron",
+          "title": "Executive Vice President and Chief Financial Officer",
+          "email": "",
+          "phone": "",
+          "linkedin": "",
+          "relevant_info": "Craig Aaron is responsible for financial planning and operations. He could be interested in how StreamERP can optimize financial management and supply chain operations.",
+          "relevance_score": 85,
+          "approach_reccomendation": "Approach Craig Aaron by discussing how StreamERP can streamline financial processes and enhance supply chain efficiency.",
+          "notes": "As CFO, Craig Aaron is likely interested in cost-saving and efficiency-enhancing solutions.",
+          "source_urls": ["https://www.borgwarner.com/company/leadership", "https://www.globaldata.com/company-profile/borgwarner-inc/executives/"],
+          "company_info": {
+              "name": "BorgWarner Inc.",
+              "website": "https://www.borgwarner.com",
+              "description": "Provides innovative solutions for combustion, hybrid and electric vehicles.",
+              "industry": "Automotive Parts Manufacturing",
+              "location": "Auburn Hills, MI, USA",
+              "employee_count": "Over 50,000 globally",
+              "annual_revenue": "$14.84B",
+              "relevant_info": "BorgWarner operates globally and is undergoing significant digital transformation to support electric vehicle technologies."
+          }
+      },
+      {
+          "name": "Jim Jarrell",
+          "title": "CEO & President",
+          "email": "",
+          "phone": "",
+          "linkedin": "",
+          "relevant_info": "Jim Jarrell is the CEO and President of Linamar Corporation, overseeing overall strategy and operations, which includes aspects relevant to ERP solutions.",
+          "relevance_score": 90,
+          "approach_reccomendation": "Approach Jim Jarrell by highlighting the strategic benefits of StreamERP in enhancing operational efficiency and decision-making for automotive suppliers.",
+          "notes": "I inferred relevance based on his role as CEO and President, which likely involves overseeing operations and technology decisions.",
+          "source_urls": ["https://www.linamar.com/team/jim-jarrell/", "https://www.linamar.com/wp-content/uploads/2025/03/2024-MIC-Final.pdf"],
+          "company_info": {
+              "name": "Linamar Corporation",
+              "website": "https://www.linamar.com",
+              "description": "Manufacturer of precision metallic components for the automotive industry.",
+              "industry": "Automotive Parts Manufacturing",
+              "location": "Guelph, ON, Canada",
+              "employee_count": "Over 20,000 globally",
+              "annual_revenue": "$5B+ CAD",
+              "relevant_info": "Linamar operates multiple production sites and is involved in digital transformation efforts."
+          }
+      },
+      {
+          "name": "Dale Schneider",
+          "title": "Chief Financial Officer",
+          "email": "",
+          "phone": "",
+          "linkedin": "",
+          "relevant_info": "As CFO, Dale Schneider is responsible for financial strategies and operations, making him a key decision-maker for ERP systems.",
+          "relevance_score": 95,
+          "approach_reccomendation": "Engage Dale Schneider by discussing the financial benefits and cost optimizations offered by StreamERP.",
+          "notes": "I inferred his role's relevance based on typical CFO responsibilities.",
+          "source_urls": ["https://www.globaldata.com/company-profile/linamar-corp/executives/"],
+          "company_info": {
+              "name": "Linamar Corporation",
+              "website": "https://www.linamar.com",
+              "description": "Manufacturer of precision metallic components for the automotive industry.",
+              "industry": "Automotive Parts Manufacturing",
+              "location": "Guelph, ON, Canada",
+              "employee_count": "Over 20,000 globally",
+              "annual_revenue": "$5B+ CAD",
+              "relevant_info": "Linamar operates multiple production sites and is involved in digital transformation efforts."
+          }
+      }
+  ]
+}

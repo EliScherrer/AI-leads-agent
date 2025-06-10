@@ -152,26 +152,24 @@ export const ChatWindow = ({ onSendMessage }: ChatWindowProps) => {
             borderColor="gray.950"
           >
             <Flex gap={2}>
-            <Button onClick={handleNewSession} bg="red.500">
-              <FaRegTrashAlt/> Clear Session
-            </Button>
+              <Button onClick={handleNewSession} bg="red.500" _hover={{ bg: 'red.600' }}>
+                <FaRegTrashAlt/> Clear Session
+              </Button>
               <Input
-                value={inputValue}
-                onChange={(e) => setInputValue(e.target.value)}
-                onKeyPress={handleKeyPress}
-                placeholder="Type your message..."
-                disabled={isLoading}
-                borderWidth="1px"
-                borderColor="gray.950"
+                  value={inputValue}
+                  onChange={(e) => setInputValue(e.target.value)}
+                  onKeyPress={handleKeyPress}
+                  placeholder="Type your message..."
+                  disabled={isLoading}
+                  borderWidth="1px"
+                  borderColor="gray.950"
               />
               <IconButton
-                colorScheme="blue"
-                aria-label="Send message"
-                onClick={handleSend}
-                loading={isLoading}
-              >
-                <LuSearch />
-              </IconButton>
+                  colorScheme="blue"
+                  aria-label="Send message"
+                  onClick={handleSend}
+                  loading={isLoading}
+              ><LuSearch /></IconButton>
             </Flex>
           </Box>
         </VStack>

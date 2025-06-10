@@ -74,7 +74,7 @@ export default function App() {
         <Box w="full" maxW="container.md">
           <ChatWindow onSendMessage={handleSendMessage} />
         </Box>
-        <Box
+        {tableData.length === 0 && <Box
           id="get-leads-list-explanation"
           p={8}
           bg="gray.300"
@@ -99,7 +99,7 @@ export default function App() {
           >
             When the chat bot tells you that the intake data has been collected, you can click the button below to get the leads list. It usually takes about 2 minutes after the intake data has been collected to generate the leads list.
           </Text>
-          {tableData.length === 0 && <Button
+          <Button
               size="lg"
               fontWeight="bold"
               px={8}
@@ -112,10 +112,10 @@ export default function App() {
               onClick={handleGetLeads}
             >
               <AiOutlineCloudDownload /> Show Leads List
-            </Button>}
-        </Box>
+            </Button>
+        </Box>}
 
-        <Box w="full" maxW="container.md">
+        <Box w="full">
           {tableData.length > 0 && <DataTable data={tableData} />}
         </Box>
       </VStack>

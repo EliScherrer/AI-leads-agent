@@ -165,13 +165,13 @@ export const DataTable = ({ data }: DataTableProps) => {
 
   const getHeaderIcon = (header: string) => {
     if (header === 'email' || header === 'phone' || header === 'linkedin') {
-      return <Icon as={RiContactsBook2Line} ml={2} color="gray.400" />;
+      return <Icon as={RiContactsBook2Line} ml={2} color="blue.600" />;
     } else if (header === 'company_info') {
-      return <Icon as={MdOutlineBusinessCenter} ml={2} color="gray.400" />;
+      return <Icon as={MdOutlineBusinessCenter} ml={2} color="blue.600" />;
     } else if (header === 'name' || header === 'title') {
-      return <Icon as={MdPerson} ml={2} color="gray.400" />;
+      return <Icon as={MdPerson} ml={2} color="gray.950" />;
     }
-    return <Icon as={FaInfoCircle} ml={2} color="gray.400" />;
+    return <Icon as={FaInfoCircle} ml={2} color="yellow.300" />;
   };
 
   const handleCellCopy = (value: string) => {
@@ -186,8 +186,8 @@ export const DataTable = ({ data }: DataTableProps) => {
   const renderRow = (lead: LeadInfo, rowIndex: number) => (
     <Table.Row 
       key={rowIndex}
-      _hover={{ bg: 'gray.50' }}
-      _even={{ bg: 'gray.50' }}
+      _hover={{ bg: 'gray.200' }}
+      _even={{ bg: 'gray.100' }}
     >
       <Table.Cell
         color="gray.500"
@@ -195,7 +195,7 @@ export const DataTable = ({ data }: DataTableProps) => {
         width="50px"
         onClick={() => handleCellCopy(String(rowIndex + 1))}
         cursor="pointer"
-        _hover={{ bg: 'gray.100' }}
+        _hover={{ bg: 'gray.200' }}
       >
         {rowIndex + 1}
       </Table.Cell>
@@ -217,12 +217,12 @@ export const DataTable = ({ data }: DataTableProps) => {
             overflow="hidden"
             textOverflow="ellipsis"
             whiteSpace="nowrap"
-            color="gray.500"
+            color="black"
             // title={header === "company_info" ? JSON.stringify(lead.lead_info.company_info, null, 2) : cellValue}
             title={header === "company_info" ? JSON.stringify(lead.company_info, null, 2) : cellValue}
             onClick={() => handleCellCopy(cellValue)}
             cursor="pointer"
-            _hover={{ bg: 'gray.100' }}
+            _hover={{ bg: 'gray.200' }}
           >
             {cellValue}
           </Table.Cell>
@@ -232,13 +232,14 @@ export const DataTable = ({ data }: DataTableProps) => {
   );
 
   return (
-    <Box borderWidth="1px" borderRadius="lg" overflow="hidden" bg="white" mb={50}>
+    <Box maxW="container.md" px={5}>
+    <Box borderWidth="1px" borderColor="gray.500" borderRadius="lg" overflow="hidden" bg="white" mb={50}>
       <HStack mb={4} justify="space-between" p={4} borderBottomWidth="1px">
-        <Text color="gray.600" fontSize="sm">
+        <Text color="gray.800" fontSize="sm">
           {sortedAndFilteredData.length} / {data.length} Rows Filtered
         </Text>
-        <Text color="gray.600" fontSize="sm">
-          <Icon as={FaRegCopy} ml={2} color="gray.400" /> Click on a cell to copy the value
+        <Text color="gray.800" fontSize="sm">
+          <Icon as={FaRegCopy} ml={2} color="gray.600" /> Click on a cell to copy the value
         </Text>
         <Input
           placeholder="Search..."
@@ -248,6 +249,8 @@ export const DataTable = ({ data }: DataTableProps) => {
           size="sm"
           borderRadius="md"
           color="gray.500"
+          borderWidth="1px"
+          borderColor="gray.950"
         />
       </HStack>
 
@@ -268,7 +271,7 @@ export const DataTable = ({ data }: DataTableProps) => {
                   minW="150px"
                   cursor="pointer"
                   onClick={() => handleSort(header)}
-                  _hover={{ bg: 'gray.100' }}
+                  _hover={{ bg: 'gray.200' }}
                 >
                   <HStack gap={1} justify="space-between">
                     {getHeaderIcon(header)}
@@ -286,14 +289,19 @@ export const DataTable = ({ data }: DataTableProps) => {
           </Table.Body>
         </Table.Root>
       </Box>
-      <Button
-        size="lg"
-        onClick={handleDownload}
-        variant="solid"
-      >
-       <Icon as={FaFileDownload} ml={2} color="gray.400" /> Download Leads List
-      </Button>
+      <Box display="flex" justifyContent="flex-end" mt={1} p={1}>
+        <Button
+          size="lg"
+          onClick={handleDownload}
+          variant="solid"
+          bg="teal.500"
+          _hover={{ bg: 'teal.600' }}
+        >
+         <Icon as={FaFileDownload} ml={2} color="white" /> Download Leads List
+        </Button>
+      </Box>
       <Toaster />
+    </Box>
     </Box>
   );
 }; 
