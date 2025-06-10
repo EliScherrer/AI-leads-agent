@@ -8,17 +8,9 @@ from agents.company_research_agent import CompanyResearchAgent
 from agents.people_finder_agent import PeopleFinderAgent
 from agents.contact_enrichment_agent import ContactEnrichmentAgent
 from agents.lead_scoring_agent import LeadScoringAgent
-from agents.research_agent.research_agent import ResearchAgent
 from agents.tsv_output_agent import TSVOutputAgent
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
-from agents.research_agent.schemas import (
-    OrchestrationContext,
-    SessionDetails,
-    AgentsContext,
-    AgentContextEntry,
-)
-from agents.research_agent.my_context_vars import StrictContextVariables
 from datetime import datetime
 
 import nest_asyncio
@@ -162,31 +154,30 @@ async def processIntakeData(userId: str):
     print("-------------started lead generation-------------------")
     intakeInfoString = intakeAgent.intake_data
     # get company list
-    # companyListString = await companyResearchAgent.process_message(intakeAgent, intakeInfoString)
-    companyListString = companyTestData
+    companyListString = await companyResearchAgent.process_message(intakeAgent, intakeInfoString)
+    # companyListString = companyTestData
 
     print("-------------Company List results-------------------")
     print(companyListString)
-    final_results[userId] = companyListString
 
     # get people list
     companyListAndPeopleString = await peopleFinderAgent.process_message(companyResearchAgent, intakeInfoString, companyListString)
     print("-------------Company List and people results-------------------")
     print(companyListAndPeopleString)
 
+    # enrich people list
+    # companyListAndPeopleStringEnriched = await contactEnrichmentAgent.process_message(peopleFinderAgent, companyListAndPeopleString)
+
+    # score leads
+    leadsListString = await leadScoringAgent.process_message(contactEnrichmentAgent, intakeInfoString, companyListAndPeopleString)
+
+    print("-------------Leads List results-------------------")
+    print(leadsListString)
+    final_results[userId] = leadsListString
     return
 
 
-    # get people list
-    # companyListAndPeopleString = await peopleFinderAgent.process_message(companyResearchAgent, intakeInfoString, companyListString)
-    # enrich people list
-    # companyListAndPeopleStringEnriched = await contactEnrichmentAgent.process_message(peopleFinderAgent, companyListAndPeopleString)
-    # score leads
-    # leadsListString = await leadScoringAgent.process_message(contactEnrichmentAgent, intakeInfoString, companyListAndPeopleStringEnriched)
-    # print("-------------Leads List results-------------------")
-    # print(leadsListString)
-    # final_results[userId] = leadsListString
-    # return
+
 
 @app.get("/results")
 async def getResults(request: Request):
@@ -198,62 +189,3 @@ async def getResults(request: Request):
         return final_results[user_agent]
 
     return "Leads haven't been generated yet"
-
-
-# async def runOrchestrator(userId: str):
-#     print("-------------started lead generation (AG2 orchestration)-------------------")
-#     config_list = config_list_from_json(env_or_file="OAI_CONFIG_LIST")
-
-#     userProxy = UserProxyAgent(name="userProxy", code_execution_config=False, human_input_mode="NEVER")
-
-#     def is_termination_msg(msg: dict[str, Any]) -> bool:
-#         content = msg.get("content", "")
-#         if (content is not None) and "\"complete\": true" in content:
-#             print("-------------Termination message received-------------------")
-#             return True
-#         return False
-
-#     # Compose the orchestration pattern
-#     pattern = AutoPattern(
-#         initial_agent=companyResearchAgent,
-#         agents=[
-#             companyResearchAgent,
-#             company_google_research_agent,
-#             peopleFinderAgent,
-#             people_google_research_agent,
-#             # contactEnrichmentAgent,
-#             leadScoringAgent,
-#         ],
-#         user_agent=userProxy,
-#         context_variables=get_context_variables(),
-#         group_manager_args={"llm_config": {"config_list": config_list}, "is_termination_msg": is_termination_msg},
-#     )
-#     agents_order = """ It is critical to transfer agents in the following exact order:
-#     1. companyResearchAgent
-#     2. company_google_research_agent
-#     3. companyResearchAgent
-#     4. peopleFinderAgent
-#     5. people_google_research_agent
-#     6. peopleFinderAgent
-#     7. leadScoringAgent
-
-#     """ + intakeAgent.intake_data
-#     # 7. contactEnrichmentAgent
-
-
-#     # Run the group chat orchestration max_rounds=100,
-#     result, context_variables, last_agent = initiate_group_chat(
-#         pattern=pattern,
-#         messages=agents_order,
-#         max_rounds=40,
-#     )
-
-#     print("\n-----------------------------Conversation complete!---------------------------\n")
-
-#     # Extract the final leads list from the result
-#     leadsListString = result  # Adjust this if your agent outputs differently
-#     print("-------------GroupChat summary-------------------")
-#     print(leadsListString.summary)
-
-#     final_results[userId] = leadsListString.summary
-#     return

@@ -4,7 +4,7 @@ import json
 
 from dotenv import load_dotenv
 from autogen import Agent, config_list_from_json, ConversableAgent
-from agents.prompts import PERPLEXITY_COMPANY_RESEARCH_SYSTEM_MESSAGE
+from agents.prompts import PERPLEXITY_COMPANY_RESEARCH_SYSTEM_MESSAGE, COMPANY_LIST_FORMATTER_SYSTEM_MESSAGE
 
 from agents.perplexity_agent import PerplexityAgent
 
@@ -93,18 +93,12 @@ class CompanyResearchAgent(ConversableAgent):
 
         self.perplexity_agent = PerplexityAgent()
         
-        # add the PerplexitySearchTool to the agent
-        # self.perplexity_search_tool = PerplexitySearchTool(
-        #     api_key=os.getenv("PERPLEXITY_API_KEY"),
-        #     max_tokens=1000
-        # )
-        # Register the tool for LLM recommendation and execution.
-        # self.perplexity_search_tool.register_for_llm(self)
-        #"messages": [
-        #     {"role": "system", "content": self.system_prompt},
-        #     {"role": "user", "content": query}
-        # ]
-
+        self.formatter_agent = ConversableAgent(
+            name="FormatterAgent",
+            llm_config={"config_list": config_list},
+            system_message=COMPANY_LIST_FORMATTER_SYSTEM_MESSAGE,
+            human_input_mode="NEVER"  # Don't ask for human input since we're in API mode
+        )
 
         # init agent
         super().__init__(
@@ -129,19 +123,24 @@ class CompanyResearchAgent(ConversableAgent):
         print("-------------message-------------------")
         print(user_message)
         
-        # Send the message to the agent
+        # Get the prompt from the main agent
         self.receive(user_message, sender)
-
-        # Get the agent's reply
         reply = self.generate_reply([user_message], sender=sender)
-
         print("-------------CompanyResearchAgent reply-------------------")
         print(reply)
 
+        # Search for companies using the PerplexityAgent
         searchResponse = self.perplexity_agent.search(PERPLEXITY_COMPANY_RESEARCH_SYSTEM_MESSAGE, reply)
-
-        print("-------------perplexity_agent response-------------------")
+        print("-------------perplexity_agent company response-------------------")
         print(searchResponse)
 
-        
-        return searchResponse
+        # Format the response from the PerplexityAgent
+        user_message = {
+            "role": "user",
+            "content": searchResponse
+        }
+        self.formatter_agent.receive(user_message, self)
+        formattedResponse = self.formatter_agent.generate_reply([user_message], sender=sender)
+
+        return formattedResponse
+    

@@ -97,7 +97,7 @@ Evaluation Criteria:
                   "relevance_score": 95,
                   "approach_reccomendation": "I would approach John Doe by saying 'Hello, I'm from SupplyStream Technologies and we provide AI-driven ERP solutions for mid-sized automotive manufacturers. We're looking for a COO like you who is interested in digital transformation and streamlining operations. Would you be interested in a demo?'",
                   "notes": "I found this information on the company website. The phone number I'm not sure if it's still valid. the email might be John's or steve hammond's",
-                  "source_url": "https://www.supplystreamtech.com/people/john-doe"
+                  "source_urls": ["https://www.supplystreamtech.com/people/john-doe"]
               }
           ]
         },
@@ -120,7 +120,7 @@ this is an example of the JSON object you should return:
             "relevance_score": 95,
             "approach_reccomendation": "I would approach John Doe by saying 'Hello, I'm from SupplyStream Technologies and we provide AI-driven ERP solutions for mid-sized automotive manufacturers. We're looking for a COO like you who is interested in digital transformation and streamlining operations. Would you be interested in a demo?'",
             "notes": "I found this information on the company website. The phone number I'm not sure if it's still valid. the email might be John's or steve hammond's",
-            "source_url": "https://www.supplystreamtech.com/people/john-doe",
+            "source_urls": ["https://www.supplystreamtech.com/people/john-doe"],
             "company_info": {
                 "name": "SupplyStream Technologies",
                 "website": "https://www.supplystreamtech.com",

@@ -75,7 +75,7 @@ Input and Output:
                   "relevance_score": 95,
                   "approach_reccomendation": "I would approach John Doe by saying 'blah blah blah'",
                   "notes": "I found this information on the company website. The phone number I'm not sure if it's still valid. the email might be John's or steve hammond's",
-                  "source_url": "https://www.supplystreamtech.com/people/john-doe"
+                  "source_urls": ["https://www.supplystreamtech.com/people/john-doe"]
               }
           ]
         },

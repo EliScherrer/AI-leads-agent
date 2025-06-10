@@ -94,7 +94,7 @@ Rules:
 - If you do not have data for a field, use an empty string.
 - Do not include anything outside the JSON object.
 - Be precise and concise. Only include people who are likely to be the decision maker or best contact for the ICP and product_info.
-- For each person, provide: name, title, email, phone, linkedin, source_url (where you found the info), relevance_score (0-100), relevant_info (why this person is a good fit for the ICP and product_info), and approach_recommendation (how you would approach them to sell product_info).
+- For each person, provide: name, title, email, phone, linkedin, source_urls (where you found the info), relevance_score (0-100), relevant_info (why this person is a good fit for the ICP and product_info), and approach_recommendation (how you would approach them to sell product_info).
 - If you make an assumption, state it in the notes field and lower the relevance_score. Always append to the notes field, do not overwrite it.
 - in each field only include that data, any explanations should be appeneded to the notes field.
 - include a source_urls field that is an array of urls where you found the info.
@@ -123,6 +123,33 @@ Return a JSON object in the following format (add more fields if relevant data i
             "source_urls": ["https://www.supplystreamtech.com/people/john-doe"]
         }
     ]
+}
+""".strip()
+
+COMPANY_LIST_FORMATTER_SYSTEM_MESSAGE = """
+You are a helpful AI assistant. Your task is to take slightly unstructured JSON input from a previous agent containing companies and maybe some other stuff. Your job is to return a single JSON object with only the company data
+
+Rules:
+- Only output the final answer as a JSON object. Do not include any explanations, intermediate steps, or markdown formatting.
+- Do not include anything outside the JSON object.
+- Do not modify any of the data in the input JSON objects, except to remove any companies without a name value
+
+Return a JSON object in the following format:
+output example =
+{
+  "company_list": [
+    {
+      "name": "Westport Fuel Systems",
+      "website": "https://www.westport.com",
+      "description": "Westport Fuel Systems is a global leader in the design, manufacture, and supply of advanced fuel systems for clean, low-carbon fuels.",
+      "industry": "Automotive Parts and Manufacturing",
+      "location": "Vancouver, BC, Canada",
+      "employee_count": "100-150",
+      "annual_revenue": "$30M-$40M",
+      "relevant_info": "Westport is a good fit for StreamERP due to its focus on clean energy solutions, which likely involves digital transformation, and operates multiple sites.",
+      "relevance_score": 85
+    }
+  ]
 }
 """.strip()
 
@@ -488,7 +515,7 @@ Output:
                   "relevance_score": 95,
                   "approach_reccomendation": "I would approach John Doe by saying 'Hello, I'm from SupplyStream Technologies and we provide AI-driven ERP solutions for mid-sized automotive manufacturers. We're looking for a COO like you who is interested in digital transformation and streamlining operations. Would you be interested in a demo?'",
                   "notes": "I found this information on the company website. The phone number I'm not sure if it's still valid. the email might be John's or steve hammond's",
-                  "source_url": "https://www.supplystreamtech.com/people/john-doe"
+                  "source_urls": ["https://www.supplystreamtech.com/people/john-doe"]
               }
           ]
         }
@@ -602,7 +629,7 @@ Output:
                   "relevance_score": 95,
                   "approach_reccomendation": "I would approach John Doe by saying 'Hello, I'm from SupplyStream Technologies and we provide AI-driven ERP solutions for mid-sized automotive manufacturers. We're looking for a COO like you who is interested in digital transformation and streamlining operations. Would you be interested in a demo?'",
                   "notes": "I found this information on the company website. The phone number I'm not sure if it's still valid. the email might be John's or steve hammond's",
-                  "source_url": "https://www.supplystreamtech.com/people/john-doe"
+                  "source_urls": ["https://www.supplystreamtech.com/people/john-doe"]
               }
           ]
         }
