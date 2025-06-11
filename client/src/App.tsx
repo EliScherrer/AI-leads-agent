@@ -11,12 +11,8 @@ import { ColorModeToggle } from './components/color-mode-toggle'
 import { ChatWindow } from './components/ChatWindow';
 import AG2Client from './AG2Client';
 import { DataTable, LeadInfo } from './components/DataTable';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { AiOutlineCloudDownload } from "react-icons/ai";
-
-// import { FiDownload } from "react-icons/fi";
-
-// import testData from './testData.json';
 
 const ag2 = new AG2Client();
 
@@ -24,20 +20,7 @@ export default function App() {
   const [tableData, setTableData] = useState<LeadInfo[]>([]);
   const [isLoadingLeads, setIsLoadingLeads] = useState(false);
 
-  // useEffect(() => {
-  //   // loadTestData();
-  // }, []);
-
-  // const loadTestData = () => {
-  //   // Transform the nested data structure into a flat array of lead info
-  //   const leads = testData.leads_list.map(item => item.lead_info);
-  //   setTableData(leads);
-  // };
-
-  const handleSendMessage = async (message: string): Promise<string> => {
-    console.log("handleSendMessage: ", message);
-    return await ag2.AG2_Chat(message);
-  };
+  const bottomRef = useRef<HTMLDivElement>(null);
 
   const handleGetLeads = async () => {
     console.log("handleGetLeads");
@@ -62,7 +45,12 @@ export default function App() {
       console.error("Error getting leads: ", error);
     } finally {
       setIsLoadingLeads(false);
+      scrollToBottom();
     }
+  };
+
+  const scrollToBottom = () => {
+    bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
   return (
@@ -72,7 +60,7 @@ export default function App() {
           Sales Lead Finder Chat Bot
         </Heading>
         <Box w="full" maxW="container.md">
-          <ChatWindow onSendMessage={handleSendMessage} />
+          <ChatWindow />
         </Box>
         {tableData.length === 0 && <Box
           id="get-leads-list-explanation"
@@ -119,6 +107,7 @@ export default function App() {
         <Box w="full">
           {tableData.length > 0 && <DataTable data={tableData} />}
         </Box>
+        <div ref={bottomRef} />
       </VStack>
 
       <Box pos="absolute" top="4" right="4">

@@ -1,7 +1,8 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef } from 'react';
 import { Box, VStack, Input, IconButton, Flex, Text, Avatar, Container, Button } from '@chakra-ui/react';
 import { LuSearch } from 'react-icons/lu';
 import { FaRegTrashAlt, FaUser } from "react-icons/fa";
+import { AiOutlineCloudUpload } from "react-icons/ai";
 import AG2Client from '../AG2Client';
 
 interface Message {
@@ -11,39 +12,97 @@ interface Message {
   timestamp: Date;
 }
 
-interface ChatWindowProps {
-  onSendMessage: (message: string) => Promise<string>;
-}
-
 const defaultFirstMessage: Message = {
   id: Date.now().toString(),
-  text: "Hello, I'm the lead finder chat bot. I'm here to help you find leads for your product. Please provide me with information about your company, the product you are selling, and information about your ideal customer profile.",
+  text: "Hello, I'm the lead finder chat bot. I'm here to help you find leads for your product. Please provide me with information about your company, the product you are selling, and information about your ideal customer profile. You can also upload a CSV or TSV file with your data.",
   sender: 'ai',
   timestamp: new Date(),
 };
 
 const ag2 = new AG2Client();
 
-export const ChatWindow = ({ onSendMessage }: ChatWindowProps) => {
+export const ChatWindow = ({ } ) => {
   const [messages, setMessages] = useState<Message[]>([defaultFirstMessage]);
   const [inputValue, setInputValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
+
+  // Trigger the file input when the button is clicked
+  const handleUploadData = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+      fileInputRef.current.click();
+    }
   };
 
-  useEffect(() => {
-    scrollToBottom();
-  }, [messages]);
+  // Handle file selection
+  const launchFileSelector = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
 
-  const handleSend = async () => {
-    if (!inputValue.trim()) return;
+    const fileName = file.name.toLowerCase();
+    const isTSV = fileName.endsWith('.tsv') || fileName.endsWith('.txt');
+    if (!isTSV) {
+      alert('Please upload a .tsv file.');
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const text = event.target?.result as string;
+      if (!text) return;
+
+      const jsonString = tsvToJsonString(text);
+      if (!jsonString) {
+        return;
+      };
+
+      sendMessage(jsonString);
+    };
+    
+    reader.readAsText(file);
+  };
+
+  function tsvToJsonString(tsvString: string) {
+    const delimiter = '\t';
+
+    const rows = tsvString.split("\n");
+    const headers = rows[0].split(delimiter);
+    const jsonData = [];
+
+    if (rows.length < 2) {
+      alert('File must have a header and at least one row.');
+      return;
+    }
+
+    for (let i = 1; i < rows.length; i++) {
+        if (!rows[i]) {
+            continue;
+        }
+
+        const values = rows[i].split(delimiter);
+        const obj: any = {};
+
+        for (let j = 0; j < headers.length; j++) {
+            const key: string = (headers[j]) ? headers[j].trim() : "";
+            const value: string = (values[j]) ? values[j].trim() : "";
+            obj[key] = value;
+        }
+
+        jsonData.push(obj);
+    }
+    console.log("uploaded data: ");
+    console.log(jsonData);
+    return JSON.stringify(jsonData);
+}
+
+  const sendMessage = async (message: string) => {
+    if (!message.trim()) return;
 
     const userMessage: Message = {
       id: Date.now().toString(),
-      text: inputValue,
+      text: message,
       sender: 'user',
       timestamp: new Date(),
     };
@@ -53,7 +112,7 @@ export const ChatWindow = ({ onSendMessage }: ChatWindowProps) => {
     setIsLoading(true);
 
     try {
-      const aiResponseMessage = await onSendMessage(inputValue);
+      const aiResponseMessage = await ag2.AG2_Chat(message);
       const aiMessage: Message = {
         id: (Date.now() + 1).toString(),
         text: aiResponseMessage,
@@ -71,7 +130,7 @@ export const ChatWindow = ({ onSendMessage }: ChatWindowProps) => {
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
-      handleSend();
+      sendMessage(inputValue);
     }
   };
 
@@ -140,7 +199,6 @@ export const ChatWindow = ({ onSendMessage }: ChatWindowProps) => {
                     </Flex>
                 </Flex>
               ))}
-              <div ref={messagesEndRef} />
             </VStack>
           </Box>
 
@@ -167,13 +225,26 @@ export const ChatWindow = ({ onSendMessage }: ChatWindowProps) => {
               <IconButton
                   colorScheme="blue"
                   aria-label="Send message"
-                  onClick={handleSend}
+                  onClick={() => sendMessage(inputValue)}
                   loading={isLoading}
               ><LuSearch /></IconButton>
+              <Button
+                bg="blue.500"
+                _hover={{ bg: 'blue.600' }}
+                onClick={handleUploadData}
+              ><AiOutlineCloudUpload/>Upload Data</Button>
             </Flex>
           </Box>
         </VStack>
       </Box>
+      {/* Hidden file input */}
+      <input
+        type="file"
+        accept=".csv,.tsv,text/csv,text/tab-separated-values"
+        style={{ display: 'none' }}
+        ref={fileInputRef}
+        onChange={launchFileSelector}
+      />
     </Container>
   );
 }; 
