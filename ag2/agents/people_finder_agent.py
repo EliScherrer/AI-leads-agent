@@ -2,11 +2,12 @@
 import os
 import json
 
-from dotenv import load_dotenv
-
 from autogen import Agent, config_list_from_json, ConversableAgent
+from agents.apollo_client import ApolloClient
 from agents.perplexity_client import PerplexityClient
 from agents.prompts import PERPLEXITY_PEOPLE_FINDER_SYSTEM_MESSAGE, PERPLEXITY_PEOPLE_ENRICHMENT_SYSTEM_MESSAGE
+from dotenv import load_dotenv
+
 
 load_dotenv()
 
@@ -99,19 +100,24 @@ class PeopleFinderAgent(ConversableAgent):
 
         # 1. search for people
         findPeopleOutput = self.search_for_people(company_list_obj, intake_info)
+
         # 2. format the found people results
         companyListWithPeopleResults = self.format_people_results(sender, json.dumps(findPeopleOutput))
         print("-------------------------------- companyListWithPeopleResults --------------------------------")
-        print(f"Prompt: {companyListWithPeopleResults}")
+        print(companyListWithPeopleResults)
+
         # 3. enrich the contact info
-        enrichedContactInfoOutput = self.enrich_contact_info(companyListWithPeopleResults)
+        enrichedContactInfoOutput = self.enrich_contact_info_perplexity(companyListWithPeopleResults)
         print("-------------------------------- enrichedContactInfoOutput --------------------------------")
-        print(f"Prompt: {enrichedContactInfoOutput}")
+        print(enrichedContactInfoOutput)
+
+        enrichedContactInfoOutput = self.enrich_contact_info_apollo(companyListWithPeopleResults)
+
         # 4.format the enriched people results
         companyListWithEnrichedPeopleResults = self.format_people_results(sender, json.dumps(enrichedContactInfoOutput))
         # TODO: do we need another formatter? companyListWithEnrichedPeopleResults = self.format_enriched_people_results(sender, json.dumps(enrichedContactInfoOutput))
         print("-------------------------------- companyListWithEnrichedPeopleResults --------------------------------")
-        print(f"Prompt: {companyListWithEnrichedPeopleResults}")
+        print(companyListWithEnrichedPeopleResults)
 
         return companyListWithEnrichedPeopleResults
     
@@ -140,8 +146,37 @@ class PeopleFinderAgent(ConversableAgent):
 
         return output
 
-    def enrich_contact_info(self, companyListWithPeople):
-        # enrich each person's contact info
+    def enrich_contact_info_apollo(self, companyListWithPeople):
+        try:
+            companyListWithPeople_obj = json.loads(companyListWithPeople)
+        except Exception as e:
+            print(f"Error parsing formatted company/people results: {e}")
+            return companyListWithPeople  # fallback to un-enriched results
+
+        company_list = companyListWithPeople_obj.get("company_list", [])
+        output = {"company_list": []}
+
+        for company in company_list:
+            company_info = company["company_info"]
+            people_list = company_info.get("people_list", [])
+            enriched_people_list = []
+            for person in people_list:
+                if not person.get("name"):
+                    print(f"No name found for person {person} ??")
+                    continue
+
+                companyName = company_info.get("name", "")
+                enriched_person = ApolloClient.enrich_contact_info(companyName, person)
+                enriched_people_list.append(enriched_person)
+
+            # update the company with the new people_list, and append to the new company_list
+            company_info["people_list"] = enriched_people_list
+            company["company_info"] = company_info
+            output["company_list"].append(company)
+        
+        return output
+
+    def enrich_contact_info_perplexity(self, companyListWithPeople):
         try:
             companyListWithPeople_obj = json.loads(companyListWithPeople)
         except Exception as e:

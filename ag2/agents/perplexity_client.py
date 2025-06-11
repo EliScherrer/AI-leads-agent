@@ -9,20 +9,12 @@ from pydantic import BaseModel
 
 load_dotenv()
 
-# ---------------------------------------------------------------------------
-# Agent definition
-# ---------------------------------------------------------------------------
 class PerplexityClient():
     """
     Specialist agent for interacting with the Perplexity API and gathering information from the web.
-
-    Parameters TODO
-    ----------
     """
 
-    def __init__(
-        self,
-    ):
+    def __init__(self,):
         self.API_URL = "https://api.perplexity.ai/chat/completions"
         self.headers = {
             "accept": "application/json",
