@@ -1,8 +1,5 @@
 # agents/perplexity_client.py
-import json
-import os
-import requests
-
+import json, os, requests
 from dotenv import load_dotenv
 from jsonschema import ValidationError
 from pydantic import BaseModel

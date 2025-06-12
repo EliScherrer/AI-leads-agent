@@ -1,6 +1,5 @@
 # agents/intake_agent.py
 import json
-
 from autogen import UserProxyAgent, config_list_from_json, ConversableAgent
 
 # TODO: ADD in logic to force the AI to confirm any assumptions before proceeding

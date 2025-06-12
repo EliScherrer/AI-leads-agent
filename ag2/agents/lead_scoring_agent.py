@@ -1,6 +1,5 @@
 # agents/lead_scoring_agent.py
 import json
-
 from autogen import Agent, config_list_from_json, ConversableAgent
 
 SYSTEM_MESSAGE = """

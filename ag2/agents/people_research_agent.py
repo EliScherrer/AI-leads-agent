@@ -1,7 +1,5 @@
-# agents/people_finder_agent.py
-import os
+# agents/people_research_agent.py
 import json
-
 from autogen import Agent, config_list_from_json, ConversableAgent
 from agents.apollo_client import ApolloClient
 from agents.perplexity_client import PerplexityClient
@@ -58,7 +56,7 @@ output example =
 # ---------------------------------------------------------------------------
 # Agent definition
 # ---------------------------------------------------------------------------
-class PeopleFinderAgent(ConversableAgent):
+class PeopleResearchAgent(ConversableAgent):
     """
     Specialist agent for gathering a list of people at a list of companies that match the ICP for company_info to sell product_info to.
 
@@ -78,7 +76,7 @@ class PeopleFinderAgent(ConversableAgent):
 
         # init self agent that will act as the formatting agent
         super().__init__(
-            name="PeopleFinderAgent",
+            name="PeopleResearchAgent",
             llm_config={"config_list": config_list},
             system_message=SYSTEM_MESSAGE,
             human_input_mode="NEVER"  # Don't ask for human input since we're in API mode

@@ -11,9 +11,7 @@ TWEAK
   • Change MAX_PROSPECTS to control how many contacts you process per run.
   • Edit `wanted_top`, `wanted_employment`, … if you need more/less fields.
 """
-import os, sys, time, json, requests
-
-from pathlib import Path
+import os, json, requests
 from typing import Dict, List, Any
 
 

@@ -1,18 +1,12 @@
-import asyncio
-import nest_asyncio
-import time
-
-from typing import Any
-from autogen import config_list_from_json, UserProxyAgent
-from autogen.agentchat import initiate_group_chat
-from autogen.agentchat.group.patterns import AutoPattern
-from agents.intake_agent import IntakeAgent
+import asyncio, nest_asyncio
+from autogen import config_list_from_json
 from agents.company_research_agent import CompanyResearchAgent
-from agents.people_finder_agent import PeopleFinderAgent
-from agents.contact_enrichment_agent import ContactEnrichmentAgent
+from agents.intake_agent import IntakeAgent
 from agents.lead_scoring_agent import LeadScoringAgent
+from agents.people_research_agent import PeopleResearchAgent
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
+from typing import Any
 
 nest_asyncio.apply()
 app = FastAPI()
@@ -110,7 +104,7 @@ companyListWithPeopleTestData = """
                 "people_list": [
                     {
                         "person_info": {
-                            "name": "Dan Sceli",
+                            "name": "Daniel Sceli",
                             "title": "CEO & Director",
                             "email": "dsceli@wfsinc.com",
                             "phone": "(604) 718-2000",
@@ -422,13 +416,13 @@ leadsTestData = """
     "complete": true,
     "leads_list": [
         {
-            "name": "Dan Sceli",
+            "name": "Daniel Sceli",
             "title": "CEO & Director",
-            "email": "dsceli@wfsinc.com",
-            "phone": "(604) 718-2000",
-            "linkedin": "",
+            "email": null,
+            "phone": null,
+            "linkedin": "http://www.linkedin.com/in/daniel-sceli",
             "relevant_info": "Dan Sceli is the CEO and Director of Westport Fuel Systems, responsible for strategic direction. His leadership in manufacturing and commitment to sustainability aligns with the ERP solution's focus on operational efficiency and environmental sustainability.",
-            "relevance_score": 83,
+            "relevance_score": 85,
             "approach_reccomendation": "Approach Dan Sceli by highlighting how StreamERP can enhance operational efficiency and support sustainability goals in the automotive manufacturing sector.",
             "notes": "The email is a best-guess assumption based on the pattern d***@wfsinc.com from ZoomInfo and the publicly available (604) 718-2000 corporate phone number for Westport Fuel Systems.",
             "source_urls": [
@@ -440,17 +434,20 @@ leadsTestData = """
                 "website": "https://www.westport.com",
                 "description": "Westport Fuel Systems is a global leader in the design, manufacture, and supply of advanced fuel systems for clean, low-carbon fuels.",
                 "industry": "Automotive Parts and Manufacturing",
+                "location": "Vancouver, BC, Canada",
+                "employee_count": "100-150",
+                "annual_revenue": "$30M-$40M",
                 "relevant_info": "Westport is a good fit for StreamERP due to its focus on clean energy solutions, which likely involves digital transformation, and operates multiple sites."
             }
         },
         {
             "name": "Simon Kew",
             "title": "Vice President NA JIT Operations",
-            "email": "simon.kew@magna.com",
-            "phone": "248-420-....",
-            "linkedin": "",
+            "email": null,
+            "phone": null,
+            "linkedin": null,
             "relevant_info": "Simon Kew is associated with Magna Seating and has been involved in various leadership roles.",
-            "relevance_score": 91,
+            "relevance_score": 90,
             "approach_reccomendation": "Approach Simon Kew by highlighting the importance of automotive seating solutions and the potential for collaboration or innovation in the industry.",
             "notes": "The role of Simon Kew is noted differently across sources; some mention him as President, while others specify Vice President NA JIT Operations.",
             "source_urls": [
@@ -463,17 +460,46 @@ leadsTestData = """
                 "website": "https://www.magnainc.com",
                 "description": "Magna Seating is part of Magna International, specializing in seating solutions for the automotive industry.",
                 "industry": "Automotive Parts",
+                "location": "Aurora, ON, Canada",
+                "employee_count": "100-200",
+                "annual_revenue": "$20M-$50M",
                 "relevant_info": "As part of Magna, this division likely undergoes digital transformation and operates multiple production sites."
+            }
+        },
+        {
+            "name": "Pat D'Eramo",
+            "title": "President and CEO",
+            "email": null,
+            "phone": null,
+            "linkedin": "http://www.linkedin.com/in/patderamo",
+            "relevant_info": "Pat D'Eramo is the President and Chief Executive Officer of Martinrea International Inc., with extensive experience in metal forming and parts manufacturing.",
+            "relevance_score": 90,
+            "approach_reccomendation": "Approach Pat D'Eramo by highlighting any collaboration or innovation opportunities in the automotive sector that align with Martinrea's focus on lightweight structures and propulsion systems.",
+            "notes": "Contact information for Pat D'Eramo is not readily available. The information provided is based on publicly available sources about his professional background and roles.",
+            "source_urls": [
+                "https://rocketreach.co/pat-deramo-email_87174236",
+                "https://www.martinrea.com/about-us/executive-team/",
+                "https://www.cadia.org/pat-deramo/"
+            ],
+            "company_info": {
+                "name": "Martinrea International Inc.",
+                "website": "https://www.martinrea.com",
+                "description": "Martinrea International Inc. is a diversified global automotive supplier that provides lightweight castings, aluminum blocks, structural components, and fluid management systems.",
+                "industry": "Automotive Parts",
+                "location": "Vaughan, ON, Canada",
+                "employee_count": "100-200",
+                "annual_revenue": "$20M-$50M",
+                "relevant_info": "Martinrea is a good fit due to its diverse operations and likely need for digital transformation across multiple sites."
             }
         },
         {
             "name": "Fred Di Tosto",
             "title": "President",
-            "email": "f.ditosto@martinrea.com",
-            "phone": "(289) 982-3020",
-            "linkedin": "",
+            "email": null,
+            "phone": null,
+            "linkedin": null,
             "relevant_info": "Fred Di Tosto serves as President for Martinrea International, based in Concord, Ontario effective July 1, 2024. He previously served as CFO since 2011 and has held other executive roles including EVP of its Flexible Manufacturing Group and EVP, Corporate Strategy.",
-            "relevance_score": 96,
+            "relevance_score": 95,
             "approach_reccomendation": "I would approach Fred Di Tosto by saying: 'Hello Fred, I represent [your organization or product] and am reaching out regarding opportunities in automotive supply chain innovation and leadership. As President of Martinrea International, I believe you share our vision for operational excellence and growth. Would you be open to a brief conversation?'",
             "notes": "The email is partially obscured in ZoomInfo; it is likely f.ditosto@martinrea.com, as this matches the company's standard email format and Fred's initials.",
             "source_urls": [
@@ -486,17 +512,20 @@ leadsTestData = """
                 "website": "https://www.martinrea.com",
                 "description": "Martinrea International Inc. is a diversified global automotive supplier that provides lightweight castings, aluminum blocks, structural components, and fluid management systems.",
                 "industry": "Automotive Parts",
+                "location": "Vaughan, ON, Canada",
+                "employee_count": "100-200",
+                "annual_revenue": "$20M-$50M",
                 "relevant_info": "Martinrea is a good fit due to its diverse operations and likely need for digital transformation across multiple sites."
             }
         },
         {
             "name": "Peter Cirulis",
             "title": "CFO",
-            "email": "",
-            "phone": "",
-            "linkedin": "",
+            "email": null,
+            "phone": null,
+            "linkedin": null,
             "relevant_info": "As CFO, Peter Cirulis is responsible for financial strategies and would be interested in the financial optimization aspects of StreamERP.",
-            "relevance_score": 93,
+            "relevance_score": 95,
             "approach_reccomendation": "Emphasize how StreamERP can improve financial management and support growth initiatives.",
             "notes": "Peter Cirulis's recent appointment as CFO indicates his critical role in financial decision-making.",
             "source_urls": [
@@ -508,17 +537,20 @@ leadsTestData = """
                 "website": "https://www.martinrea.com",
                 "description": "Martinrea International Inc. is a diversified global automotive supplier that provides lightweight castings, aluminum blocks, structural components, and fluid management systems.",
                 "industry": "Automotive Parts",
+                "location": "Vaughan, ON, Canada",
+                "employee_count": "100-200",
+                "annual_revenue": "$20M-$50M",
                 "relevant_info": "Martinrea is a good fit due to its diverse operations and likely need for digital transformation across multiple sites."
             }
         },
         {
             "name": "Skotti Fietsam",
             "title": "Senior Vice President, Supply Chain and CIO",
-            "email": "s***@accuridecorp.com",
-            "phone": "(812) ***-****",
-            "linkedin": "",
+            "email": null,
+            "phone": null,
+            "linkedin": "http://www.linkedin.com/in/skotti-fietsam-0433b68",
             "relevant_info": "Skotti Fietsam handles supply chain and IT responsibilities, making them a relevant contact for StreamERP.",
-            "relevance_score": 92,
+            "relevance_score": 90,
             "approach_reccomendation": "Reach out to Skotti Fietsam by highlighting how StreamERP can improve supply chain efficiency and IT integration.",
             "notes": "Skotti's role involves both supply chain and IT, making them a key decision maker for ERP solutions.",
             "source_urls": [
@@ -529,17 +561,20 @@ leadsTestData = """
                 "website": "https://www.accuridewheels.com",
                 "description": "Accuride Corporation is a leading supplier of wheel end solutions to the global commercial vehicle industry.",
                 "industry": "Automotive Parts",
+                "location": "Evansville, IN, USA",
+                "employee_count": "100-200",
+                "annual_revenue": "$20M-$50M",
                 "relevant_info": "Accuride operates multiple production sites and is likely undergoing digital transformation in its operations."
             }
         },
         {
             "name": "Geoff Bruce",
             "title": "President of Accuride Wheels",
-            "email": "g******@accuridecorp.com",
-            "phone": "815288....",
-            "linkedin": "",
+            "email": null,
+            "phone": null,
+            "linkedin": "http://www.linkedin.com/in/geoff-bruce",
             "relevant_info": "Geoff Bruce, as President of Accuride Wheels, could be interested in operational improvements offered by StreamERP.",
-            "relevance_score": 94,
+            "relevance_score": 95,
             "approach_reccomendation": "Emphasize how StreamERP can enhance operational efficiency and customer delivery in the wheel manufacturing sector.",
             "notes": "Geoff Bruce's role focuses on wheel operations, making him a potential decision maker for operational improvements.",
             "source_urls": [
@@ -550,15 +585,18 @@ leadsTestData = """
                 "website": "https://www.accuridewheels.com",
                 "description": "Accuride Corporation is a leading supplier of wheel end solutions to the global commercial vehicle industry.",
                 "industry": "Automotive Parts",
+                "location": "Evansville, IN, USA",
+                "employee_count": "100-200",
+                "annual_revenue": "$20M-$50M",
                 "relevant_info": "Accuride operates multiple production sites and is likely undergoing digital transformation in its operations."
             }
         },
         {
             "name": "Kent Jones",
             "title": "Chief Executive Officer",
-            "email": "",
-            "phone": "",
-            "linkedin": "",
+            "email": null,
+            "phone": null,
+            "linkedin": null,
             "relevant_info": "Kent Jones, as CEO, oversees strategic growth and innovation, which could include adopting StreamERP for operational enhancements.",
             "relevance_score": 95,
             "approach_reccomendation": "Approach Kent Jones by highlighting the strategic benefits of StreamERP in driving growth and innovation.",
@@ -571,17 +609,20 @@ leadsTestData = """
                 "website": "https://www.accuridewheels.com",
                 "description": "Accuride Corporation is a leading supplier of wheel end solutions to the global commercial vehicle industry.",
                 "industry": "Automotive Parts",
+                "location": "Evansville, IN, USA",
+                "employee_count": "100-200",
+                "annual_revenue": "$20M-$50M",
                 "relevant_info": "Accuride operates multiple production sites and is likely undergoing digital transformation in its operations."
             }
         },
         {
             "name": "Jim Jarrell",
             "title": "CEO and President",
-            "email": "jim.jarrell@linamar.com",
-            "phone": "519-836-****",
-            "linkedin": "",
+            "email": null,
+            "phone": null,
+            "linkedin": "http://www.linkedin.com/in/jim-jarrell-aab44813",
             "relevant_info": "Jim Jarrell serves as the CEO and President of Linamar Corporation, responsible for overall strategic direction. His role involves overseeing major operations and strategic decisions which align with the need for ERP solutions.",
-            "relevance_score": 87,
+            "relevance_score": 90,
             "approach_reccomendation": "Approach Jim Jarrell by highlighting strategic partnerships or innovative solutions that align with Linamar's global expansion and operational goals.",
             "notes": "The phone number is partial and sourced from various directories. The LinkedIn profile was not found due to privacy settings or lack of public information.",
             "source_urls": [
@@ -594,17 +635,20 @@ leadsTestData = """
                 "website": "https://www.linamar.com",
                 "description": "Linamar Corporation is a diversified global manufacturing company of highly engineered products across its Powertrain and Driveline, Industrial, and Skyjack segments.",
                 "industry": "Automotive Parts and Manufacturing",
+                "location": "Guelph, ON, Canada",
+                "employee_count": "100-200",
+                "annual_revenue": "$20M-$50M",
                 "relevant_info": "Linamar operates multiple production sites and is likely undergoing digital transformation in its operations."
             }
         },
         {
             "name": "Dale Schneider",
             "title": "Chief Financial Officer",
-            "email": "d***@linamar.com",
-            "phone": "(519) ***-****",
-            "linkedin": "",
+            "email": null,
+            "phone": null,
+            "linkedin": null,
             "relevant_info": "Dale Schneider is the CFO of Linamar Corporation, playing a crucial role in financial planning and investment decisions. His focus on financial management aligns with the cost optimization features of StreamERP.",
-            "relevance_score": 88,
+            "relevance_score": 90,
             "approach_reccomendation": "I would approach Dale Schneider by emphasizing how StreamERP can help streamline financial operations and improve cost management across Linamar's operations.",
             "notes": "The phone number and email are partially masked for privacy.",
             "source_urls": [
@@ -616,17 +660,20 @@ leadsTestData = """
                 "website": "https://www.linamar.com",
                 "description": "Linamar Corporation is a diversified global manufacturing company of highly engineered products across its Powertrain and Driveline, Industrial, and Skyjack segments.",
                 "industry": "Automotive Parts and Manufacturing",
+                "location": "Guelph, ON, Canada",
+                "employee_count": "100-200",
+                "annual_revenue": "$20M-$50M",
                 "relevant_info": "Linamar operates multiple production sites and is likely undergoing digital transformation in its operations."
             }
         },
         {
             "name": "Chris Merchant",
             "title": "Global Vice President Of Finance & Information Technology",
-            "email": "",
-            "phone": "519-836-XXXX",
-            "linkedin": "",
+            "email": null,
+            "phone": null,
+            "linkedin": "http://www.linkedin.com/in/chris-merchant-cpa-cma-7548b025",
             "relevant_info": "Chris Merchant has been with Linamar Corporation since 1999 and has served as Global Vice President of Finance & Information Technology.",
-            "relevance_score": 82,
+            "relevance_score": 85,
             "approach_reccomendation": "Contact through corporate channels or phone number provided. Consider reaching out via Linamar's corporate contact form referencing his title for appropriate routing.",
             "notes": "Email addresses were not publicly provided in full; phone number partially obtained but not complete.",
             "source_urls": [
@@ -639,52 +686,9 @@ leadsTestData = """
                 "website": "https://www.linamar.com",
                 "description": "Linamar Corporation is a diversified global manufacturing company of highly engineered products across its Powertrain and Driveline, Industrial, and Skyjack segments.",
                 "industry": "Automotive Parts and Manufacturing",
-                "relevant_info": "Linamar operates multiple production sites and is likely undergoing digital transformation in its operations."
-            }
-        },
-        {
-            "name": "Roxanne Rose",
-            "title": "Vice President, Global Human Resources",
-            "email": "Roxanne.Rose@linamar.com",
-            "phone": "519-836-7550",
-            "linkedin": "",
-            "relevant_info": "Roxanne Rose is a seasoned professional with extensive experience in Human Resources. She is currently serving as the Vice President, Global Human Resources at Linamar Corporation.",
-            "relevance_score": 90,
-            "approach_reccomendation": "I would approach Roxanne Rose by highlighting any expertise or solutions relevant to her role in Human Resources, such as innovative HR technologies or strategies for organizational development.",
-            "notes": "The phone number and email might be used for general inquiries or accessibility feedback rather than direct personal contact.",
-            "source_urls": [
-                "https://www.linamar.com/team/roxanne-rose/",
-                "https://rocketreach.co/roxanne-rose-email_7886431",
-                "https://www.linamar.com/wp-content/uploads/2024/01/Updated-Linamar-Feedback-Form.pdf"
-            ],
-            "company_info": {
-                "name": "Linamar Corporation",
-                "website": "https://www.linamar.com",
-                "description": "Linamar Corporation is a diversified global manufacturing company of highly engineered products across its Powertrain and Driveline, Industrial, and Skyjack segments.",
-                "industry": "Automotive Parts and Manufacturing",
-                "relevant_info": "Linamar operates multiple production sites and is likely undergoing digital transformation in its operations."
-            }
-        },
-        {
-            "name": "Mark Stoddart",
-            "title": "Chief Technology Officer & Executive Vice President of Sales and Marketing",
-            "email": "m***@linamar.com",
-            "phone": "",
-            "linkedin": "",
-            "relevant_info": "Mark Stoddart is a seasoned executive with extensive experience in the automotive sector, joining Linamar in 1985.",
-            "relevance_score": 84,
-            "approach_reccomendation": "I would approach Mark Stoddart by highlighting expertise in automotive technology and marketing strategies, emphasizing how your solutions align with Linamar's focus on innovative manufacturing solutions.",
-            "notes": "I couldn't find a complete, verified email address or a LinkedIn profile.",
-            "source_urls": [
-                "https://www.linamar.com/team/mark-stoddart/",
-                "https://www.enertechcapital.com/post/enertech-capital-adds-linamar-executive-mark-stoddart-to-mobility-advisory-board",
-                "https://www.zoominfo.com/p/Mark-Stoddart/265096096"
-            ],
-            "company_info": {
-                "name": "Linamar Corporation",
-                "website": "https://www.linamar.com",
-                "description": "Linamar Corporation is a diversified global manufacturing company of highly engineered products across its Powertrain and Driveline, Industrial, and Skyjack segments.",
-                "industry": "Automotive Parts and Manufacturing",
+                "location": "Guelph, ON, Canada",
+                "employee_count": "100-200",
+                "annual_revenue": "$20M-$50M",
                 "relevant_info": "Linamar operates multiple production sites and is likely undergoing digital transformation in its operations."
             }
         }
@@ -701,8 +705,7 @@ final_results = {}
 # Initialize agent once and store as global
 intakeAgent = IntakeAgent()
 companyResearchAgent = CompanyResearchAgent()
-peopleFinderAgent = PeopleFinderAgent()
-contactEnrichmentAgent = ContactEnrichmentAgent()
+peopleResearchAgent = PeopleResearchAgent()
 leadScoringAgent = LeadScoringAgent()
 
 @app.post("/chat")
@@ -746,27 +749,23 @@ async def newSession(request: Request):
     return results
 
 async def processIntakeData(userId: str):
-    return
     print("-------------started lead generation-------------------")
     intakeInfoString = intakeAgent.intake_data
     # get company list
-    # companyListString = await companyResearchAgent.process_message(intakeAgent, intakeInfoString)
-    companyListString = companyTestData
+    # companyListString = await companyResearchAgent.process_message(intakeAgent, intakeInfoString) 
+    companyListString = companyListWithPeopleTestData # TODO: REPLACE WHEN DONE TESTING
 
     print("-------------Company List results-------------------")
-    print(companyListString)
+    # print(companyListString)
 
     # # get people list
-    # companyListAndPeopleString = await peopleFinderAgent.process_message(companyResearchAgent, intakeInfoString, companyListString)
-    # print("-------------Company List and people results-------------------")
-    # print(companyListAndPeopleString)
-
-    # enrich people list
-    # companyListAndPeopleStringEnriched = await contactEnrichmentAgent.process_message(peopleFinderAgent, companyListAndPeopleString)
-    companyListAndPeopleStringEnriched = companyListWithPeopleTestData
+    companyListAndPeopleString = await peopleResearchAgent.process_message(companyResearchAgent, intakeInfoString, companyListString)
+    # companyListAndPeopleString = companyListWithPeopleTestData
+    print("-------------Company List and people results-------------------")
+    print(companyListAndPeopleString)
 
     # score leads
-    leadsListString = await leadScoringAgent.process_message(contactEnrichmentAgent, intakeInfoString, companyListAndPeopleStringEnriched)
+    leadsListString = await leadScoringAgent.process_message(peopleResearchAgent, intakeInfoString, companyListAndPeopleString)
 
     print("-------------Leads List results-------------------")
     print(leadsListString)
@@ -785,5 +784,6 @@ async def getResults(request: Request):
     # if user_agent in final_results:
     #     return final_results[user_agent]
 
+    # TODO: remove this when done testing
     return leadsTestData
     # return "Leads haven't been generated yet"

@@ -1,12 +1,8 @@
 # agents/company_research_agent.py
-import os
-import json
-
-from dotenv import load_dotenv
 from autogen import Agent, config_list_from_json, ConversableAgent
-from agents.prompts import PERPLEXITY_COMPANY_RESEARCH_SYSTEM_MESSAGE, COMPANY_LIST_FORMATTER_SYSTEM_MESSAGE
-
 from agents.perplexity_client import PerplexityClient
+from agents.prompts import PERPLEXITY_COMPANY_RESEARCH_SYSTEM_MESSAGE, COMPANY_LIST_FORMATTER_SYSTEM_MESSAGE
+from dotenv import load_dotenv
 
 load_dotenv()
 
