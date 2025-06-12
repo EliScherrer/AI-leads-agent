@@ -28,19 +28,25 @@ class ApolloClient():
     Specialist agent for interacting with the Apollo API and enriching contact info.
     """
 
-    def request_people_enrichment(name: str, title: str, company: str) -> Dict:
+    def request_people_enrichment(self, name: str, title: str, company: str) -> Dict:
         """Request Apollo to get a person's data https://docs.apollo.io/reference/people-enrichment"""
         url = f"{BASE}{PEOPLE_MATCH_ENDPOINT}"
 
+        headers = {
+            "x-api-key": API_KEY,
+            "accept": "application/json",
+            "Content-Type": "application/json",
+            "Cache-Control": "no-cache",
+        }
+
         params = {
             "name": name, 
-            "title": title, 
-            "company": company,
+            "organization_name": company,
             "reveal_personal_emails": "true",
             "reveal_personal_number": "false"
             # TODO: add webhook_url, you need this for the phone number, apollo will send it in JSON there
         }
-        response = requests.post(url, headers=HDRS, params=params, timeout=30)
+        response = requests.post(url, headers=headers, params=params, timeout=30)
 
         try:
             response.raise_for_status()
@@ -61,10 +67,15 @@ class ApolloClient():
 
 
     # ───────────────────────── main entrypoint ───────────────────────── #
-    def enrich_contact_info(company: str, person: Any) -> List[Dict]:
+    def enrich_contact_info(self, company: str, person: Any) -> List[Dict]:
+        print("-------------------------------- enriching contact for ... --------------------------------")
+        print(company)
+        print(person)
         enrichedPerson = person.copy()
 
-        apolloPerson = request_people_enrichment(person["name"], person["title"], company).get("person")
+        apolloPerson = self.request_people_enrichment(person["name"], person["title"], company).get("person")
+        print("-------------------------------- apolloPerson --------------------------------")
+        print(apolloPerson)
         if apolloPerson:
             enrichedPerson["email"] = apolloPerson.get("contact", {}).get("email")
             enrichedPerson["twitter_url"] = apolloPerson.get("twitter_url")
@@ -74,6 +85,9 @@ class ApolloClient():
             enrichedPerson["phone"] = apolloPerson.get("phone_numbers") # TODO: this is a list of phone numbers? Doc says they should be sent to the webhook?
             enrichedPerson["is_likely_to_engage"] = apolloPerson.get("is_likely_to_engage")
             enrichedPerson["email_status"] = apolloPerson.get("email_status")
+
+        print("-------------------------------- enrichedPerson --------------------------------")
+        print(apolloPerson)
 
         return enrichedPerson
 

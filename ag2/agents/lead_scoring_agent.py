@@ -107,6 +107,7 @@ Evaluation Criteria:
 
 When you have complied all the data you can return ONLY a JSON object in this format. Taking all of the people_list objects and combining them into a single leads_list object including the data you've compiled. If you are confident that all of the leads have been scored and ranked, set the complete field to true.
 this is an example of the JSON object you should return:
+DO NOT INCLUE JOHN DOE FROM THE EXAMPLE BELOW, HE IS NOT A LEAD
 {
     "complete": true,
     "leads_list": [
@@ -188,7 +189,7 @@ class LeadScoringAgent(ConversableAgent):
         # Get the agent's reply
         reply = self.generate_reply([user_message], sender=sender)
 
-        print("-------------reply-------------------")
+        print("-------------lead_scoring_agent reply-------------------")
         print(reply)
 
         # parse the AI response to JSON to confirm it is valid

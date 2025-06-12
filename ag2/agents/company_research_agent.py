@@ -24,9 +24,9 @@ Rules:
 
 
 Output:
-A single, well-formed user prompt string suitable for web search, e.g.:
-
-Find companies in the United States or Canada in the automotive manufacturing or parts supply industry, with 20-200 employees and $5M-$50M annual revenue, that are undergoing digital transformation or operate multiple production sites. Exclude SupplyStream Technologies. The ideal companies should be a good fit for selling StreamERP, a cloud-based ERP solution for automotive suppliers.
+-A single, well-formed user prompt string suitable for web search,
+-THIS IS JUST AN EXAMPLE, DO NOT USE ANY OF THE DATA FROM THIS EXAMPLE
+"Find companies in the United States or Canada in the automotive manufacturing or parts supply industry, with 20-200 employees and $5M-$50M annual revenue, that are undergoing digital transformation or operate multiple production sites. Exclude SupplyStream Technologies. The ideal companies should be a good fit for selling StreamERP, a cloud-based ERP solution for automotive suppliers."
 
 The input JSON is in the following format:
 {
@@ -126,7 +126,7 @@ class CompanyResearchAgent(ConversableAgent):
         # Get the prompt from the main agent
         self.receive(user_message, sender)
         reply = self.generate_reply([user_message], sender=sender)
-        print("-------------CompanyResearchAgent reply-------------------")
+        print("-------------CompanyResearchAgent prompt-------------------")
         print(reply)
 
         # Search for companies using the PerplexityClient

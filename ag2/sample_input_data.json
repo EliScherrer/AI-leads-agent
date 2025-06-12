@@ -25,7 +25,7 @@
       ]
     },
     "ICP": {
-      "target_title": "COO",
+      "target_titles": ["COO", "CFO", "VP of Operations", "VP of IT", "VP of Supply Chain", "VP of Manufacturing", "VP of Engineering", "VP of Quality", "VP of Sales", "VP of Marketing"],
       "company_industry": "Automotive manufacturing or parts supply",
       "employee_range": {
         "min": 20,
@@ -669,6 +669,183 @@
       }
   ]
 }
+
+{
+    "complete": true,
+    "leads_list": [
+        {
+            "name": "Rick Ferguson",
+            "title": "Vice President of Service and Branch Operations",
+            "email": "",
+            "phone": "",
+            "linkedin": "",
+            "relevant_info": "Rick Ferguson oversees service and branch operations at Miller Electric Company, making him responsible for field teams and operational efficiency—key areas for CrewMate’s scheduling and job sign-off features.",
+            "relevance_score": 85,
+            "approach_reccomendation": "Introduce CrewMate as a solution for improving field crew efficiency, real-time scheduling, and digital job sign-offs, directly impacting the teams under his leadership.",
+            "notes": "Direct contact details not found. Role is highly relevant for CrewMate; consider reaching out via company main line (904-388-8000) or LinkedIn search for direct contact.",
+            "source_urls": [
+                "https://www.mecojax.com/who-we-are/leadership"
+            ],
+            "company_info": {
+                "name": "Miller Electric Company",
+                "website": "",
+                "description": "A national electrical contractor with over 2,000 employees.",
+                "industry": "Electrical Contracting",
+                "relevant_info": "Miller Electric is likely too large for the ICP, but smaller divisions within the company might still benefit from CrewMate."
+            }
+        },
+        {
+            "name": "Electrician Field Supervisor at Exceed Electrical Contracting",
+            "title": "Electrician Field Supervisor",
+            "email": "",
+            "phone": "",
+            "linkedin": "",
+            "relevant_info": "Responsible for overseeing daily operations, ensuring safety, and managing project progress, making them a good fit for CrewMate.",
+            "relevance_score": 85,
+            "approach_reccomendation": "Highlight how CrewMate can improve safety compliance and project management through digital tools.",
+            "notes": "Assuming this role is similar across locations, the person in this role would be a good contact.",
+            "source_urls": [
+                "https://exceedec.com/job-openings/"
+            ],
+            "company_info": {
+                "name": "Local Electrical Contractors",
+                "website": "",
+                "description": "Various smaller electrical contractors across the U.S.",
+                "industry": "Electrical Contracting",
+                "relevant_info": "Smaller electrical contractors often use manual methods for crew logistics, making them potential targets for CrewMate."
+            }
+        },
+        {
+            "name": "James MacDonald",
+            "title": "Executive VP for Commercial, Service, Technology Solutions, and Regional Operations",
+            "email": "",
+            "phone": "",
+            "linkedin": "",
+            "relevant_info": "James MacDonald’s responsibilities include service and regional operations, directly impacting field workforce management and technology adoption.",
+            "relevance_score": 80,
+            "approach_reccomendation": "Position CrewMate as a solution for regional and service operations teams to manage schedules, track time, and get digital sign-offs efficiently.",
+            "notes": "Direct contact details not found. Highly relevant; consider outreach through company main line or LinkedIn.",
+            "source_urls": [
+                "https://www.mecojax.com/who-we-are/leadership"
+            ],
+            "company_info": {
+                "name": "Miller Electric Company",
+                "website": "",
+                "description": "A national electrical contractor with over 2,000 employees.",
+                "industry": "Electrical Contracting",
+                "relevant_info": "Miller Electric is likely too large for the ICP, but smaller divisions within the company might still benefit from CrewMate."
+            }
+        },
+        {
+            "name": "Josh Nelson",
+            "title": "Founder & CEO",
+            "email": "",
+            "phone": "",
+            "linkedin": "",
+            "relevant_info": "Josh Nelson is the CEO of Plumbing & HVAC SEO and an expert in internet marketing. He helps plumbing and HVAC contractors increase their sales and grow their businesses, making him a relevant contact for digital solutions.",
+            "relevance_score": 80,
+            "approach_reccomendation": "Approach Josh Nelson by highlighting how CrewMate can enhance operational efficiency and streamline crew management, which could complement his focus on digital marketing solutions.",
+            "notes": "No specific contact information available. Josh's role as CEO makes him a key decision-maker.",
+            "source_urls": [
+                "https://www.plumberseo.net/about/",
+                "https://www.theorg.com/org/plumbing-hvac-seo/org-chart/josh-nelson"
+            ],
+            "company_info": {
+                "name": "Plumbing & HVAC SEO",
+                "website": "https://www.plumberseo.net",
+                "description": "Plumbing & HVAC SEO helps contractors with digital marketing.",
+                "industry": "Digital Marketing for Plumbing & HVAC",
+                "relevant_info": "Though not a direct contractor, they work with numerous small to mid-sized plumbing and HVAC companies, which could be ideal candidates for CrewMate."
+            }
+        },
+        {
+            "name": "Chad Guinn",
+            "title": "Vice President of Facility Solutions",
+            "email": "",
+            "phone": "",
+            "linkedin": "",
+            "relevant_info": "Chad Guinn leads facility solutions, which may involve field crew management for facility-related projects.",
+            "relevance_score": 70,
+            "approach_reccomendation": "Present CrewMate as a tool for facility service teams to streamline scheduling and digital sign-offs, especially for multi-site clients.",
+            "notes": "Direct contact details not found. Role is relevant; consider reaching out via main company contact or LinkedIn.",
+            "source_urls": [
+                "https://www.mecojax.com/who-we-are/leadership"
+            ],
+            "company_info": {
+                "name": "Miller Electric Company",
+                "website": "",
+                "description": "A national electrical contractor with over 2,000 employees.",
+                "industry": "Electrical Contracting",
+                "relevant_info": "Miller Electric is likely too large for the ICP, but smaller divisions within the company might still benefit from CrewMate."
+            }
+        },
+        {
+            "name": "Dean Iodice",
+            "title": "Co-Founder & Operations Director",
+            "email": "",
+            "phone": "",
+            "linkedin": "",
+            "relevant_info": "As the Operations Director, Dean Iodice likely oversees operational aspects of the company, making him a potential contact for operational tools like CrewMate.",
+            "relevance_score": 70,
+            "approach_reccomendation": "Highlight how CrewMate can improve operational efficiency and crew management, aligning with Dean's operational focus.",
+            "notes": "No specific contact information available. Assumption based on operations role.",
+            "source_urls": [
+                "https://www.youtube.com/playlist?list=PLTo2FpS7EDoVVQ1C4gCKQ9JcMv7t6cIVF"
+            ],
+            "company_info": {
+                "name": "Plumbing & HVAC SEO",
+                "website": "https://www.plumberseo.net",
+                "description": "Plumbing & HVAC SEO helps contractors with digital marketing.",
+                "industry": "Digital Marketing for Plumbing & HVAC",
+                "relevant_info": "Though not a direct contractor, they work with numerous small to mid-sized plumbing and HVAC companies, which could be ideal candidates for CrewMate."
+            }
+        },
+        {
+            "name": "Field Supervisor at Innovative Electric",
+            "title": "Field Supervisor",
+            "email": "",
+            "phone": "",
+            "linkedin": "",
+            "relevant_info": "This person is responsible for managing project operations and ensuring efficient completion, which aligns with the features of CrewMate for managing schedules and tracking time.",
+            "relevance_score": 80,
+            "approach_reccomendation": "Approach by highlighting how CrewMate can enhance project efficiency and reduce errors, emphasizing its ability to streamline field operations.",
+            "notes": "Innovative Electric is a residential electrical contractor, and while the specific name is not available, the role is highly relevant.",
+            "source_urls": [
+                "https://recruiting.paylocity.com/Recruiting/Jobs/Details/1910139"
+            ],
+            "company_info": {
+                "name": "Local Electrical Contractors",
+                "website": "",
+                "description": "Various smaller electrical contractors across the U.S.",
+                "industry": "Electrical Contracting",
+                "relevant_info": "Smaller electrical contractors often use manual methods for crew logistics, making them potential targets for CrewMate."
+            }
+        },
+        {
+            "name": "Christian",
+            "title": "Director of Business Development",
+            "email": "",
+            "phone": "",
+            "linkedin": "",
+            "relevant_info": "Christian is involved in client account management and business development, making him a potential lead for new business solutions.",
+            "relevance_score": 60,
+            "approach_reccomendation": "Approach Christian by explaining how CrewMate can enhance the operational efficiency of clients, aligning with his focus on business growth.",
+            "notes": "No specific contact information available. Assumption based on business development role.",
+            "source_urls": [
+                "https://www.plumberseo.net/about/"
+            ],
+            "company_info": {
+                "name": "Plumbing & HVAC SEO",
+                "website": "https://www.plumberseo.net",
+                "description": "Plumbing & HVAC SEO helps contractors with digital marketing.",
+                "industry": "Digital Marketing for Plumbing & HVAC",
+                "relevant_info": "Though not a direct contractor, they work with numerous small to mid-sized plumbing and HVAC companies, which could be ideal candidates for CrewMate."
+            }
+        }
+    ]
+}
+
+
 {
   "person": {
     "id": "66b8a5d38d90c000011cce51",

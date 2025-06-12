@@ -62,7 +62,7 @@ You will receive structured JSON input containing company_info, product_info, an
 
 Output:
 Return a JSON object in the following format (add more fields if relevant data is found):
-
+THIS IS JUST AN EXAMPLE, DO NOT USE ANY OF THE DATA FROM THIS EXAMPLE
 {
   "company_list": [
     {

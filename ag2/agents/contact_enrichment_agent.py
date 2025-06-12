@@ -131,7 +131,7 @@ class ContactEnrichmentAgent(ConversableAgent):
         # Get the agent's reply
         reply = self.generate_reply([user_message], sender=sender)
 
-        print("-------------reply-------------------")
+        print("-------------contact_enrichment_agent reply-------------------")
         print(reply)
 
         # parse the AI response to JSON to confirm it is valid

@@ -95,7 +95,7 @@ export default function App() {
               mt={2}
               bg="teal.500"
               _hover={{ bg: 'teal.600' }}
-              pos="absolute" bottom="10" right="10"
+              pos="absolute" bottom="14" right="10"
               loading={isLoadingLeads}
               disabled={isLoadingLeads}
               onClick={handleGetLeads}

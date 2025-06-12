@@ -17,7 +17,7 @@ You are a helpful AI assistant. Your task is to take structured JSON input conta
 Rules:
 - Only output the final answer as a JSON object. Do not include any explanations, intermediate steps, or markdown formatting.
 - Do not include anything outside the JSON object.
-- Do not modify any of the data in the input JSON objects, except to remove any people without a name value
+- Do not modify any of the data in the input JSON objects, except to remove any people without a name value or if the name value == title value remove them as well.
 
 - You can merge people objects together if they are the same person (same name and at the same company), there should be no duplicates (two people at the same company with the same name and title). Prefer to keep data over empty strings.
 
@@ -74,6 +74,7 @@ class PeopleFinderAgent(ConversableAgent):
 
         # init PerplexityClient
         self.perplexity_client = PerplexityClient()
+        self.apollo_client = ApolloClient()
 
         # init self agent that will act as the formatting agent
         super().__init__(
@@ -99,19 +100,19 @@ class PeopleFinderAgent(ConversableAgent):
             return f"Input JSON parsing error: {e}"
 
         # 1. search for people
-        findPeopleOutput = self.search_for_people(company_list_obj, intake_info)
+        # findPeopleOutput = self.search_for_people(company_list_obj, intake_info)
 
         # 2. format the found people results
-        companyListWithPeopleResults = self.format_people_results(sender, json.dumps(findPeopleOutput))
+        # companyListWithPeopleResults = self.format_people_results(sender, json.dumps(findPeopleOutput))
+        companyListWithPeopleResults = companyListString # TODO: REPLACE WHEN DONE TESTING
         print("-------------------------------- companyListWithPeopleResults --------------------------------")
         print(companyListWithPeopleResults)
 
         # 3. enrich the contact info
-        enrichedContactInfoOutput = self.enrich_contact_info_perplexity(companyListWithPeopleResults)
+        # enrichedContactInfoOutput = self.enrich_contact_info_perplexity(companyListWithPeopleResults)
+        enrichedContactInfoOutput = self.enrich_contact_info_apollo(companyListWithPeopleResults)
         print("-------------------------------- enrichedContactInfoOutput --------------------------------")
         print(enrichedContactInfoOutput)
-
-        enrichedContactInfoOutput = self.enrich_contact_info_apollo(companyListWithPeopleResults)
 
         # 4.format the enriched people results
         companyListWithEnrichedPeopleResults = self.format_people_results(sender, json.dumps(enrichedContactInfoOutput))
@@ -119,6 +120,7 @@ class PeopleFinderAgent(ConversableAgent):
         print("-------------------------------- companyListWithEnrichedPeopleResults --------------------------------")
         print(companyListWithEnrichedPeopleResults)
 
+        # return companyListWithPeopleResults
         return companyListWithEnrichedPeopleResults
     
     def search_for_people(self, company_list_obj, intake_info):
@@ -156,17 +158,22 @@ class PeopleFinderAgent(ConversableAgent):
         company_list = companyListWithPeople_obj.get("company_list", [])
         output = {"company_list": []}
 
+        # TODO: remove this to stop limiting the number of companies and people to reduce apollo usage
         for company in company_list:
             company_info = company["company_info"]
             people_list = company_info.get("people_list", [])
             enriched_people_list = []
             for person in people_list:
+                person = person.get("person_info", person)
                 if not person.get("name"):
                     print(f"No name found for person {person} ??")
                     continue
+                
+                print("-------------------------------- checking person --------------------------------")
+                print(person.get("name"))
 
                 companyName = company_info.get("name", "")
-                enriched_person = ApolloClient.enrich_contact_info(companyName, person)
+                enriched_person = self.apollo_client.enrich_contact_info(companyName, person)
                 enriched_people_list.append(enriched_person)
 
             # update the company with the new people_list, and append to the new company_list
@@ -241,11 +248,14 @@ class PeopleFinderAgent(ConversableAgent):
         product_name = product.get("name", "")
         product_desc = product.get("description", "")
         
+        # f"Find current executives or decision makers at {company_name} ({industry}) "
+        # f"Find current employees at {company_name} ({industry}) "
+        # f"with titles such as {target_titles} who would be good leads for selling {product_name}, {product_desc}. "
+        # f"Provide for each person: name, title, email, phone, LinkedIn, and a source URL for each field. "
         prompt = (
-            f"Find current executives or decision makers at {company_name} ({industry}) "
-            f"with titles such as {target_titles} who would be good leads for selling {product_name}, {product_desc}. "
-            f"Provide for each person: name, title, email, phone, LinkedIn, and a source URL for each field. "
-            f"Prioritize accuracy, recency, and relevance to the ICP. If a field is not available, leave it blank."
+            f"Find current employees at {company_name} ({industry}) with job titles such as {target_titles} who are likely decision makers or good leads for selling {product_name}, {product_desc}. "
+            f"For each person, provide their name and job title. If available, also include their email, phone, and LinkedIn profile as a bonus. Always include a source URL for each field you provide. "
+            f"Prioritize accuracy and recency. If a field is not available, leave it blank."
         )
         return prompt
 
