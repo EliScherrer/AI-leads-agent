@@ -148,7 +148,7 @@ class IntakeAgent(ConversableAgent):
             replyJson = json.loads(parsedReply)
 
             if "company_info" in replyJson and "product_info" in replyJson and "ICP" in replyJson:
-                self.intake_data = parsedReply
+                self.intake_data[userId] = parsedReply
                 print("-------------intake data accuired successfully----------")
                 print(replyJson)
                 return { "response": "Intake data accuired successfully, please wait while I find leads for you", "complete": True }

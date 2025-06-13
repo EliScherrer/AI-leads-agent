@@ -103,21 +103,19 @@ companyListWithPeopleTestData = """
                 "relevance_score": 85,
                 "people_list": [
                     {
-                        "person_info": {
-                            "name": "Daniel Sceli",
-                            "title": "CEO & Director",
-                            "email": "dsceli@wfsinc.com",
-                            "phone": "(604) 718-2000",
-                            "linkedin": "",
-                            "relevant_info": "Dan Sceli is the CEO and Director of Westport Fuel Systems, responsible for strategic direction. His leadership in manufacturing and commitment to sustainability aligns with the ERP solution's focus on operational efficiency and environmental sustainability.",
-                            "relevance_score": 85,
-                            "approach_recommendation": "Approach Dan Sceli by highlighting how StreamERP can enhance operational efficiency and support sustainability goals in the automotive manufacturing sector.",
-                            "notes": "The email is a best-guess assumption based on the pattern d***@wfsinc.com from ZoomInfo and the publicly available (604) 718-2000 corporate phone number for Westport Fuel Systems.",
-                            "source_urls": [
-                                "https://wfsinc.com/company/leadership",
-                                "https://investors.wfsinc.com/news/news-details/2024/Westport-Appoints-Dan-Sceli-as-Chief-Executive-Officer/default.aspx"
-                            ]
-                        }
+                        "name": "Daniel Sceli",
+                        "title": "CEO & Director",
+                        "email": "dsceli@wfsinc.com",
+                        "phone": "(604) 718-2000",
+                        "linkedin": "",
+                        "relevant_info": "Dan Sceli is the CEO and Director of Westport Fuel Systems, responsible for strategic direction. His leadership in manufacturing and commitment to sustainability aligns with the ERP solution's focus on operational efficiency and environmental sustainability.",
+                        "relevance_score": 85,
+                        "approach_recommendation": "Approach Dan Sceli by highlighting how StreamERP can enhance operational efficiency and support sustainability goals in the automotive manufacturing sector.",
+                        "notes": "The email is a best-guess assumption based on the pattern d***@wfsinc.com from ZoomInfo and the publicly available (604) 718-2000 corporate phone number for Westport Fuel Systems.",
+                        "source_urls": [
+                            "https://wfsinc.com/company/leadership",
+                            "https://investors.wfsinc.com/news/news-details/2024/Westport-Appoints-Dan-Sceli-as-Chief-Executive-Officer/default.aspx"
+                        ]
                     }
                 ]
             }
@@ -135,7 +133,6 @@ companyListWithPeopleTestData = """
                 "relevance_score": 90,
                 "people_list": [
                     {
-                        "person_info": {
                             "name": "Simon Kew",
                             "title": "Vice President NA JIT Operations",
                             "email": "simon.kew@magna.com",
@@ -150,7 +147,6 @@ companyListWithPeopleTestData = """
                                 "https://contactout.com/simon-kew-76532",
                                 "https://rocketreach.co/simon-kew-email_25130687"
                             ]
-                        }
                     }
                 ]
             }
@@ -168,7 +164,6 @@ companyListWithPeopleTestData = """
                 "relevance_score": 92,
                 "people_list": [
                     {
-                        "person_info": {
                             "name": "Pat D'Eramo",
                             "title": "President and CEO",
                             "email": "",
@@ -183,10 +178,8 @@ companyListWithPeopleTestData = """
                                 "https://www.martinrea.com/about-us/executive-team/",
                                 "https://www.cadia.org/pat-deramo/"
                             ]
-                        }
                     },
                     {
-                        "person_info": {
                             "name": "Fred Di Tosto",
                             "title": "President",
                             "email": "f.ditosto@martinrea.com",
@@ -201,10 +194,8 @@ companyListWithPeopleTestData = """
                                 "https://www.zoominfo.com/p/Fred-Di-tosto/1610557662",
                                 "https://financialpost.com/globe-newswire/fred-di-tosto-appointed-president-of-martinrea-international-inc"
                             ]
-                        }
                     },
                     {
-                        "person_info": {
                             "name": "Peter Cirulis",
                             "title": "CFO",
                             "email": "",
@@ -218,10 +209,8 @@ companyListWithPeopleTestData = """
                                 "https://www.martinrea.com/press-release/peter-cirulis-appointed-chief-financial-officer-of-martinrea-international-inc/",
                                 "https://www.globaldata.com/company-profile/martinrea-international-inc/executives/"
                             ]
-                        }
                     },
                     {
-                        "person_info": {
                             "name": "Ganesh Iyer",
                             "title": "Chief Technology Officer",
                             "email": "ganesh.iyer@martinrea.com",
@@ -235,7 +224,6 @@ companyListWithPeopleTestData = """
                                 "https://www.martinrea.com/about-us/executive-team/",
                                 "https://a-sp.org/governance/ganesh-iyer-a-sp-board-of-directors/"
                             ]
-                        }
                     }
                 ]
             }
@@ -253,7 +241,6 @@ companyListWithPeopleTestData = """
                 "relevance_score": 88,
                 "people_list": [
                     {
-                        "person_info": {
                             "name": "Skotti Fietsam",
                             "title": "Senior Vice President, Supply Chain and CIO",
                             "email": "s***@accuridecorp.com",
@@ -266,10 +253,8 @@ companyListWithPeopleTestData = """
                             "source_urls": [
                                 "https://www.accuridecorp.com/about-accuride/leadership"
                             ]
-                        }
                     },
                     {
-                        "person_info": {
                             "name": "Geoff Bruce",
                             "title": "President of Accuride Wheels",
                             "email": "g******@accuridecorp.com",
@@ -282,10 +267,8 @@ companyListWithPeopleTestData = """
                             "source_urls": [
                                 "https://thebrakereport.com/kent-jones-named-accuride-ceo/"
                             ]
-                        }
                     },
                     {
-                        "person_info": {
                             "name": "Kent Jones",
                             "title": "Chief Executive Officer",
                             "email": "",
@@ -298,7 +281,6 @@ companyListWithPeopleTestData = """
                             "source_urls": [
                                 "https://www.accuridecorp.com/accuride-names-kent-jones-as-chief-executive-officer"
                             ]
-                        }
                     }
                 ]
             }
@@ -316,7 +298,6 @@ companyListWithPeopleTestData = """
                 "relevance_score": 90,
                 "people_list": [
                     {
-                        "person_info": {
                             "name": "Jim Jarrell",
                             "title": "CEO and President",
                             "email": "jim.jarrell@linamar.com",
@@ -331,10 +312,8 @@ companyListWithPeopleTestData = """
                                 "https://contactout.com/Jim-Jarrell-85575078",
                                 "https://www.zoominfo.com/p/Jim-Jarrell/40390109"
                             ]
-                        }
                     },
                     {
-                        "person_info": {
                             "name": "Dale Schneider",
                             "title": "Chief Financial Officer",
                             "email": "d***@linamar.com",
@@ -348,10 +327,8 @@ companyListWithPeopleTestData = """
                                 "https://www.linamar.com/report/linamar-corporation-announces-the-appointment-of-dale-schneider-as-chief-financial-officer/",
                                 "https://www.zoominfo.com/p/Dale-Schneider/1717114986"
                             ]
-                        }
                     },
                     {
-                        "person_info": {
                             "name": "Chris Merchant",
                             "title": "Global Vice President Of Finance & Information Technology",
                             "email": "",
@@ -366,10 +343,8 @@ companyListWithPeopleTestData = """
                                 "https://theorg.com/org/linamar-corp/org-chart/chris-merchant",
                                 "https://www.cpaontario.ca/protecting-the-public/directories/member/merchant-1l5c2b"
                             ]
-                        }
                     },
                     {
-                        "person_info": {
                             "name": "Roxanne Rose",
                             "title": "Vice President, Global Human Resources",
                             "email": "Roxanne.Rose@linamar.com",
@@ -384,10 +359,8 @@ companyListWithPeopleTestData = """
                                 "https://rocketreach.co/roxanne-rose-email_7886431",
                                 "https://www.linamar.com/wp-content/uploads/2024/01/Updated-Linamar-Feedback-Form.pdf"
                             ]
-                        }
                     },
                     {
-                        "person_info": {
                             "name": "Mark Stoddart",
                             "title": "Chief Technology Officer & Executive Vice President of Sales and Marketing",
                             "email": "m***@linamar.com",
@@ -402,7 +375,6 @@ companyListWithPeopleTestData = """
                                 "https://www.enertechcapital.com/post/enertech-capital-adds-linamar-executive-mark-stoddart-to-mobility-advisory-board",
                                 "https://www.zoominfo.com/p/Mark-Stoddart/265096096"
                             ]
-                        }
                     }
                 ]
             }
@@ -750,23 +722,21 @@ async def newSession(request: Request):
 
 async def processIntakeData(userId: str):
     print("-------------started lead generation-------------------")
-    intakeInfoString = intakeAgent.intake_data
-    # get company list
+    intakeInfoString = intakeAgent.intake_data[userId]
+    # 1. get companies
     # companyListString = await companyResearchAgent.process_message(intakeAgent, intakeInfoString) 
     companyListString = companyListWithPeopleTestData # TODO: REPLACE WHEN DONE TESTING
-
     print("-------------Company List results-------------------")
-    # print(companyListString)
+    print(companyListString)
 
-    # # get people list
+    # 2. get people 
     companyListAndPeopleString = await peopleResearchAgent.process_message(companyResearchAgent, intakeInfoString, companyListString)
-    # companyListAndPeopleString = companyListWithPeopleTestData
+    # # companyListAndPeopleString = companyListWithPeopleTestData
     print("-------------Company List and people results-------------------")
     print(companyListAndPeopleString)
 
-    # score leads
+    # 3. score leads
     leadsListString = await leadScoringAgent.process_message(peopleResearchAgent, intakeInfoString, companyListAndPeopleString)
-
     print("-------------Leads List results-------------------")
     print(leadsListString)
     final_results[userId] = leadsListString
@@ -779,11 +749,11 @@ async def processIntakeData(userId: str):
 async def getResults(request: Request):
     """API Endpoint that returns the leads list for the user"""
 
-    # user_agent = request.headers.get("user-agent")
+    user_agent = request.headers.get("user-agent")
 
-    # if user_agent in final_results:
-    #     return final_results[user_agent]
+    if user_agent in final_results:
+        return final_results[user_agent]
 
     # TODO: remove this when done testing
-    return leadsTestData
-    # return "Leads haven't been generated yet"
+    # return leadsTestData
+    return "Leads haven't been generated yet"

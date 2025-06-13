@@ -14,7 +14,7 @@ interface Message {
 
 const defaultFirstMessage: Message = {
   id: Date.now().toString(),
-  text: "Hello, I'm the lead finder chat bot. I'm here to help you find leads for your product. Please provide me with information about your company, the product you are selling, and information about your ideal customer profile. You can also upload a CSV or TSV file with your data.",
+  text: "Hello, I'm the lead finder chat bot. I'm here to help you find leads for your product. Please provide me with information about your company, the product you are selling, and information about your ideal customer profile. You can also upload a TSV file with your data.",
   sender: 'ai',
   timestamp: new Date(),
 };

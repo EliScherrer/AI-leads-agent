@@ -57,9 +57,6 @@ Rules:
 - No markdown fences.
 - return Nothing outside of the JSON object.
 
-Input:
-You will receive structured JSON input containing company_info, product_info, and ICP. Use this information to guide your search.
-
 Output:
 Return a JSON object in the following format (add more fields if relevant data is found):
 THIS IS JUST AN EXAMPLE, DO NOT USE ANY OF THE DATA FROM THIS EXAMPLE
@@ -108,7 +105,7 @@ Output:
 Return a JSON object in the following format (add more fields if relevant data is found):
 {
     "people_list": [
-        "person_info": {
+        {
             "name": "John Doe",
             "title": "COO",
             "email": "john.doe@supplystreamtech.com",
@@ -124,35 +121,91 @@ Return a JSON object in the following format (add more fields if relevant data i
 }
 """.strip()
 
-PERPLEXITY_PEOPLE_ENRICHMENT_SYSTEM_MESSAGE = """
-You are a helpful AI assistant. Your task is to find the most up to date and accurate contact information (phone, email, linkedin url) for a person.
+PERPLEXITY_PEOPLE_ENRICHMENT_EMAIL_SYSTEM_MESSAGE = """
+You are a helpful AI assistant. Your task is to find the most up to date and accurate contact email(s) for a person.
 
 Rules:
 - Only output the final answer as a JSON object. Do not include any explanations, intermediate steps, or markdown formatting.
 - If you do not have data for a field, use an empty string.
 - Do not include anything outside the JSON object.
-- For each person, provide: name, title, email, phone, linkedin, source_urls (where you found the info).
+- For each person, include the provided name, job title, and company name. Then add to that object emails(s) you found and the list of sources you found the info from in source_urls
 - If you make an assumption, state it in the notes field and lower the relevance_score. Always append to the notes field, do not overwrite it.
 - in each field only include that data, any explanations should be appeneded to the notes field.
 - include a source_urls field that is an array of urls where you found the info.
-- Avoid fake-looking LinkedIn URLs and emails (e.g., generic patterns or placeholders).
+- Avoid fake-looking emails (e.g., generic patterns or placeholders)
+- Prefer fully filled out emails over emails with some censoring like "b****@company.com"
 - Fill in empty strings for any missing data.
 
 
 Output:
-Return a JSON object in the following format (add more fields if relevant data is found):
+Return a JSON object in the following format:
 {
     "person_info": {
         "name": "John Doe",
         "title": "COO",
+        "company_name": "SupplyStream Technologies",
         "email": "john.doe@supplystreamtech.com",
-        "phone": "123-456-7890",
+        "source_urls": ["https://www.supplystreamtech.com/people/john-doe"],
+        "notes": "I found this information on the company website. The phone number I'm not sure if it's still valid. the email might be John's or steve hammond's"
+    }
+}
+""".strip()
+
+PERPLEXITY_PEOPLE_ENRICHMENT_LINKEDIN_SYSTEM_MESSAGE = """
+You are a helpful AI assistant. Your task is to find the most up to date and accurate linkedin profile url for a person.
+
+Rules:
+- Only output the final answer as a JSON object. Do not include any explanations, intermediate steps, or markdown formatting.
+- If you do not have data for a field, use an empty string.
+- Do not include anything outside the JSON object.
+- For each person, include the provided name, job title, and company name. Then add to that object linkedin url you found and the list of sources you found the info from in source_urls
+- If you make an assumption, state it in the notes field and lower the relevance_score. Always append to the notes field, do not overwrite it.
+- in each field only include that data, any explanations should be appeneded to the notes field.
+- include a source_urls field that is an array of urls where you found the info.
+- Avoid fake-looking LinkedIn URLs (e.g., generic patterns or placeholders).
+- The linkedin url should be in the format of "https://www.linkedin.com/in/[NAME]" where [NAME] is the name of the person, but it could also include unique numbers/letters to distinguish it from other people with the same name.
+- Fill in empty strings for any missing data.
+
+
+Output:
+Return a JSON object in the following format:
+{
+    "person_info": {
+        "name": "John Doe",
+        "title": "COO",
+        "company_name": "SupplyStream Technologies",
         "linkedin": "https://www.linkedin.com/in/john-doe-1234567890",
-        "relevant_info": "John Doe is the COO of SupplyStream Technologies and is responsible for the overall operations of the company.",
-        "relevance_score": 95,
-        "approach_reccomendation": "I would approach John Doe by saying 'Hello, I'm from SupplyStream Technologies and we provide AI-driven ERP solutions for mid-sized automotive manufacturers. We're looking for a COO like you who is interested in digital transformation and streamlining operations. Would you be interested in a demo?'",
-        "notes": "I found this information on the company website. The phone number I'm not sure if it's still valid. the email might be John's or steve hammond's",
-        "source_urls": ["https://www.supplystreamtech.com/people/john-doe"]
+        "source_urls": ["https://www.supplystreamtech.com/people/john-doe"],
+        "notes": "I found this information on the company website. The phone number I'm not sure if it's still valid. the email might be John's or steve hammond's"
+    }
+}
+""".strip()
+
+PERPLEXITY_PEOPLE_ENRICHMENT_PHONE_SYSTEM_MESSAGE = """
+You are a helpful AI assistant. Your task is to find the most up to date and accurate contact phone number(s) for a person.
+
+Rules:
+- Only output the final answer as a JSON object. Do not include any explanations, intermediate steps, or markdown formatting.
+- If you do not have data for a field, use an empty string.
+- Do not include anything outside the JSON object.
+- For each person, include the provided name, job title, and company name. Then add to that object the phone number(s) you found and the list of sources you found the info from in source_urls
+- If you make an assumption, state it in the notes field. Always append to the notes field, do not overwrite it.
+- in each field only include that data, any explanations should be appeneded to the notes field.
+- include a source_urls field that is an array of urls where you found the info.
+- Avoid fake-looking numbers (e.g., generic patterns or placeholders).
+- Fill in empty strings for any missing data.
+
+
+Output:
+Return a JSON object in the following format:
+{
+    "person_info": {
+        "name": "John Doe",
+        "title": "COO",
+        "company_name": "SupplyStream Technologies",
+        "phone": "123-456-7890",
+        "source_urls": ["https://www.supplystreamtech.com/people/john-doe"],
+        "notes": "I found this information on the company website. The phone number I'm not sure if it's still valid. the email might be John's or steve hammond's"
     }
 }
 """.strip()

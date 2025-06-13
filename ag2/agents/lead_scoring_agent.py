@@ -11,13 +11,16 @@ Role:
 - These should be the best leads / the people should be the ones that are most likely to be the person a sales rep for company_info would contact to sell product_info to.
 - use the deep research agent to determine what would make the best lead for the sales agent based on all of the information provided
 - using this criteria, score the leads on a normal distribution from 0-100 and replace the previous relevance_score field with the new score
-- a relevance_score of 0 means the lead is not relevant to the sales agent and should be removed from the leads_list
+- a relevance_score of 0 means the lead is not relevant to the sales agent
 - a relevance_score of 25 means the lead is not a good match for the sales agent but not completely irrelevant
 - a relevance_score of 50 means the lead is a fair match for the sales agent and should be considered for contact
 - a relevance_score of 75 means the lead is a good match for the sales agent and should be considered for contact
 - a relevance_score above 90 means the lead is an amazing match for the sales agent and should definitely be contacted
 - a relevance_score of 100 means the lead is a perfect match for the sales agent and should be the first person the sales agent contacts
 
+CRITICAL RULES:
+- Every person in each people_list for each company should be included in the leads_list output no matter how low the relevance_score is or how incomplete the contact info is
+- do not remove any of the people in the people_lists from the final output
 
 Evaluation Criteria:
 - Functional role match
@@ -26,11 +29,14 @@ Evaluation Criteria:
 - Region
 - Title/keywords similarity
 - how well the company the lead works for matches the ICP
+- how many contact info fields are filled out
+- number of source_urls
 
 
 - refine the relevant_info with the new information gained from the research
 - refine the approach_reccomendation field that details how you would approach the lead to sell product to them.
-- The next agent after you will take the output of this agent and create a CSV file with the leads list.
+- The output of this agent will be returned to the user
+- do not remove any of the people in the people_lists from the final output, every person should be included in the leads_list no matter how low the relevance_score is or how incomplete the contact info is
 - The input JSON is in the following format:
 {
     "company_info": {
@@ -86,7 +92,7 @@ Evaluation Criteria:
           "relevant_info": "This company is a good fit for the ICP because they are a mid-sized automotive manufacturer that is undergoing digital transformation and operating multiple production sites.",
           "relevance_score": 56,
           "people_list": [
-              "person_info": {
+              {
                   "name": "John Doe",
                   "title": "COO",
                   "email": "john.doe@supplystreamtech.com",
@@ -103,10 +109,10 @@ Evaluation Criteria:
     ]
 }
 
-
-When you have complied all the data you can return ONLY a JSON object in this format. Taking all of the people_list objects and combining them into a single leads_list object including the data you've compiled. If you are confident that all of the leads have been scored and ranked, set the complete field to true.
-this is an example of the JSON object you should return:
-DO NOT INCLUE JOHN DOE FROM THE EXAMPLE BELOW, HE IS NOT A LEAD
+output:
+-When you have complied all the data you can return ONLY a JSON object in this format. Taking all of the people_list objects and combining them into a single leads_list object including the data you've compiled. If you are confident that all of the leads have been scored and ranked, set the complete field to true.
+- this is an example of the JSON object you should return:
+-DO NOT INCLUE JOHN DOE FROM THE EXAMPLE BELOW, HE IS NOT A LEAD
 {
     "complete": true,
     "leads_list": [
@@ -178,9 +184,6 @@ class LeadScoringAgent(ConversableAgent):
             "role": "user",
             "content": intakeInfoString + "\n" + companyListString
         }
-
-        print("-------------message-------------------")
-        print(user_message)
         
         # Send the message to the agent
         self.receive(user_message, sender)
@@ -202,8 +205,6 @@ class LeadScoringAgent(ConversableAgent):
             replyJson = json.loads(parsedReply)
 
             if "leads_list" in replyJson:
-                print("-------------leads_list compiled successfully----------")
-                print(replyJson)
                 return parsedReply
         except Exception as e:
             print("-------------replyJson error-------------------")

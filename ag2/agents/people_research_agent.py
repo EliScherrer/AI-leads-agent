@@ -3,7 +3,7 @@ import json
 from autogen import Agent, config_list_from_json, ConversableAgent
 from agents.apollo_client import ApolloClient
 from agents.perplexity_client import PerplexityClient
-from agents.prompts import PERPLEXITY_PEOPLE_FINDER_SYSTEM_MESSAGE, PERPLEXITY_PEOPLE_ENRICHMENT_SYSTEM_MESSAGE
+from agents.prompts import PERPLEXITY_PEOPLE_FINDER_SYSTEM_MESSAGE, PERPLEXITY_PEOPLE_ENRICHMENT_EMAIL_SYSTEM_MESSAGE, PERPLEXITY_PEOPLE_ENRICHMENT_PHONE_SYSTEM_MESSAGE, PERPLEXITY_PEOPLE_ENRICHMENT_LINKEDIN_SYSTEM_MESSAGE
 from dotenv import load_dotenv
 
 
@@ -35,7 +35,7 @@ output example =
           "relevant_info": "This company is a good fit for the ICP because they are a mid-sized automotive manufacturer that is undergoing digital transformation and operating multiple production sites.",
           "relevance_score": 83,
           "people_list": [
-              "person_info": {
+              {
                   "name": "John Doe",
                   "title": "COO",
                   "email": "john.doe@supplystreamtech.com",
@@ -107,8 +107,8 @@ class PeopleResearchAgent(ConversableAgent):
         print(companyListWithPeopleResults)
 
         # 3. enrich the contact info
-        # enrichedContactInfoOutput = self.enrich_contact_info_perplexity(companyListWithPeopleResults)
-        enrichedContactInfoOutput = self.enrich_contact_info_apollo(companyListWithPeopleResults)
+        enrichedContactInfoOutput = self.enrich_contact_info_perplexity(companyListWithPeopleResults)
+        # enrichedContactInfoOutput = self.enrich_contact_info_apollo(companyListWithPeopleResults)
         print("-------------------------------- enrichedContactInfoOutput --------------------------------")
         print(enrichedContactInfoOutput)
 
@@ -158,7 +158,7 @@ class PeopleResearchAgent(ConversableAgent):
 
         # TODO: remove this to stop limiting the number of companies and people to reduce apollo usage
         for company in company_list:
-            company_info = company["company_info"]
+            company_info = company.get("company_info", company)
             people_list = company_info.get("people_list", [])
             enriched_people_list = []
             for person in people_list:
@@ -196,24 +196,33 @@ class PeopleResearchAgent(ConversableAgent):
             people_list = company_info.get("people_list", [])
             enriched_people_list = []
             for person in people_list:
+                person = person.get("person_info", person)
                 if not person.get("name"):
                     print(f"No name found for person {person} ??")
                     continue
 
-                enrichment_prompt = self.build_contact_enrichment_prompt(company_info, person)
+                emailEnrichmentPrompt = self.build_email_enrichment_prompt(company_info, person)
+                phoneEnrichmentPrompt = self.build_phone_enrichment_prompt(company_info, person)
+                linkedinEnrichmentPrompt = self.build_linkedin_enrichment_prompt(company_info, person)
                 print("-------------------------------- Contact Enrichment Prompt--------------------------------")
-                print(f"Prompt: {enrichment_prompt}")
+                print(f"linkedinEnrichmentPrompt: {linkedinEnrichmentPrompt}")
 
                 try:
-                    enrichment_result = self.perplexity_client.search(PERPLEXITY_PEOPLE_ENRICHMENT_SYSTEM_MESSAGE, enrichment_prompt)
-                    print(f"Enrichment result: {enrichment_result}")
+                    # emailEnrichmentResult = self.perplexity_client.search(PERPLEXITY_PEOPLE_ENRICHMENT_EMAIL_SYSTEM_MESSAGE, emailEnrichmentPrompt)
+                    # phoneEnrichmentResult = self.perplexity_client.search(PERPLEXITY_PEOPLE_ENRICHMENT_PHONE_SYSTEM_MESSAGE, phoneEnrichmentPrompt)
+                    linkedinEnrichmentResult = self.perplexity_client.search(PERPLEXITY_PEOPLE_ENRICHMENT_LINKEDIN_SYSTEM_MESSAGE, linkedinEnrichmentPrompt)
+                    # print(f"emailEnrichmentResult result: {emailEnrichmentResult}")
+                    # print(f"phoneEnrichmentResult result: {phoneEnrichmentResult}")
+                    print(f"linkedinEnrichmentResult result: {linkedinEnrichmentResult}")
                 except Exception as e:
                     print(f"Error enriching contact info for {person.get('name', '')}: {e}")
                 
                 # create an object with the old person info and the new contact info and append to new people_list
                 enriched_people_list.append({
                     "person_info": person,
-                    "contact_info": enrichment_result
+                    # "email_info": emailEnrichmentResult,
+                    # "phone_info": phoneEnrichmentResult,
+                    "linkedin_info": linkedinEnrichmentResult
                 })
 
             # update the company with the new people_list
@@ -257,13 +266,36 @@ class PeopleResearchAgent(ConversableAgent):
         )
         return prompt
 
-    def build_contact_enrichment_prompt(self, company_info, person_info):
+    def build_email_enrichment_prompt(self, company_info, person_info):
         company_name = company_info.get("name", "")
         person_name = person_info.get("name", "")
         person_title = person_info.get("title", "")
         prompt = (
-            f"Find the most accurate and up-to-date contact information for {person_name}, {person_title} at {company_name}. "
-            f"Return their email, phone number, LinkedIn profile, and any other relevant contact details. "
-            f"Provide source URLs for each field. If a field is not available, leave it as an empty string."
+            f"Find the most accurate and up-to-date email information for {person_name}, {person_title} at {company_name}. "
+            f"Return any and all known email address. Provide source URLs for each email. If no emails are found, leave it as an empty string."
+        )
+        return prompt
+    
+    def build_linkedin_enrichment_prompt(self, company_info, person_info):
+        company_name = company_info.get("name", "")
+        person_name = person_info.get("name", "")
+        person_title = person_info.get("title", "")
+        prompt = (
+            f"{person_name}, {person_title} at {company_name} linkedin profile url"
+        )
+        # prompt = (
+        #     f"Find the most accurate and up-to-date linkedin url for {person_name}, {person_title} at {company_name}. "
+        #     f"Return LinkedIn profile, searching for '{person_name}, {person_title} at {company_name} linkedin' should be pretty accurate "
+        #     f"If a linkedin can not be found, leave it as an empty string."
+        # )
+        return prompt
+    
+    def build_phone_enrichment_prompt(self, company_info, person_info):
+        company_name = company_info.get("name", "")
+        person_name = person_info.get("name", "")
+        person_title = person_info.get("title", "")
+        prompt = (
+            f"Find the most accurate and up-to-date phone number(s) for {person_name}, {person_title} at {company_name}. "
+            f"Return any and all known phone numbers. Provide source URLs for each number. If no phone numbers are found, leave it as an empty string."
         )
         return prompt
